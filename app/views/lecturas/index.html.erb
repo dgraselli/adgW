@@ -10,10 +10,39 @@
         </button>
       </span>
 
-</div>
-<%= select("post", "asdf", Lecturista.all, {include_blank: true}) %>
+      <span class="input-group-btn">
+  
+    </span>
 
 </div>
+<br>
+<%= @p%>
+<div>
+<%= form_tag action: :filtrar %>
+    
+    <%= label_tag "Lecturistas" %>
+    <%= select :lectura, :lecturista, 
+    Lecturista.all.map { |u| [u.nombre, u.id] },  { include_blank: true },
+    { class: 'chosen-select', "multiple" => true, "data-placeholder" => "...", style: "width: 200px" }
+    %>
+
+    <%= label_tag "Periodos" %>
+    <%= select :lectura, :periodo, 
+    Lectura.periodos.map { |u| [u,u] },  { include_blank: true },
+    { class: 'chosen-select', "multiple" => true, "data-placeholder" => "...", style: "width: 200px" }
+    %>
+
+    <%= label_tag "Rutas" %>
+    <%= select :lectura, :ruta, 
+    Lectura.rutas.map { |u| [u,u] },  { include_blank: true },
+    { class: 'chosen-select', "multiple" => true, "data-placeholder" => "...", style: "width: 200px" }
+    %>
+
+    <%= submit_tag "Filtar", {class: "btn btn-default "} %>
+</form>
+</div>
+</div>
+
 
 <fieldset>
 

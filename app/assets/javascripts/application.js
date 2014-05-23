@@ -17,3 +17,7 @@
 //= require chartkick
 //= require chartkick_custom
 //= require typeahead.bundle
+//= require chosen.jquery
+//= require scaffold
+
+

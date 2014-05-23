@@ -6,6 +6,7 @@ class LecturasController < ApplicationController
   # GET /lecturas
   # GET /lecturas.json
   def index
+    
     @lecturas = Lectura.all
     if(params[:ruta].present?)
       @lecturas = @lecturas.where(ruta: params[:ruta])
@@ -15,6 +16,18 @@ class LecturasController < ApplicationController
     end
 
     @lecturas = @lecturas.paginate(page: params[:page])
+  end
+
+  def filtrar
+    @p = {}
+    params[:lectura].map{|a,b| b = b.select{|c| !c.blank?}; @p.merge! a => b unless  b.empty?}
+
+    @lecturas = Lectura.where( @p )
+    #@lecturas = Lectura.all
+
+    @lecturas = @lecturas.paginate(page: params[:page])
+
+    render :index
   end
 
   # GET /lecturas/1

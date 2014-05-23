@@ -12,6 +12,7 @@ FirstApp::Application.routes.draw do
   get  '/lecturas/pendientes'
   get  '/update_lectura', to: 'lecturas#update_lectura'
   post '/lecturas/update_lectura'
+  post '/lecturas/filtrar'
   match '/lecturas/:id/georeferenciar', to: 'lecturas#georeferenciar', via: 'post' 
   get  'ruta/index'
   get  'ruta/periodos'

@@ -3,7 +3,7 @@ class MainController < ApplicationController
 
 
   def home
-    @rutas = Rutum.paginate(page: params[:page], per_page: 5)
+
   end
   def help
   end

@@ -10,8 +10,13 @@ class Lectura < ActiveRecord::Base
   end
 
   def self.periodos
-  	Lectura.pluck('distinct periodo')
+    Lectura.pluck('distinct periodo')
   end
+  
+  def self.rutas
+    Lectura.pluck('distinct ruta')
+  end
+  
 
   def direccion
     "#{calle} #{altura}, #{localidad}, Ar"
