@@ -16,26 +16,22 @@
 
 </div>
 <br>
-<%= @p%>
 <div>
 <%= form_tag action: :filtrar %>
     
     <%= label_tag "Lecturistas" %>
-    <%= select :lectura, :lecturista, 
-    Lecturista.all.map { |u| [u.nombre, u.id] },  { include_blank: true },
-    { class: 'chosen-select', "multiple" => true, "data-placeholder" => "...", style: "width: 200px" }
+    <%= select_tag 'lectura[lecturista]', options_for_select(Lecturista.all.map { |u| [u.nombre, u.id] }), 
+        { class: 'chosen-select', "multiple" => :multiple, "data-placeholder" => "...", style: "width: 200px" }
     %>
 
     <%= label_tag "Periodos" %>
-    <%= select :lectura, :periodo, 
-    Lectura.periodos.map { |u| [u,u] },  { include_blank: true },
-    { class: 'chosen-select', "multiple" => true, "data-placeholder" => "...", style: "width: 200px" }
+    <%= select_tag 'lectura[periodo]', options_for_select(Lectura.periodos.map { |u| [u, u] }), 
+        { class: 'chosen-select', "multiple" => :multiple, "data-placeholder" => "...", style: "width: 200px" }
     %>
 
     <%= label_tag "Rutas" %>
-    <%= select :lectura, :ruta, 
-    Lectura.rutas.map { |u| [u,u] },  { include_blank: true },
-    { class: 'chosen-select', "multiple" => true, "data-placeholder" => "...", style: "width: 200px" }
+    <%= select_tag 'lectura[ruta]', options_for_select(Lectura.rutas.map { |u| [u,u] }), 
+        { class: 'chosen-select', "multiple" => :multiple, "data-placeholder" => "...", style: "width: 200px" }
     %>
 
     <%= submit_tag "Filtar", {class: "btn btn-default "} %>
@@ -48,16 +44,19 @@
 
 <button type="button" class="btn btn-default" onclick="$(this).next('div').slideToggle()">Ver Mapa</button>
 <% markers = @lecturas.map{|m| "markers=#{m.lat},#{m.lon}" unless m.lat.nil? }.compact.join('&') %>
+<% markers_real = @lecturas.map{|m| "markers=icon:http://tinyurl.com/2ftvtt6|#{m.lectura_lat},#{m.lectura_lon}" unless m.lat.nil? }.compact.join('&') %>
+
 <% path = "path=color:0x0000ff|weight:2|" + @lecturas.map{|m| "#{m.lat},#{m.lon}" unless m.lat.nil? }.compact.join('|') %>
+<% path_real = "&path=color:0x00ff00|weight:2|" + @lecturas.map{|m| "#{m.lectura_lat},#{m.lectura_lon}" unless m.lat.nil? }.compact.join('|') %>
 
 <div style="float: right; display: none">
 <div>
 <%
 zoom=12
 %>
-<%= image_tag "http://maps.google.com/maps/api/staticmap?size=550x450&sensor=false&zoom=#{zoom}&#{markers}" ,{style: 'border: solid black 1px'} unless markers.blank? %>
+<%= image_tag "http://maps.google.com/maps/api/staticmap?size=550x450&sensor=false&zoom=#{zoom}&#{markers}&#{markers_real}" ,{style: 'border: solid black 1px'} unless markers.blank? %>
 
-<%= image_tag "http://maps.google.com/maps/api/staticmap?size=550x450&sensor=false&zoom=#{zoom}&#{path}" ,{style: 'border: solid black 1px'} unless markers.blank? %>
+<%= image_tag "http://maps.google.com/maps/api/staticmap?size=550x450&sensor=false&zoom=#{zoom}&#{path}&#{path_real}" ,{style: 'border: solid black 1px'} unless markers.blank? %>
 </div>
 
 </div>
@@ -95,7 +94,7 @@ zoom=12
         <td>[<%= lectura.medidor_tipo %>] <%= lectura.medidor_num %></td>
         <td><%= lectura.lectura_valor %></td>
         <td><%= lectura.incidencias %> </td>
-        <td><%= lectura.estado %> </td>
+        <td><%= lectura.estado.to_s + "-" + lectura.lectura_lat.to_s %> </td>
         <td><%= link_to 'Show', lectura %></td>
         <td><%= link_to 'Edit', edit_lectura_path(lectura) %></td>
         <td><%= link_to 'Destroy', lectura, method: :delete, data: { confirm: 'Are you sure?' } %></td>
@@ -108,3 +107,5 @@ zoom=12
 <br>
 
 <%= link_to 'New Lectura', new_lectura_path %>
+
+<% javascript_include_tag 'admin/layout', 'admin/extras', :cache => 'admin' %>
