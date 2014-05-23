@@ -15,7 +15,16 @@ class MainController < ApplicationController
   end
 
   def download_mobile
-    send_file "#{Rails.root}/public/assets/adgM.apk"
+    send_file "#{Rails.root}/public/uploads/adgM.apk"
+  end
+
+  def upload
+    if request.post?
+        uploaded_io = params[:attachment]
+        f = File.new(Rails.root.join('public', 'uploads', "adgM.apk"), "w+b")
+        f.write uploaded_io.read
+        f.close
+    end
   end
 
   def qcode

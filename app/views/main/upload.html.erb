@@ -1,0 +1,22 @@
+
+<fieldset>
+	<legend>Subir archivo adgM.apk</legend>
+	<%= form_tag '/upload', :multipart => true %>
+		<%= label_tag :attachment %>
+		<%= file_field_tag :attachment %>
+		<%= submit_tag  "Subir"%>
+	</form>
+</fieldset>
+
+<% files = Dir.glob("#{Rails.root}/public/uploads/*") %>
+
+
+<h2>Archivos</h2>
+<ul>
+<% Dir.entries("#{Rails.root}/public/uploads/").each do |f| %>
+
+	<% if  ! [".",".."].include? f %>
+		<li> <%= f %> </li>
+	<% end %>
+<% end %>
+</ul>

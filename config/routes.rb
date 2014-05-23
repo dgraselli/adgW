@@ -19,6 +19,7 @@ FirstApp::Application.routes.draw do
   resources :lecturistas
 
   get "qcode" => 'main#qcode'
+  match "upload", to: 'main#upload', via: [:get, :post]
   get "download_mobile" => "main#download_mobile"
 
 
