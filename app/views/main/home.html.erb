@@ -1,0 +1,21 @@
+<% provide(:title, 'Rutas') %>
+
+<table>
+  <thead>
+    <tr>
+      <th>Ruta</th>
+      <th></th>
+    </tr>
+  </thead>
+
+  <tbody>
+
+    <tbody>
+      <% Lectura.periodos.each do |p| %>
+      <tr>
+        <td><%= link_to p,  "/ruta/index?periodo=#{p}" %></td>
+        <td><%= pie_chart Lectura.where(periodo: p).group(:estado).count , height: "140px", colors:  ['green','red', 'blue','yellow']  %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>

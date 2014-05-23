@@ -1,0 +1,29 @@
+<h1>Listing lectura_hsts</h1>
+
+<%= will_paginate @lectura_hsts %>
+<table>
+  <thead>
+    <tr>
+      <th>Unidad</th>
+      <th>Fecha</th>
+      <th>Lectura</th>
+      <th>Consumo</th>
+      <th></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @lectura_hsts.each do |lectura_hst| %>
+      <tr>
+        <td><%= lectura_hst.unidad %></td>
+        <td><%= lectura_hst.fec_med %></td>
+        <td><%= lectura_hst.est_med %></td>
+        <td><%= lectura_hst.consumo %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Lectura hst', new_lectura_hst_path %>

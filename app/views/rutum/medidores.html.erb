@@ -1,0 +1,65 @@
+<h1>Medidores <%= "de la ruta #{@ruta.nombre}" unless @ruta.nil? %></h1>
+
+
+<% markers = @medidors.map{|m| "markers=#{m.lat},#{m.lng}" unless m.lat.nil? }.compact.join('&') %>
+<% path = "path=color:0x0000ff|weight:2|" + @medidors.map{|m| "#{m.lat},#{m.lng}" unless m.lat.nil? }.compact.join('|') %>
+
+<div style="float: right">
+<div>
+<%
+zoom=12
+%>
+<%= image_tag "http://maps.google.com/maps/api/staticmap?size=550x450&sensor=false&zoom=#{zoom}&#{markers}" ,{style: 'border: solid black 1px'} unless markers.blank? %>
+</div>
+
+<div>
+<%= image_tag "http://maps.google.com/maps/api/staticmap?size=550x450&sensor=false&zoom=#{zoom}&#{path}" ,{style: 'border: solid black 1px'} unless markers.blank? %>
+</div>
+
+</div>
+
+<p>
+<div><b>Medidores Geo-referenciados:</b> <%= @medidors.where('lat is not null').count %></div>
+<div><b>Medidores sin Georeferencia:</b> <%= @medidors.where('lat is null').count %>
+<%= button_to "Geo-Refernciar", "/rutum/#{@rutum.id}/georeferenciar" %>
+</div>
+
+</p>
+
+
+
+
+<%= will_paginate @medidors %>
+<table>
+  <thead>
+    <tr>
+      <th>idactivo</th>
+      <th>Codigo Interno</th>
+      <th>Ciudad</th>
+      <th>Calle</th>
+      <th>Altura</th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @medidors.each do |medidor| %>
+      <tr>
+        <td><%= medidor.idactivo %></td>
+        <td><%= medidor.codigo_interno %></td>
+        <td><%= medidor.city.nombre %></td>
+        <td><%= medidor.ub_calle %></td>
+        <td><%= medidor.ub_altura %></td>
+        <td><%= link_to 'Show', medidor %></td>
+        <td><%= link_to 'Edit', edit_medidor_path(medidor) %></td>
+        <td><%= link_to 'Destroy', medidor, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+      <!--
+      <tr>
+        <td colspan="5"><%= line_chart  medidor.lecturas_hst.pluck(:fec_med, :consumo) unless medidor.lecturas_hst.empty? %></td>
+      </tr>
+      -->
+    <% end %>
+  </tbody>
+</table>
+
+<%= link_to 'New Medidor', new_medidor_path(@ruta) %>

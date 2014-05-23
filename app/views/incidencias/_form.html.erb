@@ -1,0 +1,21 @@
+<%= form_for(@incidencia) do |f| %>
+  <% if @incidencia.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@incidencia.errors.count, "error") %> prohibited this incidencia from being saved:</h2>
+
+      <ul>
+      <% @incidencia.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :nombre %><br>
+    <%= f.text_field :nombre %>
+  </div>
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>

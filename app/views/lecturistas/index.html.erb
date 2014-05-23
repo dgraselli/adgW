@@ -1,0 +1,27 @@
+<h1>Lecturistas</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Nombre</th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @lecturistas.each do |lecturista| %>
+      <tr>
+        <td><%= lecturista.nombre %></td>
+        <td><%= link_to 'Ver', lecturista %></td>
+        <td><%= link_to 'Editar', edit_lecturista_path(lecturista) %></td>
+        <td><%= link_to 'Eliminar', lecturista, method: :delete, data: { confirm: 'Seguro?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'Nuevo Lecturista', new_lecturista_path %>

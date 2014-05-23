@@ -1,0 +1,127 @@
+<div style="float: right">
+<% if  ! @lectura.lat.nil? %>
+<%= image_tag "http://maps.google.com/maps/api/staticmap?size=350x350&sensor=false&zoom=16&markers=#{@lectura.lat}%2C#{@lectura.lon}" ,{style: 'border: solid black 1px'} %>
+
+<%= image_tag "http://maps.googleapis.com/maps/api/streetview?size=350x350&location=40.720032,%20-73.988354&fov=90&heading=235&pitch=10&sensor=false" ,{style: 'border: solid black 1px'} %>
+<% else %>
+<div >
+  Medidor sin georeferenciar <%= button_to "Geo-referenciar", "/lecturas/#{@lectura.id}/georeferenciar" %>
+</div>
+<% end %>
+</div>
+
+
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Usuario:</strong>
+  <%= @lectura.usuario %>
+</p>
+
+<p>
+  <strong>Razon social:</strong>
+  <%= @lectura.razon_social %>
+</p>
+
+<p>
+  <strong>Doc tipo:</strong>
+  <%= @lectura.doc_tipo %>
+</p>
+
+<p>
+  <strong>Doc nro:</strong>
+  <%= @lectura.doc_nro %>
+</p>
+
+<p>
+  <strong>Localidad:</strong>
+  <%= @lectura.localidad %>
+</p>
+
+<p>
+  <strong>Calle:</strong>
+  <%= @lectura.calle %>
+</p>
+
+<p>
+  <strong>Altura:</strong>
+  <%= @lectura.altura %>
+</p>
+
+<p>
+  <strong>Piso:</strong>
+  <%= @lectura.piso %>
+</p>
+
+<p>
+  <strong>Dpto:</strong>
+  <%= @lectura.dpto %>
+</p>
+
+<p>
+  <strong>Datos comp:</strong>
+  <%= @lectura.datos_comp %>
+</p>
+
+<p>
+  <strong>Cp:</strong>
+  <%= @lectura.cp %>
+</p>
+
+<p>
+  <strong>Situacion:</strong>
+  <%= @lectura.situacion %>
+</p>
+
+<p>
+  <strong>Telefono:</strong>
+  <%= @lectura.telefono %>
+</p>
+
+<p>
+  <strong>Medidor tipo:</strong>
+  <%= @lectura.medidor_tipo %>
+</p>
+
+<p>
+  <strong>Medidor num:</strong>
+  <%= @lectura.medidor_num %>
+</p>
+
+<p>
+  <strong>Medidor f alta:</strong>
+  <%= @lectura.medidor_f_alta %>
+</p>
+
+<p>
+  <strong>Lectura valor:</strong>
+  <%= @lectura.lectura_valor %>
+</p>
+
+<p>
+  <strong>Lectura fh toma:</strong>
+  <%= @lectura.lectura_fh_toma %>
+</p>
+
+<p>
+  <strong>Lectura fh carga:</strong>
+  <%= @lectura.lectura_fh_carga %>
+</p>
+
+<p>
+  <strong>Lat:</strong>
+  <%= @lectura.lat %>
+</p>
+
+<p>
+  <strong>Lon:</strong>
+  <%= @lectura.lon %>
+</p>
+
+<p>
+  <strong>Incidencias:</strong>
+  <%= @lectura.incidencias %>
+</p>
+
+<%= link_to 'Edit', edit_lectura_path(@lectura) %> |
+<%= link_to 'Back', lecturas_path %>

@@ -1,0 +1,26 @@
+<h1>Unidades#index</h1>
+<p>Find me in app/views/unidades/index.html.erb</p>
+
+<table class="table table-striped">
+<tr>
+	<th>Unidad</th>
+	<th>Razon</th>
+	<th>Medidor</th>
+	<th>Lecturas</th>
+</tr>
+<%= will_paginate %>
+<% @unidades.each do |u|  %>
+	<tr <%= "onclick=show_lecturas('#{u.unidad}',this)" unless u.medidor.nil? %>>
+    	<td><%= u.unidad %></td>
+    	<td><%= u.razon %></td>
+    	<td><%= u.medidor.codigo_interno unless u.medidor.nil? %></td>
+    	<td><%= u.medidor.lecturas_hst.count unless u.medidor.nil? %></td>
+    </tr>
+<% end %>
+
+</table>
+<div id="lecturas" ></div>
+
+<%= javascript_include_tag controller_name %>
+
+

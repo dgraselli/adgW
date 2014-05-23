@@ -1,0 +1,13 @@
+<fieldset>
+<legend>Importar </legend>
+<%= form_tag({:action => "do_import" }, multipart: true) do %>
+  <%= file_field_tag :file %>
+  <%= submit_tag( "Importar" ) %>
+<% end %>
+</fieldset>
+
+<fieldset>
+<legend>Eliminar todo </legend>
+<%= button_to "Limpiar lecturas", '/main/do_clear_all', method: :post,  confirm: "Se eliminaran todas las lecturas. Esta seguro?" %>
+</fieldset>
+

@@ -1,0 +1,134 @@
+class LecturasController < ApplicationController
+  before_action :set_lectura, only: [:show, :edit, :update, :destroy, :georeferenciar]
+  before_action :set_ruta_periodo, only: [:index]
+  after_filter :customheaders
+
+  # GET /lecturas
+  # GET /lecturas.json
+  def index
+    @lecturas = Lectura.all
+    if(params[:ruta].present?)
+      @lecturas = @lecturas.where(ruta: params[:ruta])
+    end
+    if(params[:periodo].present?)
+      @lecturas = @lecturas.where(periodo: params[:periodo])
+    end
+
+    @lecturas = @lecturas.paginate(page: params[:page])
+  end
+
+  # GET /lecturas/1
+  # GET /lecturas/1.json
+  def show
+  end
+
+  # GET /lecturas/new
+  def new
+    @lectura = Lectura.new
+  end
+
+  # GET /lecturas/1/edit
+  def edit
+  end
+
+  # POST /lecturas
+  # POST /lecturas.json
+  def create
+    @lectura = Lectura.new(lectura_params)
+
+    respond_to do |format|
+      if @lectura.save
+        format.html { redirect_to @lectura, notice: 'Lectura was successfully created.' }
+        format.json { render action: 'show', status: :created, location: @lectura }
+      else
+        format.html { render action: 'new' }
+        format.json { render json: @lectura.errors, status: :unprocessable_entity }
+      end
+    end
+  end
+
+  # PATCH/PUT /lecturas/1
+  # PATCH/PUT /lecturas/1.json
+  def update
+    respond_to do |format|
+      if @lectura.update(lectura_params)
+        format.html { redirect_to @lectura, notice: 'Lectura was successfully updated.' }
+        format.json { head :no_content }
+      else
+        format.html { render action: 'edit' }
+        format.json { render json: @lectura.errors, status: :unprocessable_entity }
+      end
+    end
+  end
+
+  # DELETE /lecturas/1
+  # DELETE /lecturas/1.json
+  def destroy
+    @lectura.destroy
+    respond_to do |format|
+      format.html { redirect_to lecturas_url }
+      format.json { head :no_content }
+    end
+  end
+
+  def pendientes
+    @lecturas = Lectura.where(lectura_valor: nil)
+    if(params[:ruta].present?)
+      @lecturas = @lecturas.where(ruta: params[:ruta])
+    end
+    if(params[:periodo].present?)
+      @lecturas = @lecturas.where(periodo: params[:periodo])
+    end
+
+    @lecturas = @lecturas.paginate(page: params[:page])
+
+    render :json => @lecturas.to_json(:methods => [:usuario, :razon_social, :direccion, :rango_valido])
+    #render :json => @lecturas.to_json(only:[:id, :usuario, :direccion], :methods => [:usuario, :razon_social, :direccion, :rango_valido])
+  end
+
+  def update_lectura
+
+    @lectura = Lectura.find(params[:id])
+    @lectura.lectura_fh_carga = DateTime.now
+    @lectura.lectura_fh_toma = params[:fh]
+    @lectura.lectura_valor = params[:valor]
+    @lectura.incidencias = params[:incidencias]
+    @lectura.lectura_lon = params[:lng]
+    @lectura.lectura_lat = params[:lat]
+    @lectura.estado = 'Leida'
+    @lectura.save
+
+    render :json => {result: 'ok'}
+
+  end
+
+  def georeferenciar
+    @lectura.geocode
+    @lectura.save
+
+    render :show
+
+  end
+
+  private
+  # Use callbacks to share common setup or constraints between actions.
+  def set_lectura
+    @lectura = Lectura.find(params[:id])
+  end
+
+  # Never trust parameters from the scary internet, only allow the white list through.
+  def lectura_params
+    params.require(:lectura).permit(:usuario, :razon_social, :doc_tipo, :doc_nro, :localidad, :calle, :altura, :piso, :dpto, :datos_comp, :cp, :situacion, :telefono, :medidor_tipo, :medidor_num, :medidor_f_alta, :lectura_valor, :lectura_fh_toma, :lectura_fh_carga, :lat, :lon, :incidencias)
+  end
+
+  def set_ruta_periodo
+    @ruta = params[:ruta]
+    @periodo = params[:periodo]
+  end
+
+  def customheaders
+    response.headers["Access-Control-Allow-Origin"]="*"
+    response.headers["Access-Control-Allow-Methods"]= "PUT, GET, POST, DELETE, OPTIONS"
+    #response.headers["Access-Control-Allow-Headers"]= "*"
+  end
+end

@@ -1,0 +1,2 @@
+module LecturistasHelper
+end

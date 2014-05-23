@@ -1,0 +1,150 @@
+    <link rel="stylesheet" href="http://ol3js.org/en/master/css/ol.css" type="text/css">
+    <style>
+      .map {
+        height: 400px;
+        width: 100%;
+      }
+    </style>
+    <script src="http://ol3js.org/en/master/build/ol.js" type="text/javascript"></script>
+
+
+
+   <div id="map" class="map"></div>
+
+ <label class="checkbox" for="visible">
+                <input id="visible" type="checkbox"/>visibility
+              </label>
+
+<label>opacity</label>
+<input id="opacity" class="webgl" type="range" min="0" max="1" step="0.01"/>
+
+<div style="background-color: white; font-size: xx-small" id="popup">info</div>
+
+    <script type="text/javascript">
+
+
+var host =  'localhost';
+
+var layers = {};
+var selected_layer;
+
+layers['osm'] = new ol.layer.Tile({
+  source: new ol.source.OSM()
+});
+
+
+// layers['red_agua'] = new ol.layer.Image({
+//     source: new ol.source.ImageWMS({
+//       url: 'http://'+host+'/cgi-bin/qgis_mapserv.fcgi?map=/opt/qgisms/projects/Red_Agua_LP.qgs',
+//       params: {'LAYERS': 'laplata_ag_cond'},
+//     })
+// });
+
+
+
+function select_layer(layer)
+{
+    layers[layer].setVisible( !  layers[layer].getVisible() );
+    if(layers[layer].getVisible() )
+        $('#'+layer+'_id').addClass('active');
+    else
+        $('#'+layer+'_id').removeClass('active');
+
+    for(l in layers)
+       $('#'+l+'_id').css('font-weight', 'normal');
+         
+    $('#'+layer+'_id').css('font-weight', 'bold');
+    selected_layer = layers[layer];
+}
+
+var layers_array = [];
+for(var k in layers)
+{
+    layers_array.push(layers[k]);
+    id = k + '_id';
+    $('#panel').append('<li><button style="width: 100%; margin: 2px;" type="button" class="btn active" id="'+k+'_id" onclick="select_layer(\''+k+'\')">'+k+'</button></li>');
+}
+
+var map = new ol.Map({
+    controls: ol.control.defaults().extend([
+    new ol.control.FullScreen(),
+
+  ]),
+  layers: layers_array,
+  // The OSgeo server does not set cross origin headers, so we cannot use WebGL
+  renderer: ['canvas', 'dom'],
+  target: 'map',
+  view: new ol.View2D({
+     //projection: 'EPSG:4326',
+    center: [-34,-54],
+    //extent: extent,
+    zoom:6
+  })
+});
+
+
+var div_info = $('#popup');
+var popup = new ol.Overlay({
+  element: document.getElementById('popup')
+});
+map.addOverlay(popup);
+
+
+var visible = new ol.dom.Input(document.getElementById('visible'));
+visible.bindTo('checked', layers['osm'], 'visible');
+
+var opacity = new ol.dom.Input(document.getElementById('opacity'));
+opacity.bindTo('value', layers['osm'], 'opacity')
+    .transform(parseFloat, String);
+
+
+
+zoomslider = new ol.control.ZoomSlider();
+map.addControl(zoomslider);
+
+
+var geolocation = new ol.Geolocation();
+// take the projection to use from the map's view
+geolocation.bindTo('projection', map.getView());
+// listen to changes in position
+geolocation.on('change', function(evt) {
+  window.console.log(geolocation.getPosition());
+});
+
+map.on('singleclick', function(evt) {
+
+  var coordinate = evt.coordinate;
+  var hdms = ol.coordinate.toStringHDMS(ol.proj.transform(
+      coordinate, 'EPSG:3857', 'EPSG:4326'));
+
+  popup.setPosition(coordinate);
+
+  wmsSource = selected_layer.getSource();
+  view  = map.getView();
+
+  var url = wmsSource.getGetFeatureInfoUrl(
+      evt.coordinate, view.getResolution(), view.getProjection(),
+      {'INFO_FORMAT': 'text/html'});
+  if (url) {
+    
+    alert(url);
+    $.ajax({
+    url: url,
+    cache: false
+    })
+    .done(function( html ) {
+        alert(2);
+    $( "#popup" ).html( html );
+    }) .fail(function(e) {
+    alert( "error" +e);
+    });
+    
+  }
+
+  //div_info.css('display', 'block');
+
+});
+
+
+
+    </script>

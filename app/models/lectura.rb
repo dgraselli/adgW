@@ -1,0 +1,40 @@
+class Lectura < ActiveRecord::Base
+
+  geocoded_by :direccion, :latitude => :lat, :longitude => :lon
+  #after_validation :geocode, :if => :address_changed?
+
+  before_save :before_save
+
+  def before_save
+    estado = "Nueva" unless estado.present?
+  end
+
+  def self.periodos
+  	Lectura.pluck('distinct periodo')
+  end
+
+  def direccion
+    "#{calle} #{altura}, #{localidad}, Ar"
+  end
+
+  def address_changed?
+    calle_changed? or altura_changed? or localidad.changed?
+  end
+
+  def leida?
+    ! lectura_valor.nil?
+  end
+
+  def texto
+    "Usuario #{usuario}"
+  end
+
+  def denominacion
+    razon_social 
+  end
+
+  def rango_valido
+    [1,99]
+  end
+
+end

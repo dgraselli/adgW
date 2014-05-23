@@ -1,0 +1,105 @@
+<%= form_for(@lectura) do |f| %>
+  <% if @lectura.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@lectura.errors.count, "error") %> prohibited this lectura from being saved:</h2>
+
+      <ul>
+      <% @lectura.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :usuario %><br>
+    <%= f.number_field :usuario %>
+  </div>
+  <div class="field">
+    <%= f.label :razon_social %><br>
+    <%= f.text_field :razon_social %>
+  </div>
+  <div class="field">
+    <%= f.label :doc_tipo %><br>
+    <%= f.text_field :doc_tipo %>
+  </div>
+  <div class="field">
+    <%= f.label :doc_nro %><br>
+    <%= f.text_field :doc_nro %>
+  </div>
+  <div class="field">
+    <%= f.label :localidad %><br>
+    <%= f.text_field :localidad %>
+  </div>
+  <div class="field">
+    <%= f.label :calle %><br>
+    <%= f.text_field :calle %>
+  </div>
+  <div class="field">
+    <%= f.label :altura %><br>
+    <%= f.text_field :altura %>
+  </div>
+  <div class="field">
+    <%= f.label :piso %><br>
+    <%= f.text_field :piso %>
+  </div>
+  <div class="field">
+    <%= f.label :dpto %><br>
+    <%= f.text_field :dpto %>
+  </div>
+  <div class="field">
+    <%= f.label :datos_comp %><br>
+    <%= f.text_field :datos_comp %>
+  </div>
+  <div class="field">
+    <%= f.label :cp %><br>
+    <%= f.number_field :cp %>
+  </div>
+  <div class="field">
+    <%= f.label :situacion %><br>
+    <%= f.text_field :situacion %>
+  </div>
+  <div class="field">
+    <%= f.label :telefono %><br>
+    <%= f.text_field :telefono %>
+  </div>
+  <div class="field">
+    <%= f.label :medidor_tipo %><br>
+    <%= f.text_field :medidor_tipo %>
+  </div>
+  <div class="field">
+    <%= f.label :medidor_num %><br>
+    <%= f.text_field :medidor_num %>
+  </div>
+  <div class="field">
+    <%= f.label :medidor_f_alta %><br>
+    <%= f.date_select :medidor_f_alta %>
+  </div>
+  <div class="field">
+    <%= f.label :lectura_valor %><br>
+    <%= f.number_field :lectura_valor %>
+  </div>
+  <div class="field">
+    <%= f.label :lectura_fh_toma %><br>
+    <%= f.date_select :lectura_fh_toma %>
+  </div>
+  <div class="field">
+    <%= f.label :lectura_fh_carga %><br>
+    <%= f.date_select :lectura_fh_carga %>
+  </div>
+  <div class="field">
+    <%= f.label :lat %><br>
+    <%= f.text_field :lat %>
+  </div>
+  <div class="field">
+    <%= f.label :lon %><br>
+    <%= f.text_field :lon %>
+  </div>
+  <div class="field">
+    <%= f.label :incidencias %><br>
+    <%= f.text_field :incidencias %>
+  </div>
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>

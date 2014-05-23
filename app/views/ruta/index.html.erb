@@ -1,0 +1,32 @@
+<% provide(:title, 'Rutas') %>
+<h1>Rutas (<%= @periodo %>)</h1>
+
+
+
+<%= will_paginate @rutas %>
+
+<table>
+  <thead>
+    <tr>
+      <th>Ruta</th>
+      <th></th>
+    </tr>
+  </thead>
+
+  <tbody>
+
+    <tbody>
+	<% @rutas.each do |ruta| %>
+      <tr>
+        <td><%= link_to ruta.ruta,  "/lecturas?ruta=#{ruta.ruta}&periodo=#{params[:periodo]}" %></td>
+        <td>
+        <%=
+          estados = {"Leida" => 0, "Nueva" => 0}.merge! Lectura.where(ruta: ruta.ruta).group(:estado).count
+        %>  
+        <%= pie_chart Lectura.where(ruta: ruta.ruta).group(:estado).count , height: "250px", colors:  ['green','red', 'blue','yellow']  %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<%= will_paginate  @rutas %>

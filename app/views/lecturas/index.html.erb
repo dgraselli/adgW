@@ -1,0 +1,81 @@
+<h1>Lecturas de <%= @ruta %> - <%= @periodo %></h1>
+
+<div>
+<div class="input-group input-group">
+  <input type="text" class="form-control" placeholder="Ruta">
+  
+        <span class="input-group-btn">
+        <button class="btn btn-default" type="button">
+          <span class="glyphicon glyphicon-search"></span>
+        </button>
+      </span>
+
+</div>
+<%= select("post", "asdf", Lecturista.all, {include_blank: true}) %>
+
+</div>
+
+<fieldset>
+
+<button type="button" class="btn btn-default" onclick="$(this).next('div').slideToggle()">Ver Mapa</button>
+<% markers = @lecturas.map{|m| "markers=#{m.lat},#{m.lon}" unless m.lat.nil? }.compact.join('&') %>
+<% path = "path=color:0x0000ff|weight:2|" + @lecturas.map{|m| "#{m.lat},#{m.lon}" unless m.lat.nil? }.compact.join('|') %>
+
+<div style="float: right; display: none">
+<div>
+<%
+zoom=12
+%>
+<%= image_tag "http://maps.google.com/maps/api/staticmap?size=550x450&sensor=false&zoom=#{zoom}&#{markers}" ,{style: 'border: solid black 1px'} unless markers.blank? %>
+
+<%= image_tag "http://maps.google.com/maps/api/staticmap?size=550x450&sensor=false&zoom=#{zoom}&#{path}" ,{style: 'border: solid black 1px'} unless markers.blank? %>
+</div>
+
+</div>
+</fieldset>
+<%= will_paginate  %>
+
+<table>
+  <thead>
+    <tr>
+      <th>Ruta</th>
+      <th>Periodo</th>
+      <th>Secuencia</th>
+      <th>Usuario</th>
+      <th>Direccion</th>
+      <th>Cp</th>
+      <th>Medidor</th>
+      <th>Lectura valor</th>
+      <th>Incidencias</th>
+      <th>Estado</th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @lecturas.each do |lectura| %>
+      <tr>
+        <td><%= lectura.ruta %></td>
+        <td><%= lectura.periodo %></td>
+        <td><%= lectura.secuencia %></td>
+        <td><%= lectura.usuario %> / <%= lectura.razon_social %></td>
+        <td><%= lectura.direccion %> (<%=lectura.datos_comp%>)</td>
+        <td><%= lectura.cp %></td>
+        <td>[<%= lectura.medidor_tipo %>] <%= lectura.medidor_num %></td>
+        <td><%= lectura.lectura_valor %></td>
+        <td><%= lectura.incidencias %> </td>
+        <td><%= lectura.estado %> </td>
+        <td><%= link_to 'Show', lectura %></td>
+        <td><%= link_to 'Edit', edit_lectura_path(lectura) %></td>
+        <td><%= link_to 'Destroy', lectura, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<%= will_paginate  %>
+<br>
+
+<%= link_to 'New Lectura', new_lectura_path %>

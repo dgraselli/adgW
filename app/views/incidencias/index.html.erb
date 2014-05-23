@@ -1,0 +1,27 @@
+<h1>Listing incidencias</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Nombre</th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @incidencias.each do |incidencia| %>
+      <tr>
+        <td><%= incidencia.nombre %></td>
+        <td><%= link_to 'Show', incidencia %></td>
+        <td><%= link_to 'Edit', edit_incidencia_path(incidencia) %></td>
+        <td><%= link_to 'Destroy', incidencia, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Incidencia', new_incidencia_path %>
