@@ -20,7 +20,7 @@ gem 'delayed_job_active_record'
 gem 'daemons'
 gem 'delayed_job_web'
 gem 'activerecord-import'
-
+gem 'rack-cors'
 group :development do
   gem 'sqlite3', '1.3.8'
   gem 'rspec-rails', '2.13.1'

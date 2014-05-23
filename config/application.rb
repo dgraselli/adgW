@@ -23,6 +23,14 @@ module FirstApp
 
     config.adgM_path = '/assets/adgM.apk'
 
+
+    config.middleware.use Rack::Cors do
+      allow do
+        origins '*'
+        resource '*.json', :headers => :any, :methods => [:get, :post, :options]
+      end
+    end
+
   end
 
 
@@ -31,5 +39,6 @@ module FirstApp
       username == 'username' && password == 'password'
     end
   end
+
 
 end

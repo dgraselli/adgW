@@ -134,6 +134,7 @@ GEM
       method_source (~> 0.8)
       slop (~> 3.4)
     rack (1.5.2)
+    rack-cors (0.2.9)
     rack-protection (1.5.3)
       rack
     rack-test (0.6.2)
@@ -260,6 +261,7 @@ DEPENDENCIES
   mini_magick
   mocha
   pg (= 0.15.1)
+  rack-cors
   rails (= 4.0.4)
   rails_12factor (= 0.0.2)
   rqrcode-rails3
