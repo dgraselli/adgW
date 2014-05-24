@@ -6,7 +6,7 @@ class LecturasController < ApplicationController
   # GET /lecturas
   # GET /lecturas.json
   def index
-    
+
     @lecturas = Lectura.all
     if(params[:ruta].present?)
       @lecturas = @lecturas.where(ruta: params[:ruta])
@@ -19,16 +19,31 @@ class LecturasController < ApplicationController
   end
 
   def filtrar
-    @p = {}
-    params[:lectura].map{|a,b| b = b.select{|c| !c.blank?}; @p.merge! a => b unless  b.empty?}
 
-    @lecturas = Lectura.where( @p )
-    #@lecturas = Lectura.all
+    @lecturas = Lectura.all
+    if(params[:ruta].present?)
+      @lecturas = @lecturas.where(ruta: params[:ruta])
+    end
+    if(params[:periodo].present?)
+      @lecturas = @lecturas.where(periodo: params[:periodo])
+    end
+    if(params[:lecturista_id].present?)
+      @lecturas = @lecturas.where(lecturista_id: params[:lecturista_id])
+    end
+
+     @estado_cantidad = {:Todos => @lecturas.count}.merge @lecturas.group(:estado).count 
+
+    if(params[:estado].present? and params[:estado] != "Todos")
+      @lecturas = @lecturas.where(estado: params[:estado])
+    else
+      params[:estado] = "Todos"
+    end
 
     @lecturas = @lecturas.paginate(page: params[:page])
 
     render :index
   end
+
 
   # GET /lecturas/1
   # GET /lecturas/1.json
@@ -131,7 +146,7 @@ class LecturasController < ApplicationController
 
   # Never trust parameters from the scary internet, only allow the white list through.
   def lectura_params
-    params.require(:lectura).permit(:usuario, :razon_social, :doc_tipo, :doc_nro, :localidad, :calle, :altura, :piso, :dpto, :datos_comp, :cp, :situacion, :telefono, :medidor_tipo, :medidor_num, :medidor_f_alta, :lectura_valor, :lectura_fh_toma, :lectura_fh_carga, :lat, :lon, :incidencias)
+    params.require(:lectura).permit(:usuario, :razon_social, :doc_tipo, :doc_nro, :localidad, :calle, :altura, :piso, :dpto, :datos_comp, :cp, :situacion, :telefono, :medidor_tipo, :medidor_num, :medidor_f_alta, :lectura_valor, :lectura_fh_toma, :lectura_fh_carga, :lat, :lon, :incidencias, :ruta, :periodo, :lecturista)
   end
 
   def set_ruta_periodo

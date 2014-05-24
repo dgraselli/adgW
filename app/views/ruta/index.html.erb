@@ -5,11 +5,15 @@
 
 <%= will_paginate @rutas %>
 
-<table>
+<table class="table">
   <thead>
     <tr>
+      <th>Localidad</th>
       <th>Ruta</th>
-      <th></th>
+      <th>Estado</th>
+      <th>Grafico</th>
+      <th>Lecturista</th>
+      <th>Lecturas</th>
     </tr>
   </thead>
 
@@ -18,15 +22,42 @@
     <tbody>
 	<% @rutas.each do |ruta| %>
       <tr>
-        <td><%= link_to ruta.ruta,  "/lecturas?ruta=#{ruta.ruta}&periodo=#{params[:periodo]}" %></td>
+        <td><%= ruta.localidad %></td>
+        <td><%= ruta.ruta %></td>
         <td>
-        <%=
+
+        <%
           estados = {"Leida" => 0, "Nueva" => 0}.merge! Lectura.where(ruta: ruta.ruta).group(:estado).count
         %>  
-        <%= pie_chart Lectura.where(ruta: ruta.ruta).group(:estado).count , height: "250px", colors:  ['green','red', 'blue','yellow']  %></td>
+        <% estados.each do |est, cant| %>
+          <div><span class="label label-<%= if est == "Leida"; "success"; else "default"; end %>"><%=est %>: <%=cant%>  </span></div>
+        <% end %>        
+        </td>
+        <td width="400">
+        <%= column_chart estados , height: "100px", colors:  ['green','red', 'yellow']  %>
+        </td>          
+        <td>
+        <%
+          lecturistas = Lectura.joins(:lecturista).where(ruta: ruta.ruta, periodo: params[:periodo]).group(:lecturista).count
+        %> 
+
+        <%= lecturistas.map{|a,b| a[:nombre]}.first %>
+
+        <%= form_tag action: "asignar"  %>
+          <%= hidden_field_tag 'ruta' , ruta.ruta %>
+          <%= hidden_field_tag 'periodo' ,  @periodo %>
+
+          <%= select_tag :lecturista,  options_for_select(Lecturista.all.map { |u| [u.nombre, u.id] }), { onchange: "if(confirm('Esta seguro que desea asignar esta ruta ?')) { $(this).parent('form').submit(); }", :include_blank => '-' } %>
+
+        </form>
+        </td>
+        </td>
+        <td><%= button_to "Ver Lecturas", "/lecturas/filtrar?ruta=#{ruta.ruta}&periodo=#{params[:periodo]}", {class: "btn btn-default"} %></td>
       </tr>
     <% end %>
   </tbody>
 </table>
 
 <%= will_paginate  @rutas %>
+
+

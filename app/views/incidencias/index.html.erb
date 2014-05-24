@@ -4,6 +4,11 @@
   <thead>
     <tr>
       <th>Nombre</th>
+      <th>Requiere lectura</th>
+      <th>Dato requerido</th>
+      <th>Dato rexp</th>
+      <th>Incidencias incompatibles</th>
+      <th>Tipo</th>
       <th></th>
       <th></th>
       <th></th>
@@ -14,6 +19,11 @@
     <% @incidencias.each do |incidencia| %>
       <tr>
         <td><%= incidencia.nombre %></td>
+        <td><%= incidencia.requiere_lectura %></td>
+        <td><%= incidencia.dato_requerido %></td>
+        <td><%= incidencia.dato_rexp %></td>
+        <td><%= incidencia.incidencias_incompatibles %></td>
+        <td><%= incidencia.tipo %></td>
         <td><%= link_to 'Show', incidencia %></td>
         <td><%= link_to 'Edit', edit_incidencia_path(incidencia) %></td>
         <td><%= link_to 'Destroy', incidencia, method: :delete, data: { confirm: 'Are you sure?' } %></td>

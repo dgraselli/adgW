@@ -1,16 +1,17 @@
 class Lectura < ActiveRecord::Base
-
+  belongs_to :lecturista
   geocoded_by :direccion, :latitude => :lat, :longitude => :lon
   #after_validation :geocode, :if => :address_changed?
 
-  before_save :before_save
+  after_initialize :default_values
 
-  def before_save
-    estado = "Nueva" unless estado.present?
-  end
-
+  
   def self.periodos
     Lectura.pluck('distinct periodo')
+  end
+
+  def self.periodos_pendientes
+    Lectura.where(lectura_valor: nil ).pluck('distinct periodo')
   end
   
   def self.rutas
@@ -41,5 +42,10 @@ class Lectura < ActiveRecord::Base
   def rango_valido
     [1,99]
   end
+
+private
+    def default_values
+      estado ||= "Nueva"
+    end
 
 end

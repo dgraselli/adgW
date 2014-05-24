@@ -69,6 +69,6 @@ class IncidenciasController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def incidencia_params
-      params.require(:incidencia).permit(:nombre)
+      params.require(:incidencia).permit(:nombre, :requiere_lectura, :dato_requerido, :dato_rexp, :incidencias_incompatibles, :tipo)
     end
 end

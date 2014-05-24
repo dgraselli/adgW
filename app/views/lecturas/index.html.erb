@@ -1,48 +1,31 @@
-<h1>Lecturas de <%= @ruta %> - <%= @periodo %></h1>
-
-<div>
-<div class="input-group input-group">
-  <input type="text" class="form-control" placeholder="Ruta">
-  
-        <span class="input-group-btn">
-        <button class="btn btn-default" type="button">
-          <span class="glyphicon glyphicon-search"></span>
-        </button>
-      </span>
-
-      <span class="input-group-btn">
-  
-    </span>
-
-</div>
-<br>
-<div>
+<h1>Lecturas</h1>
+<fieldset>
 <%= form_tag action: :filtrar %>
     
     <%= label_tag "Lecturistas" %>
-    <%= select_tag 'lectura[lecturista]', options_for_select(Lecturista.all.map { |u| [u.nombre, u.id] }), 
-        { class: 'chosen-select', "multiple" => :multiple, "data-placeholder" => "...", style: "width: 200px" }
+    <%= chosen_multiple_tag 'lecturista_id[]', options_for_select(Lecturista.all.map { |u| [u.nombre, u.id] } , params[:lecturista_id]), 
+        { "data-placeholder" => "...", style: "width: 200px" }
     %>
 
+    
     <%= label_tag "Periodos" %>
-    <%= select_tag 'lectura[periodo]', options_for_select(Lectura.periodos.map { |u| [u, u] }), 
-        { class: 'chosen-select', "multiple" => :multiple, "data-placeholder" => "...", style: "width: 200px" }
+    <%= chosen_multiple_tag 'periodo[]', options_for_select(Lectura.periodos.map { |u| [u, u] }, params[:periodo]), 
+        {"data-placeholder" => "...", style: "width: 200px" }
     %>
-
+    
     <%= label_tag "Rutas" %>
-    <%= select_tag 'lectura[ruta]', options_for_select(Lectura.rutas.map { |u| [u,u] }), 
-        { class: 'chosen-select', "multiple" => :multiple, "data-placeholder" => "...", style: "width: 200px" }
+    <%= chosen_multiple_tag 'ruta[]', options_for_select(Lectura.rutas.map { |u| [u,u] }, params[:ruta]), 
+        {"data-placeholder" => "...", style: "width: 200px" } 
     %>
 
-    <%= submit_tag "Filtar", {class: "btn btn-default "} %>
-</form>
-</div>
-</div>
+    <%= hidden_field_tag 'estado' , params[:estado], {id: 'h_estado'}%>
 
+    <%= submit_tag "Filtrar", {id: 'submit_btn', class: "btn btn-primary "} %>
+</form>
+</fieldset>
 
 <fieldset>
-
-<button type="button" class="btn btn-default" onclick="$(this).next('div').slideToggle()">Ver Mapa</button>
+<legend onclick="$(this).next('div').slideToggle()">Mapa</legend>
 <% markers = @lecturas.map{|m| "markers=#{m.lat},#{m.lon}" unless m.lat.nil? }.compact.join('&') %>
 <% markers_real = @lecturas.map{|m| "markers=icon:http://tinyurl.com/2ftvtt6|#{m.lectura_lat},#{m.lectura_lon}" unless m.lat.nil? }.compact.join('&') %>
 
@@ -61,8 +44,24 @@ zoom=12
 
 </div>
 </fieldset>
-<%= will_paginate  %>
 
+
+<div class="row">
+<div class="col-md-2" style="padding-top: 140px">
+<ul class="nav nav-pills nav-stacked">
+<% @estado_cantidad.each do |est,cant| %>
+  <% if  params[:estado].to_s == est.to_s %>
+    <li class="active" >
+  <% else %>
+    <li  >
+  <% end %>
+    <a href="#" onclick="$('#h_estado').val('<%=est%>'); $('#submit_btn').click()" ><span class="badge pull-right"><%=cant%></span><%= est.to_s  %>&nbsp;</a>
+  </li>
+<% end %>
+</ul>
+</div>
+<div class="col-md-10">
+<%= will_paginate  %>
 <table>
   <thead>
     <tr>
@@ -94,18 +93,18 @@ zoom=12
         <td>[<%= lectura.medidor_tipo %>] <%= lectura.medidor_num %></td>
         <td><%= lectura.lectura_valor %></td>
         <td><%= lectura.incidencias %> </td>
-        <td><%= lectura.estado.to_s + "-" + lectura.lectura_lat.to_s %> </td>
+        <td><%= lectura.estado.to_s %> </td>
         <td><%= link_to 'Show', lectura %></td>
         <td><%= link_to 'Edit', edit_lectura_path(lectura) %></td>
-        <td><%= link_to 'Destroy', lectura, method: :delete, data: { confirm: 'Are you sure?' } %></td>
       </tr>
     <% end %>
   </tbody>
 </table>
-
 <%= will_paginate  %>
+</div>
+</div>
+
 <br>
 
-<%= link_to 'New Lectura', new_lectura_path %>
 
-<% javascript_include_tag 'admin/layout', 'admin/extras', :cache => 'admin' %>
+<% javascript_include_tag 'scaffold' %>

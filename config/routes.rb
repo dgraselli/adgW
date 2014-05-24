@@ -11,11 +11,14 @@ FirstApp::Application.routes.draw do
   post '/main/do_clear_all'
   get  '/lecturas/pendientes'
   get  '/update_lectura', to: 'lecturas#update_lectura'
+  post  '/update_lectura', to: 'lecturas#update_lectura'
+
   post '/lecturas/update_lectura'
-  post '/lecturas/filtrar'
+  match '/lecturas/filtrar', to: 'lecturas#filtrar', via: [:get, :post]
   match '/lecturas/:id/georeferenciar', to: 'lecturas#georeferenciar', via: 'post' 
   get  'ruta/index'
   get  'ruta/periodos'
+  post 'ruta/asignar'
   resources :lecturas
   resources :lecturistas
 

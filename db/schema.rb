@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140522205553) do
+ActiveRecord::Schema.define(version: 20140524034035) do
 
   create_table "cities", force: true do |t|
     t.string   "nombre"
@@ -45,6 +45,11 @@ ActiveRecord::Schema.define(version: 20140522205553) do
 
   create_table "incidencias", force: true do |t|
     t.string   "nombre"
+    t.boolean  "requiere_lectura"
+    t.string   "dato_requerido"
+    t.string   "dato_rexp"
+    t.string   "incidencias_incompatibles"
+    t.string   "tipo"
     t.datetime "created_at"
     t.datetime "updated_at"
   end

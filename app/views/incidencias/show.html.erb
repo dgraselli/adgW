@@ -5,5 +5,30 @@
   <%= @incidencia.nombre %>
 </p>
 
+<p>
+  <strong>Requiere lectura:</strong>
+  <%= @incidencia.requiere_lectura %>
+</p>
+
+<p>
+  <strong>Dato requerido:</strong>
+  <%= @incidencia.dato_requerido %>
+</p>
+
+<p>
+  <strong>Dato rexp:</strong>
+  <%= @incidencia.dato_rexp %>
+</p>
+
+<p>
+  <strong>Incidencias incompatibles:</strong>
+  <%= @incidencia.incidencias_incompatibles %>
+</p>
+
+<p>
+  <strong>Tipo:</strong>
+  <%= @incidencia.tipo %>
+</p>
+
 <%= link_to 'Edit', edit_incidencia_path(@incidencia) %> |
 <%= link_to 'Back', incidencias_path %>

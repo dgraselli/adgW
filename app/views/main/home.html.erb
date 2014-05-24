@@ -1,21 +1,25 @@
 <% provide(:title, 'Rutas') %>
 
-<table>
-  <thead>
-    <tr>
-      <th>Ruta</th>
-      <th></th>
-    </tr>
-  </thead>
 
-  <tbody>
+<div class="container-fluid">
 
-    <tbody>
-      <% Lectura.periodos.each do |p| %>
-      <tr>
-        <td><%= link_to p,  "/ruta/index?periodo=#{p}" %></td>
-        <td><%= pie_chart Lectura.where(periodo: p).group(:estado).count , height: "140px", colors:  ['green','red', 'blue','yellow']  %></td>
-      </tr>
-    <% end %>
-  </tbody>
-</table>
+<% Lectura.periodos_pendientes.each do |p| %>
+
+  <div class="col-sm-6 col-md-4">
+  <a href="/ruta/index?periodo=<%=p%>"> 
+  <div class="thumbnail">
+    <h3 class="text-center"><%= p %></h3>
+
+    <%
+      estados = {"Leida" => 0, "Nueva" => 0}.merge! Lectura.where(periodo: p).group(:estado).count
+    %>  
+    <%= column_chart estados , height: "250px", colors:  ['green','red', 'yellow']  %>
+    <%= estados %>        
+
+  </div>
+  </a>
+  </div>
+
+<% end %>
+
+</div>

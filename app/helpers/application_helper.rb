@@ -11,4 +11,14 @@ module ApplicationHelper
     end
   end
   
+
+  def chosen_tag (name, options, html_options)
+  	select_tag name, options, {class: 'chosen-select'}.merge(html_options)
+  end
+
+
+  def chosen_multiple_tag (name, options, html_options)
+  	select_tag name, options, {class: 'chosen-select', style: 'height: 80px', "multiple" => :multiple}.merge(html_options)
+  end
+
 end

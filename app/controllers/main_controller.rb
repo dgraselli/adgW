@@ -74,7 +74,7 @@ class MainController < ApplicationController
     myfile = params[:file]
 
     lines = CSV.read(myfile.path, col_sep: "\t")
-    @columns = lines[0].compact.reject(&:blank?)
+    @columns = lines[0].compact.reject(&:blank?) << "estado"
 
     #check column_names
     invalid_cols = @columns.select{|a|  ! Lectura.column_names.include? a}
@@ -82,7 +82,7 @@ class MainController < ApplicationController
       fail "Columnas invalidas:" + invalid_cols.join(",")
     end
 
-    @values = lines[1..lines.count-1]
+    @values = lines[1..lines.count-1].map{|line| line << "Nueva"} 
 
 
     Lectura.import( @columns, @values) #, validate: false
