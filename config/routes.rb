@@ -11,8 +11,8 @@ FirstApp::Application.routes.draw do
   post '/main/do_import'
   post '/main/do_clear_all'
   get  '/lecturas/pendientes'
-  get  '/update_lectura', to: 'lecturas#update_lectura'
   post  '/update_lectura', to: 'lecturas#update_lectura'
+  post  '/update_foto', to: 'lecturas#update_foto'
   get  'main/test_update_lectura'
 
   post '/lecturas/update_lectura'

@@ -127,6 +127,17 @@ class LecturasController < ApplicationController
     @lectura.estado = 'Leida'
     @lectura.save
 
+    render :json => {result: 'ok'}
+
+  end
+
+  def update_foto
+
+    @lectura = Lectura.find(params[:id])
+    fh = params[:fh]
+    lon = params[:lng]
+    lat = params[:lat]
+
     if(params[:file])
       @foto = Foto.new do |t|
         t.lectura_id = @lectura.id
