@@ -2,6 +2,7 @@ class LecturasController < ApplicationController
   before_action :set_lectura, only: [:show, :edit, :update, :destroy, :georeferenciar]
   before_action :set_ruta_periodo, only: [:index]
   after_filter :customheaders
+  protect_from_forgery :except => [:update_lectura_]
 
   # GET /lecturas
   # GET /lecturas.json
