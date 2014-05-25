@@ -9,6 +9,7 @@
   </div>
   <% end %>
 
+
   <% @lectura.fotos.each do |foto| %>
     <%= render partial: 'foto', locals: {foto: foto} %>
   <% end%>
@@ -121,6 +122,17 @@
   <strong>Lon:</strong>
   <%= @lectura.lon %>
 </p>
+
+<p>
+  <strong>Lat:</strong>
+  <%= @lectura.lectura_lat %>
+</p>
+
+<p>
+  <strong>Lon:</strong>
+  <%= @lectura.lectura_lon %>
+</p>
+
 
 <p>
   <strong>Incidencias:</strong>
