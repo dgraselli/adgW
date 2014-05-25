@@ -3,3 +3,5 @@ Chartkick.options = {
   colors: ["pink", "#999"],
   //content_for: :charts_js
 }
+
+

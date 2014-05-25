@@ -19,5 +19,6 @@
 //= require typeahead.bundle
 //= require chosen.jquery
 //= require scaffold
-
+//= require easing
+//= require smoothzoom
 
