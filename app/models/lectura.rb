@@ -1,5 +1,7 @@
 class Lectura < ActiveRecord::Base
   belongs_to :lecturista
+  has_many :fotos
+  
   geocoded_by :direccion, :latitude => :lat, :longitude => :lon
   #after_validation :geocode, :if => :address_changed?
 

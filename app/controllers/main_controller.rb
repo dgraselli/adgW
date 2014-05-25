@@ -106,5 +106,13 @@ class MainController < ApplicationController
     redirect_to action: :index
   end
 
+  def foto
+    @image = Foto.find(params[:id])
+    send_data @image.foto, :type => 'image/png', :disposition => 'inline'
+  end
+
+  def test_update_lectura
+
+  end
 
 end

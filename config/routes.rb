@@ -5,13 +5,15 @@ FirstApp::Application.routes.draw do
   resources :incidencias
 
   root 'main#home'
-  get '/main/columns'
+  get  '/main/columns'
   get  '/main/import'
+  get  '/main/foto'
   post '/main/do_import'
   post '/main/do_clear_all'
   get  '/lecturas/pendientes'
   get  '/update_lectura', to: 'lecturas#update_lectura'
   post  '/update_lectura', to: 'lecturas#update_lectura'
+  get  'main/test_update_lectura'
 
   post '/lecturas/update_lectura'
   match '/lecturas/filtrar', to: 'lecturas#filtrar', via: [:get, :post]

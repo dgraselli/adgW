@@ -1,0 +1,8 @@
+<%= form_tag '/update_lectura', multipart: true %>
+	<%= text_field_tag 'id', Lectura.first.id %>
+	<%= text_field_tag 'valor', 'valor' %>
+	<%= file_field_tag 'file' %>
+	
+	<%= submit_tag 'ok' %>
+
+</form>

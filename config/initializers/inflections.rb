@@ -19,5 +19,6 @@ ActiveSupport::Inflector.inflections do |inflect|
   inflect.irregular 'ruta', 'rutas'
   inflect.irregular 'lecturista', 'lecturistas'
   inflect.irregular 'incidencia', 'incidencias'
+  inflect.irregular 'foto', 'fotos'
 
 end

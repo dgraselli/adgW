@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140524034035) do
+ActiveRecord::Schema.define(version: 20140525085748) do
 
   create_table "cities", force: true do |t|
     t.string   "nombre"
@@ -36,6 +36,18 @@ ActiveRecord::Schema.define(version: 20140524034035) do
   end
 
   add_index "delayed_jobs", ["priority", "run_at"], name: "delayed_jobs_priority"
+
+  create_table "fotos", force: true do |t|
+    t.string   "usuario_id"
+    t.string   "lectura_id"
+    t.binary   "foto"
+    t.string   "obs"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.string   "filename"
+    t.string   "mime_type"
+    t.string   "name"
+  end
 
   create_table "incidencia", force: true do |t|
     t.string   "nombre"

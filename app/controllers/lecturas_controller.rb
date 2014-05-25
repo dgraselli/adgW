@@ -127,6 +127,20 @@ class LecturasController < ApplicationController
     @lectura.estado = 'Leida'
     @lectura.save
 
+    if(params[:file])
+      @foto = Foto.new do |t|
+        t.lectura_id = @lectura.id
+        t.usuario_id = @lectura.usuario
+        t.foto = params[:file].read
+        t.filename = params[:file].original_filename
+        t.name = params[:file].original_filename
+        t.obs = "test"
+        t.mime_type = params[:file].content_type
+      end
+      @foto.save
+    end
+
+
     render :json => {result: 'ok'}
 
   end

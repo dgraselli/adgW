@@ -1,13 +1,17 @@
 <div style="float: right">
-<% if  ! @lectura.lat.nil? %>
-<%= image_tag "http://maps.google.com/maps/api/staticmap?size=350x350&sensor=false&zoom=16&markers=#{@lectura.lat}%2C#{@lectura.lon}" ,{style: 'border: solid black 1px'} %>
+  <% if  ! @lectura.lat.nil? %>
+  <%= image_tag "http://maps.google.com/maps/api/staticmap?size=350x350&sensor=false&zoom=16&markers=#{@lectura.lat}%2C#{@lectura.lon}" ,{style: 'border: solid black 1px'} %>
 
-<%= image_tag "http://maps.googleapis.com/maps/api/streetview?size=350x350&location=40.720032,%20-73.988354&fov=90&heading=235&pitch=10&sensor=false" ,{style: 'border: solid black 1px'} %>
-<% else %>
-<div >
-  Medidor sin georeferenciar <%= button_to "Geo-referenciar", "/lecturas/#{@lectura.id}/georeferenciar" %>
-</div>
-<% end %>
+  <%= image_tag "http://maps.googleapis.com/maps/api/streetview?size=350x350&location=40.720032,%20-73.988354&fov=90&heading=235&pitch=10&sensor=false" ,{style: 'border: solid black 1px'} %>
+  <% else %>
+  <div >
+    Medidor sin georeferenciar <%= button_to "Geo-referenciar", "/lecturas/#{@lectura.id}/georeferenciar" %>
+  </div>
+  <% end %>
+
+  <% @lectura.fotos.each do |foto| %>
+    <%= render partial: 'foto', locals: {foto: foto} %>
+  <% end%>
 </div>
 
 
