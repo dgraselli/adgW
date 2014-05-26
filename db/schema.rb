@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140525085748) do
+ActiveRecord::Schema.define(version: 20140526144329) do
 
   create_table "cities", force: true do |t|
     t.string   "nombre"
@@ -98,6 +98,7 @@ ActiveRecord::Schema.define(version: 20140525085748) do
     t.integer  "secuencia"
     t.float    "lectura_lat"
     t.float    "lectura_lon"
+    t.float    "adeudado"
   end
 
   add_index "lecturas", ["lecturista_id"], name: "index_lecturas_on_lecturista_id"

@@ -46,14 +46,20 @@ class Lectura < ActiveRecord::Base
   end
 
   def deuda
-    {monto: 33,
-      planes: 
-      [
-        {id: 33, desc: "Ant. $ 100 + 3 cuotas de $150"},
-        {id: 33, desc: "Ant. $ 100 + 3 cuotas de $150"},
-        {id: 33, desc: "Ant. $ 100 + 3 cuotas de $150"}
-      ],
+    if ! adeudado 
+      return
+    end
 
+    planes = []
+    planes << {id: id*100, desc: "1 pago de $#{adeudado}"}
+    [3,12].each{|cant_cuotas|
+       anticipo = (adeudado * 0.3).round
+       valor_cuota = (adeudado - anticipo) / cant_cuotas
+       planes << {id: id*100+cant_cuotas,desc: "Ant. #{'$%.2f' % anticipo} y #{cant_cuotas} cuotas de #{'$%.2f' % valor_cuota}"}
+    }
+
+    {monto: adeudado,
+      planes: planes
     }
   end
 

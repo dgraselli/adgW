@@ -15,10 +15,16 @@ namespace :db do
     Lectura.delete_all
   end
 
+  desc "Carga valores adeudados aleatorios entre 250 y 3500"
+  task set_random_adeudado: :environment do
+    #ActiveRecord::Base.logger = Logger.new(STDOUT)
+
+    #Lectura.where(:adeudado =>   nil).each{|a| a.adeudado = rand(250.00-3250.99) + rand(0.00+0.99).round(2) ; a.save; puts a.adeudado.to_s + "    -"}
+    Lectura.all.each{|a| a.adeudado = rand(250.00-3250.99) + rand(0.00+0.99).round(2) ; a.save; puts a.adeudado.to_s + "    -"}
+  end
+
 
 end
-
-
 
 def make_users
   admin = User.create!(name:     "Example User",
