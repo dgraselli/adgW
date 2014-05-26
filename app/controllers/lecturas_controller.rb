@@ -111,8 +111,9 @@ class LecturasController < ApplicationController
 
     @lecturas = @lecturas.paginate(page: params[:page])
 
-    render :json => @lecturas.to_json(:methods => [:usuario, :razon_social, :direccion, :rango_valido])
+    render :json => @lecturas.to_json(:methods => [:usuario, :razon_social, :direccion, :rango_valido, :deuda])
     #render :json => @lecturas.to_json(only:[:id, :usuario, :direccion], :methods => [:usuario, :razon_social, :direccion, :rango_valido])
+
   end
 
   def update_lectura

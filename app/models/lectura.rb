@@ -45,6 +45,18 @@ class Lectura < ActiveRecord::Base
     [1,99]
   end
 
+  def deuda
+    {monto: 33,
+      planes: 
+      [
+        {id: 33, desc: "Ant. $ 100 + 3 cuotas de $150"},
+        {id: 33, desc: "Ant. $ 100 + 3 cuotas de $150"},
+        {id: 33, desc: "Ant. $ 100 + 3 cuotas de $150"}
+      ],
+
+    }
+  end
+
 private
     def default_values
       estado ||= "Nueva"
