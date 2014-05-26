@@ -23,6 +23,7 @@ class RutaController < ApplicationController
 
 	end
 
+
 	private
 
 	def set_periodo
