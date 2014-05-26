@@ -4,11 +4,11 @@ class RutaController < ApplicationController
 
 
 	def periodos
-		@rutas = Lectura.select('ruta').group(:ruta).count.paginate(page: params[:page])
+		@rutas = Lectura.group(:periodo).count.paginate(page: params[:page])
 	end
 
 	def index
-		@rutas = Lectura.where(periodo: @periodo).group(:ruta).paginate(page: params[:page])
+		@rutas = Lectura.select(:ruta).where(periodo: @periodo).group(:ruta).paginate(page: params[:page])
 	end
 
 	def asignar
