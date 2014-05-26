@@ -4,7 +4,7 @@ class RutaController < ApplicationController
 
 
 	def periodos
-		@rutas = Lectura.group(:ruta).count.paginate(page: params[:page])
+		@rutas = Lectura.select('ruta').group(:ruta).count.paginate(page: params[:page])
 	end
 
 	def index
