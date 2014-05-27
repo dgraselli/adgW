@@ -24,8 +24,6 @@
             <li><%= link_to "Incidencias", incidencias_path %></a></li>
             <li class="divider"></li>
             <li><%= link_to "Lecturas pendientes json", "/lecturas/pendientes.json" %></a></li>
-            <li class="divider"></li>
-            <li><%= link_to "Subir archivo", "/upload" %></a></li>
           </ul>
         </li>
       </ul>
@@ -58,10 +56,12 @@
           <a href="#" class="dropdown-toggle" data-toggle="dropdown">Descargar Aplicacion Movil <b class="caret"></b></a>
           <ul class="dropdown-menu">
             <li><a href="#" data-toggle="modal" data-target="#appAndroid">Android</a></li>
-            <li><a href="#">Another action</a></li>
-            <li><a href="#">Something else here</a></li>
+            <li><a href="#">BlackBerry</a></li>
+            <li><a href="#">Iphone</a></li>
+            <li><a href="#">Windows Mobile</a></li>
+            <li><a href="#">Ubuntu</a></li>
             <li class="divider"></li>
-            <li><a href="#">Separated link</a></li>
+            <li><%= link_to "Subir archivo", "/upload" %></a></li>
           </ul>
         </li>
       </ul>

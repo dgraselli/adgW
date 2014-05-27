@@ -1,3 +1,5 @@
   <% if  @lectura.lat.present? or @lectura.lectura_lat.present? %>
   <%= image_tag "http://maps.google.com/maps/api/staticmap?size=350x350&sensor=false&zoom=16&markers=#{@lectura.lat}%2C#{@lectura.lon}|#{@lectura.lectura_lat}%2C#{@lectura.lectura_lon}" ,{style: 'border: solid black 1px'} %>
-
+  <% else %>
+Sin georeferenciar
+  <% end %>
