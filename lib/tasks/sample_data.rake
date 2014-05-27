@@ -1,4 +1,4 @@
-namespace :db do
+namespace :chaca do
   desc "Fill database with sample data"
   task populate: :environment do
     #make_rutas
@@ -21,6 +21,14 @@ namespace :db do
 
     #Lectura.where(:adeudado =>   nil).each{|a| a.adeudado = rand(250.00-3250.99) + rand(0.00+0.99).round(2) ; a.save; puts a.adeudado.to_s + "    -"}
     Lectura.all.each{|a| a.adeudado = rand(250.00-3250.99) + rand(0.00+0.99).round(2) ; a.save; puts a.adeudado.to_s + "    -"}
+  end
+
+  desc "Geocodificar ausentes por direccion"
+  task geocodificar_faltante: :environment do
+    #ActiveRecord::Base.logger = Logger.new(STDOUT)
+
+    #Lectura.where(:adeudado =>   nil).each{|a| a.adeudado = rand(250.00-3250.99) + rand(0.00+0.99).round(2) ; a.save; puts a.adeudado.to_s + "    -"}
+    Lectura.where(:lat => nil).each{|a| a.geocode; a.save; puts "#{a.usuario} (#{a.direccion}) : #{a.latlon}"}
   end
 
 

@@ -14,7 +14,6 @@
       estados = {"Leida" => 0, "Nueva" => 0}.merge! Lectura.where(periodo: p).group(:estado).count
     %>  
     <%= column_chart estados , height: "250px", colors:  ['green','red', 'yellow']  %>
-    <%= estados %>        
 
   </div>
   </a>

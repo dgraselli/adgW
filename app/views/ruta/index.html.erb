@@ -25,7 +25,7 @@
         <td>
 
         <%
-          estados = {"Leida" => 0, "Nueva" => 0}.merge! Lectura.where(ruta: ruta.ruta).group(:estado).count
+          estados = {"Leida" => 0, "Nueva" => 0}.merge! Lectura.where(ruta: ruta.ruta, periodo: @periodo).group(:estado).count
         %>  
         <% estados.each do |est, cant| %>
           <div><span class="label label-<%= if est == "Leida"; "success"; else "default"; end %>"><%=est %>: <%=cant%>  </span></div>

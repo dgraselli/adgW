@@ -7,6 +7,7 @@ module SessionsHelper
     cookies.permanent[:remember_token] = remember_token
     user.update_attribute(:remember_token, User.hash(remember_token))
     self.current_user = user
+    remember_token
   end
 
   def signed_in?
@@ -25,7 +26,9 @@ module SessionsHelper
   end
 
   def current_user
-    remember_token = User.hash(cookies[:remember_token])
+    token = cookies[:remember_token] || params[:remember_token]  
+
+    remember_token = User.hash( token )
     @current_user ||= User.find_by(remember_token: remember_token)
   end
 

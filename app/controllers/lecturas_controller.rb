@@ -1,4 +1,7 @@
 class LecturasController < ApplicationController
+    include SessionsHelper
+    before_filter :signed_in_user
+
   before_action :set_lectura, only: [:show, :edit, :update, :destroy, :georeferenciar, :visualizar]
   before_action :set_ruta_periodo, only: [:index]
   after_filter :customheaders
@@ -40,9 +43,36 @@ class LecturasController < ApplicationController
       params[:estado] = "Todos"
     end
 
-    @lecturas = @lecturas.paginate(page: params[:page])
+    
 
-    render :index
+    respond_to do |format|
+      format.html do 
+        @lecturas = @lecturas.paginate(page: params[:page])
+        render :index 
+      end
+      format.csv do 
+        columns = @lecturas.column_names
+        csv = CSV.generate() do |csv|
+          csv << columns
+          @lecturas.each do |a|
+            csv << a.attributes.values_at(*columns)
+          end
+        end
+
+        send_data csv 
+      end
+      format.xls do
+        columns = @lecturas.column_names
+        csv = CSV.generate(col_sep: "\t") do |csv|
+          csv << columns
+          @lecturas.each do |a|
+            csv << a.attributes.values_at(*columns)
+          end
+        end
+
+        send_data csv
+      end
+    end
   end
 
 
@@ -101,7 +131,13 @@ class LecturasController < ApplicationController
   end
 
   def pendientes
+
     @lecturas = Lectura.where(lectura_valor: nil)
+
+    if(params[:lecturista].present?)
+      @lecturas = @lecturas.where(lecturista_id: Lecturista.find_by_nombre(params[:lecturista].downcase) )
+    end
+
     if(params[:ruta].present?)
       @lecturas = @lecturas.where(ruta: params[:ruta])
     end

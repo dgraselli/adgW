@@ -1,6 +1,6 @@
 class MainController < ApplicationController 
   include SessionsHelper
-
+  before_filter :signed_in_user
 
   def home
 
@@ -35,26 +35,6 @@ class MainController < ApplicationController
   def load_suggestions
     @suggestions = Ruta.select(:nombre)
     render json: @suggestions
-  end
-
-  def lecturas
-    @lecturas = LecturaHst.select("*").joins(:medidor => :unidad)
-    #@lecturas = Medidor.select("*").joins( :unidad).limit(100)
-
-    columns = @lecturas.column_names + Medidor.column_names + Unidad.column_names
-    csv = CSV.generate() do |csv|
-      csv << columns
-      @lecturas.each do |a|
-        csv << a.attributes.values_at(*columns)
-      end
-    end
-
-    respond_to do |format|
-      format.html
-      format.csv { send_data csv }
-      format.xls { send_data @lecturas.to_a.to_csv(col_sep: "\t") }
-    end
-
   end
 
   def columns

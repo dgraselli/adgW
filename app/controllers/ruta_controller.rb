@@ -1,14 +1,15 @@
 class RutaController < ApplicationController
-	  before_action :set_periodo, only: [:index]
-	  before_action :set_periodo_y_ruta, only: [:asingar]
+    include SessionsHelper
+    before_filter :signed_in_user
 
+	  before_action :set_periodo, only: [:index]
 
 	def periodos
-		@rutas = Lectura.group(:periodo).count.paginate(page: params[:page])
+		@rutas = Lectura.group(:periodo).count.reverse_order(:periodo).paginate(page: params[:page])
 	end
 
 	def index
-		@rutas = Lectura.select(:ruta).where(periodo: @periodo).group(:ruta).paginate(page: params[:page])
+		@rutas = Lectura.select(:ruta).where(periodo: @periodo).group(:ruta).order(:ruta).paginate(page: params[:page])
 	end
 
 	def asignar

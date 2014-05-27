@@ -4,20 +4,21 @@ class Lectura < ActiveRecord::Base
   
   geocoded_by :direccion, :latitude => :lat, :longitude => :lon
   #after_validation :geocode, :if => :address_changed?
+  #after_validation :geocode, if: ->(obj){ ! obj.lat.present? and obj.direccion.present? and obj.address_changed? }
 
   after_initialize :default_values
 
   
   def self.periodos
-    Lectura.pluck('distinct periodo')
+    Lectura.order(:periodo).pluck('distinct periodo')
   end
 
   def self.periodos_pendientes
-    Lectura.where(lectura_valor: nil ).pluck('distinct periodo')
+    Lectura.where(lectura_valor: nil ).order(:periodo).pluck('distinct periodo')
   end
   
   def self.rutas
-    Lectura.pluck('distinct ruta')
+    Lectura.order(:periodo).pluck('distinct ruta')
   end
   
 
@@ -43,6 +44,10 @@ class Lectura < ActiveRecord::Base
 
   def rango_valido
     [1,99]
+  end
+
+  def latlon
+    "#{lat},#{lon}  (#{lectura_lat},#{lectura_lon})"
   end
 
   def deuda

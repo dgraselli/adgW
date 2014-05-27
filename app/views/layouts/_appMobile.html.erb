@@ -8,20 +8,13 @@
         <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
         <h4 class="modal-title" id="myModalLabel">Android</h4>
       </div>
-      <div class="modal-body">
+      <div class="modal-body text-center">
       
-      <table>
-      <tr>
-      <td align="center">
         <%= image_tag "/qcode.svg" %>
-      </td>
-      <td align="center">
-        <%= button_to 'Descargar', url_for(controller: "main", action: "download_mobile", only_path: false) , {class: 'btn btn-primary', method: 'get'} %>
-      </td>
-      </tr>
-      </table>
+        
 
       <div class="modal-footer">
+          <%= button_to 'Descargar', url_for(controller: "main", action: "download_mobile") , {class: 'btn btn-primary', method: 'get', style:"float:left"} %>
         <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
       </div>
     </div>

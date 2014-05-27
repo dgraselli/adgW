@@ -1,4 +1,7 @@
 class IncidenciasController < ApplicationController
+    include SessionsHelper
+    before_filter :signed_in_user
+
   before_action :set_incidencia, only: [:show, :edit, :update, :destroy]
 
   # GET /incidencias
