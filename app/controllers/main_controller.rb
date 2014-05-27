@@ -1,6 +1,6 @@
 class MainController < ApplicationController 
   include SessionsHelper
-  before_filter :signed_in_user
+  before_filter :signed_in_user, :except => [:qcode, :download_mobile]
 
   def home
 
