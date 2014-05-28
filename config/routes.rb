@@ -24,25 +24,27 @@ FirstApp::Application.routes.draw do
   get  '/lecturas/pendientes'
   post  '/update_lectura', to: 'lecturas#update_lectura'
   post  '/update_foto', to: 'lecturas#update_foto'
-  get  'main/test_update_lectura'
+  get  '/main/test_update_lectura'
 
   post '/lecturas/update_lectura'
   match '/lecturas/filtrar', to: 'lecturas#filtrar', via: [:get, :post]
   match '/lecturas/:id/georeferenciar', to: 'lecturas#georeferenciar', via: 'post' 
   match '/lecturas/:id/visualizar', to: 'lecturas#visualizar', via: [:get, :post ]
   match '/lecturas/:id/fotos', to: 'lecturas#fotos', via: [:get, :post ]
-  get  'ruta/index'
-  get  'ruta/periodos'
-  post 'ruta/asignar'
+  get  '/ruta/index'
+  get  '/ruta/periodos'
+  post '/ruta/asignar'
   resources :lecturas
   resources :lecturistas
   resources :incidencias
   resources :cities
   resources :users
 
-  get "qcode" => 'main#qcode'
-  match "upload", to: 'main#upload', via: [:get, :post]
-  get "download_mobile" => "main#download_mobile"
+  get "/qcode" => 'main#qcode'
+  match "/upload", to: 'main#upload', via: [:get, :post]
+  get "/download_mobile" => "main#download_mobile"
+  get "/test_mail" => "main#test_mail"
+
 
 
   get "jobs/index"

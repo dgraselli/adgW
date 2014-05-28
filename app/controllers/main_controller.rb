@@ -14,6 +14,11 @@ class MainController < ApplicationController
   def contact
   end
 
+  def test_mail
+    current_user.send_mail
+    redirect_to :root
+  end
+
   def download_mobile
     send_file "#{Rails.root}/public/uploads/adgM.apk"
   end

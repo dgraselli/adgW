@@ -26,6 +26,10 @@ class User < ActiveRecord::Base
     name
   end
 
+  def send_mail
+    UserMailer.welcome(self).deliver
+  end
+
   private
 
     def create_remember_token

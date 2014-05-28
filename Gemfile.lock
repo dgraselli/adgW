@@ -258,6 +258,7 @@ DEPENDENCIES
   jbuilder (= 1.0.2)
   jquery-rails (= 3.0.4)
   libnotify (= 0.8.0)
+  mail
   mini_magick
   mocha
   pg (= 0.15.1)
