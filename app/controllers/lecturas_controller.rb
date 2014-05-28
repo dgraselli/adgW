@@ -162,11 +162,22 @@ class LecturasController < ApplicationController
     @lectura.lectura_lat = params[:lat]
     @lectura.estado = 'Leida'
 
-    @lectura.incidencias = params[:incidencias]
-    @lectura.cambios = params[:cambios]
+    #@lectura.incidencias = params[:incidencias].to_s
+    #@lectura.cambios = params[:cambios].to_s
     @lectura.plan_id = params[:id_plan]
 
     @lectura.save
+    
+    email = @lectura.email
+
+    if(params[:cambios].present?)
+      dato_mail = params[:cambios].select{|x| x["dato"] == "email"}[0]
+      email = dato_mail["valor"] if dato_mail.present?
+    end
+
+    if(params[:id_plan].present?) 
+      UserMailer.send_factura(@lectura, params[:id_plan], email).deliver
+    end
 
     render :json => {result: 'ok'}
 

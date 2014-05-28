@@ -51,6 +51,7 @@
         </td>
         </td>
         <td><%= button_to "Ver Lecturas", "/lecturas/filtrar?ruta=#{ruta.ruta}&periodo=#{params[:periodo]}", {class: "btn btn-default"} %></td>
+        <td><%= button_to "Nuevo periodo", "/ruta/nuevo_periodo?ruta=#{ruta.ruta}", {class: "btn btn-default", confirm:"Seguro ?"} %></td>
       </tr>
     <% end %>
   </tbody>

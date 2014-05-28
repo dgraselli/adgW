@@ -1,152 +1,181 @@
-<div style="float: right">
-  <% if  @lectura.lat.present? or @lectura.lectura_lat.present? %>
-  <%= image_tag "http://maps.google.com/maps/api/staticmap?size=350x350&sensor=false&zoom=16&markers=#{@lectura.lat}%2C#{@lectura.lon}|#{@lectura.lectura_lat}%2C#{@lectura.lectura_lon}" ,{style: 'border: solid black 1px'} %>
 
-  <%= image_tag "http://maps.googleapis.com/maps/api/streetview?size=350x350&location=40.720032,%20-73.988354&fov=90&heading=235&pitch=10&sensor=false" ,{style: 'border: solid black 1px'} %>
+<div class="row">
+  <div class="col-md-4">
 
-  <% else %>
-  <div >
-    Medidor sin georeferenciar <%= button_to "Geo-referenciar", "/lecturas/#{@lectura.id}/georeferenciar" %>
-  </div>
-  <% end %>
+    <p id="notice"><%= notice %></p>
+
+    <p>
+      <strong>Usuario:</strong>
+      <%= @lectura.usuario %>
+    </p>
+
+    <p>
+      <strong>Razon social:</strong>
+      <%= @lectura.razon_social %>
+    </p>
+
+    <p>
+      <strong>Doc tipo:</strong>
+      <%= @lectura.doc_tipo %>
+    </p>
+
+    <p>
+      <strong>Doc nro:</strong>
+      <%= @lectura.doc_nro %>
+    </p>
+
+    <p>
+      <strong>Localidad:</strong>
+      <%= @lectura.localidad %>
+    </p>
+
+    <p>
+      <strong>Calle:</strong>
+      <%= @lectura.calle %>
+    </p>
+
+    <p>
+      <strong>Altura:</strong>
+      <%= @lectura.altura %>
+    </p>
+
+    <p>
+      <strong>Piso:</strong>
+      <%= @lectura.piso %>
+    </p>
+
+    <p>
+      <strong>Dpto:</strong>
+      <%= @lectura.dpto %>
+    </p>
+
+    <p>
+      <strong>Datos comp:</strong>
+      <%= @lectura.datos_comp %>
+    </p>
+
+    <p>
+      <strong>Cp:</strong>
+      <%= @lectura.cp %>
+    </p>
+
+    <p>
+      <strong>Situacion:</strong>
+      <%= @lectura.situacion %>
+    </p>
+
+    <p>
+      <strong>Telefono:</strong>
+      <%= @lectura.telefono %>
+    </p>
+
+    <p>
+      <strong>Medidor tipo:</strong>
+      <%= @lectura.medidor_tipo %>
+    </p>
+
+    <p>
+      <strong>Medidor num:</strong>
+      <%= @lectura.medidor_num %>
+    </p>
+
+    <p>
+      <strong>Medidor f alta:</strong>
+      <%= @lectura.medidor_f_alta %>
+    </p>
+
+    <p>
+      <strong>Periodo:</strong>
+      <%= @lectura.periodo %>
+    </p>
+
+    <p>
+      <strong>Lectura valor:</strong>
+      <%= @lectura.lectura_valor %>
+    </p>
+
+    <p>
+      <strong>Lectura consumo:</strong>
+      <%= @lectura.lectura_consumo %>
+    </p>
+
+    <p>
+      <strong>Lectura fh toma:</strong>
+      <%= @lectura.lectura_fh_toma %>
+    </p>
+
+    <p>
+      <strong>Lectura fh carga:</strong>
+      <%= @lectura.lectura_fh_carga %>
+    </p>
+
+    <p>
+      <strong>  Estado :</strong>
+      <%= @lectura.estado %>
+    </p>
+
+    <p>
+      <strong>Lat:</strong>
+      <%= @lectura.lat %>
+    </p>
+
+    <p>
+      <strong>Lon:</strong>
+      <%= @lectura.lon %>
+    </p>
+
+    <p>
+      <strong>Lectura Lat:</strong>
+      <%= @lectura.lectura_lat %>
+    </p>
+
+    <p>
+      <strong>Lectura Lon:</strong>
+      <%= @lectura.lectura_lon %>
+    </p>
 
 
-  <% @lectura.fotos.each do |foto| %>
-    <%= render partial: 'foto', locals: {foto: foto} %>
-  <% end%>
+    <p>
+      <strong>Incidencias:</strong>
+      <%= @lectura.incidencias %>
+    </p>
+
+    <%= link_to 'Edit', edit_lectura_path(@lectura) %> |
+    <%= link_to 'Back', lecturas_path %>
+
+     <script type="text/javascript">
+             $(window).load( function() {
+             $('img[rel="zoom"]').smoothZoom({
+                // Options go here
+                    });
+             });
+        </script>
+
 </div>
+<div class="col-md-8">
+
+      <% if  @lectura.lat.present? or @lectura.lectura_lat.present? %>
+      <%= image_tag "http://maps.google.com/maps/api/staticmap?size=350x350&sensor=false&zoom=16&markers=#{@lectura.lat}%2C#{@lectura.lon}|#{@lectura.lectura_lat}%2C#{@lectura.lectura_lon}" ,{style: 'border: solid black 1px'} %>
+
+      <%= image_tag "http://maps.googleapis.com/maps/api/streetview?size=350x350&location=40.720032,%20-73.988354&fov=90&heading=235&pitch=10&sensor=false" ,{style: 'border: solid black 1px'} %>
+
+      <% else %>
+      <div >
+        Medidor sin georeferenciar <%= button_to "Geo-referenciar", "/lecturas/#{@lectura.id}/georeferenciar" %>
+      </div>
+      <% end %>
 
 
-<p id="notice"><%= notice %></p>
-
-<p>
-  <strong>Usuario:</strong>
-  <%= @lectura.usuario %>
-</p>
-
-<p>
-  <strong>Razon social:</strong>
-  <%= @lectura.razon_social %>
-</p>
-
-<p>
-  <strong>Doc tipo:</strong>
-  <%= @lectura.doc_tipo %>
-</p>
-
-<p>
-  <strong>Doc nro:</strong>
-  <%= @lectura.doc_nro %>
-</p>
-
-<p>
-  <strong>Localidad:</strong>
-  <%= @lectura.localidad %>
-</p>
-
-<p>
-  <strong>Calle:</strong>
-  <%= @lectura.calle %>
-</p>
-
-<p>
-  <strong>Altura:</strong>
-  <%= @lectura.altura %>
-</p>
-
-<p>
-  <strong>Piso:</strong>
-  <%= @lectura.piso %>
-</p>
-
-<p>
-  <strong>Dpto:</strong>
-  <%= @lectura.dpto %>
-</p>
-
-<p>
-  <strong>Datos comp:</strong>
-  <%= @lectura.datos_comp %>
-</p>
-
-<p>
-  <strong>Cp:</strong>
-  <%= @lectura.cp %>
-</p>
-
-<p>
-  <strong>Situacion:</strong>
-  <%= @lectura.situacion %>
-</p>
-
-<p>
-  <strong>Telefono:</strong>
-  <%= @lectura.telefono %>
-</p>
-
-<p>
-  <strong>Medidor tipo:</strong>
-  <%= @lectura.medidor_tipo %>
-</p>
-
-<p>
-  <strong>Medidor num:</strong>
-  <%= @lectura.medidor_num %>
-</p>
-
-<p>
-  <strong>Medidor f alta:</strong>
-  <%= @lectura.medidor_f_alta %>
-</p>
-
-<p>
-  <strong>Lectura valor:</strong>
-  <%= @lectura.lectura_valor %>
-</p>
-
-<p>
-  <strong>Lectura fh toma:</strong>
-  <%= @lectura.lectura_fh_toma %>
-</p>
-
-<p>
-  <strong>Lectura fh carga:</strong>
-  <%= @lectura.lectura_fh_carga %>
-</p>
-
-<p>
-  <strong>Lat:</strong>
-  <%= @lectura.lat %>
-</p>
-
-<p>
-  <strong>Lon:</strong>
-  <%= @lectura.lon %>
-</p>
-
-<p>
-  <strong>Lat:</strong>
-  <%= @lectura.lectura_lat %>
-</p>
-
-<p>
-  <strong>Lon:</strong>
-  <%= @lectura.lectura_lon %>
-</p>
+      <% @lectura.fotos.each do |foto| %>
+        <%= render partial: 'foto', locals: {foto: foto} %>
+      <% end%>
 
 
-<p>
-  <strong>Incidencias:</strong>
-  <%= @lectura.incidencias %>
-</p>
+          <h4>Historico Consumo</h4>
+          <%= column_chart @lectura.historico_consumo  %>
 
-<%= link_to 'Edit', edit_lectura_path(@lectura) %> |
-<%= link_to 'Back', lecturas_path %>
+          <h4>Historico Lectura</h4>
+          <%= column_chart @lectura.historico_lectura  %>
 
- <script type="text/javascript">
-         $(window).load( function() {
-         $('img[rel="zoom"]').smoothZoom({
-            // Options go here
-                });
-         });
-    </script>
+</div>
+</div>

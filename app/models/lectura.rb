@@ -8,19 +8,34 @@ class Lectura < ActiveRecord::Base
 
   after_initialize :default_values
 
+  before_save :set_estado
+
+ 
   
   def self.periodos
     Lectura.order(:periodo).pluck('distinct periodo')
   end
 
   def self.periodos_pendientes
-    Lectura.where(lectura_valor: nil ).order(:periodo).pluck('distinct periodo')
+    #Lectura.where(lectura_valor: nil ).order(:periodo).pluck('distinct periodo')
+    Lectura.all.order(:periodo).pluck('distinct periodo')
   end
   
   def self.rutas
     Lectura.order(:ruta).pluck('distinct ruta')
   end
   
+  def self.historico_consumo_ruta(ruta)
+    Lectura.where(ruta: ruta).group(:periodo).order(:periodo).sum(:lectura_consumo)
+  end
+
+  def historico_consumo
+    Lectura.where(usuario: usuario).group(:lectura_fh_toma).order(:lectura_fh_toma).sum(:lectura_consumo)
+  end
+
+  def historico_lectura
+    Lectura.where(usuario: usuario).group(:lectura_fh_toma).order(:lectura_fh_toma).maximum(:lectura_valor)
+  end
 
   def direccion
     "#{calle} #{altura}, #{localidad}, Ar"
@@ -38,7 +53,7 @@ class Lectura < ActiveRecord::Base
     "Usuario #{usuario}"
   end
 
-  def denominacion
+  def denominimumacion
     razon_social 
   end
 
@@ -73,4 +88,7 @@ private
       estado ||= "Nueva"
     end
 
+    def set_estado
+      self.estado = 'Leida' if self.lectura_valor.present?
+    end
 end

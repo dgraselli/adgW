@@ -37,6 +37,10 @@ class MainController < ApplicationController
     render :qrcode => url, :unit => 10, :level => :l, :format => 'svg'
   end
 
+  def barcode(n)
+    render :qrcode => url, :unit => 10, :level => :l, :format => 'svg'
+  end
+
   def load_suggestions
     @suggestions = Ruta.select(:nombre)
     render json: @suggestions
@@ -71,6 +75,7 @@ class MainController < ApplicationController
 
 
     Lectura.import( @columns, @values) #, validate: false
+    Lectura.where("lectura_valor is not null").update_all(:estado => "Leida");
     redirect_to :action => :import
   end
 
@@ -88,6 +93,8 @@ class MainController < ApplicationController
       #render :text => hash
       Lectura.create!(hash)
     end
+
+    Lectura.where("lectura_valor is not null").update_all(:estado => "Leida");
     redirect_to action: :index
   end
 

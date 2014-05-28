@@ -36,5 +36,5 @@ FirstApp::Application.configure do
     password: 'Cneugnte21',
     enable_starttls_auto: false
   }
-  config.action_mailer.raise_delivery_errors = true
+  config.action_mailer.raise_delivery_errors = false
 end

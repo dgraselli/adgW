@@ -80,6 +80,8 @@ GEM
     ffi (1.9.3)
     formatador (0.2.4)
     geocoder (1.2.0)
+    groupdate (2.1.1)
+      activerecord (>= 3.0.0)
     guard (2.6.1)
       formatador (>= 0.2.4)
       listen (~> 2.7)
@@ -252,13 +254,13 @@ DEPENDENCIES
   factory_girl_rails (= 4.2.1)
   faker (= 1.1.2)
   geocoder
+  groupdate
   guard-rspec (= 2.5.0)
   guard-spork (= 1.5.0)
   haml (= 4.0.5)
   jbuilder (= 1.0.2)
   jquery-rails (= 3.0.4)
   libnotify (= 0.8.0)
-  mail
   mini_magick
   mocha
   pg (= 0.15.1)

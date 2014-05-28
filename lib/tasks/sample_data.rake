@@ -24,11 +24,12 @@ namespace :chaca do
   end
 
   desc "Geocodificar ausentes por direccion"
-  task geocodificar_faltante: :environment do
-    #ActiveRecord::Base.logger = Logger.new(STDOUT)
-
-    #Lectura.where(:adeudado =>   nil).each{|a| a.adeudado = rand(250.00-3250.99) + rand(0.00+0.99).round(2) ; a.save; puts a.adeudado.to_s + "    -"}
-    Lectura.where(:lat => nil).each{|a| a.geocode; a.save; puts "#{a.usuario} (#{a.direccion}) : #{a.latlon}"}
+  task :geocodificar_faltante, [:ruta] => :environment  do |task, args|
+    lecturas = Lectura.where(:lat => nil)
+    if args[:ruta].present?
+      lecturas.where(ruta: args[:ruta])
+    end
+    lecturas.each{|a| a.geocode; a.save; puts "#{a.usuario} (#{a.direccion}) : #{a.latlon}"}
   end
 
 

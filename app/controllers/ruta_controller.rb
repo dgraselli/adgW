@@ -24,6 +24,20 @@ class RutaController < ApplicationController
 
 	end
 
+	def nuevo_periodo
+		ruta = params[:ruta]
+		periodo = Lectura.where(ruta: ruta).maximum(:periodo)
+
+		#lecturas =Lectura.where(ruta: ruta, periodo: periodo).to_a
+
+		#sig_perido = 200501;
+		#nuevas_lecturas = lecturas.map{|l| l.periodo = sig_perido; id=null}
+
+		#send nuevas_lecturas
+
+		redirect_to root_path
+	end
+
 
 	private
 

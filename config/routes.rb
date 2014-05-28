@@ -34,6 +34,7 @@ FirstApp::Application.routes.draw do
   get  '/ruta/index'
   get  '/ruta/periodos'
   post '/ruta/asignar'
+  post '/ruta/nuevo_periodo'
   resources :lecturas
   resources :lecturistas
   resources :incidencias
