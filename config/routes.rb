@@ -29,8 +29,8 @@ FirstApp::Application.routes.draw do
   post '/lecturas/update_lectura'
   match '/lecturas/filtrar', to: 'lecturas#filtrar', via: [:get, :post]
   match '/lecturas/:id/georeferenciar', to: 'lecturas#georeferenciar', via: 'post' 
-  match '/lecturas/:id/visualizar', to: 'lecturas#visualizar', via: 'get' 
-  match '/lecturas/:id/fotos', to: 'lecturas#fotos', via: 'get' 
+  match '/lecturas/:id/visualizar', to: 'lecturas#visualizar', via: [:get, :post ]
+  match '/lecturas/:id/fotos', to: 'lecturas#fotos', via: [:get, :post ]
   get  'ruta/index'
   get  'ruta/periodos'
   post 'ruta/asignar'
