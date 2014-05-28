@@ -1,8 +1,8 @@
 class LecturasController < ApplicationController
     include SessionsHelper
-    before_filter :signed_in_user, :except => [:visualizar]
+    before_filter :signed_in_user
 
-  before_action :set_lectura, only: [:show, :edit, :update, :destroy, :georeferenciar, :visualizar]
+  before_action :set_lectura, only: [:show, :edit, :update, :destroy, :georeferenciar, :visualizar, :fotos]
   before_action :set_ruta_periodo, only: [:index]
   after_filter :customheaders
   protect_from_forgery :except => [:visualizar]
@@ -194,6 +194,10 @@ class LecturasController < ApplicationController
   end
 
   def visualizar
+    render layout: false
+  end
+
+  def fotos
     render layout: false
   end
 
