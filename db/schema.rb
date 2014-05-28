@@ -11,7 +11,10 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140526171233) do
+ActiveRecord::Schema.define(version: 20140528140616) do
+
+  # These are extensions that must be enabled in order to support this database
+  enable_extension "plpgsql"
 
   create_table "cities", force: true do |t|
     t.string   "nombre"
@@ -35,7 +38,7 @@ ActiveRecord::Schema.define(version: 20140526171233) do
     t.integer  "progres"
   end
 
-  add_index "delayed_jobs", ["priority", "run_at"], name: "delayed_jobs_priority"
+  add_index "delayed_jobs", ["priority", "run_at"], name: "delayed_jobs_priority", using: :btree
 
   create_table "fotos", force: true do |t|
     t.string   "usuario_id"
@@ -100,19 +103,17 @@ ActiveRecord::Schema.define(version: 20140526171233) do
     t.float    "lectura_lon"
     t.float    "adeudado"
     t.string   "email"
+    t.integer  "plan_id"
+    t.string   "cambios"
   end
 
-  add_index "lecturas", ["lecturista_id"], name: "index_lecturas_on_lecturista_id"
-
-# Could not dump table "lecturas_hst" because of following NoMethodError
-#   undefined method `[]' for nil:NilClass
+  add_index "lecturas", ["lecturista_id"], name: "index_lecturas_on_lecturista_id", using: :btree
 
   create_table "lecturistas", force: true do |t|
     t.string   "nombre"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
-
 
   create_table "users", force: true do |t|
     t.string   "name"

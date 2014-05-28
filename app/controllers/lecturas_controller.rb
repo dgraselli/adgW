@@ -158,10 +158,14 @@ class LecturasController < ApplicationController
     @lectura.lectura_fh_carga = DateTime.now
     @lectura.lectura_fh_toma = params[:fh]
     @lectura.lectura_valor = params[:valor]
-    @lectura.incidencias = params[:incidencias]
     @lectura.lectura_lon = params[:lng]
     @lectura.lectura_lat = params[:lat]
     @lectura.estado = 'Leida'
+
+    @lectura.incidencias = params[:incidencias]
+    @lectura.cambios = params[:cambios]
+    @lectura.plan_id = params[:id_plan]
+
     @lectura.save
 
     render :json => {result: 'ok'}
