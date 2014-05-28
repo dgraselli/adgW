@@ -1,5 +1,7 @@
 FirstApp::Application.routes.draw do
 
+  root 'main#home'
+
   # Autent... routes  
   resources :sessions, only: [:new, :create, :destroy]
   match '/signup',  to: 'users#new',            via: 'get'
@@ -13,9 +15,7 @@ FirstApp::Application.routes.draw do
 
 
 
-  resources :incidencias
 
-  root 'main#home'
   get  '/main/columns'
   get  '/main/import'
   get  '/main/foto'
@@ -35,6 +35,9 @@ FirstApp::Application.routes.draw do
   post 'ruta/asignar'
   resources :lecturas
   resources :lecturistas
+  resources :incidencias
+  resources :cities
+  resources :users
 
   get "qcode" => 'main#qcode'
   match "upload", to: 'main#upload', via: [:get, :post]
@@ -42,38 +45,8 @@ FirstApp::Application.routes.draw do
 
 
   get "jobs/index"
-  resources :lectura_hsts
-  resources :cities
-
   match "/delayed_job" => DelayedJobWeb, :anchor => false, via: [:get, :post]
 
-  resources :rutum do
-    resources :medidors, only: [:index, :new, :create, :edit]
-  end
-  
-  resources :medidors
-
-  get "/rutum/:id/medidores" => "ruta#medidores"
-  post "/rutum/:id/georeferenciar" => "ruta#georeferenciar"
-
-  get "unidades/index"
-  get "unidades/lecturas/:id" => "unidades#lecturas"
-
-  
-  get "test/controles"
-
-
-
-  match '/test_conctrolers', to: 'test#controles', via: 'get'
-
-
-  match 'ruta/search', to:'ruta#search', via: 'get'
-  match 'ruta/search_map', to:'ruta#search_map', via: 'get'
-
-
-
-  get "mapa/mapa1"
-  resources :users
 
 
 end

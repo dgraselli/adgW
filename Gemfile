@@ -34,6 +34,7 @@ gem "mocha", group: :test
 
 group :development do
   gem 'sqlite3', '1.3.8'
+  gem 'pg', '0.15.1'
   gem 'rspec-rails', '2.13.1'
   gem 'guard-rspec', '2.5.0'
 

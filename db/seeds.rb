@@ -5,3 +5,24 @@
 #
 #   cities = City.create([{ name: 'Chicago' }, { name: 'Copenhagen' }])
 #   Mayor.create(name: 'Emanuel', city: cities.first)
+
+City.create([
+	{nombre: 'La Plata', sufijo: ',Ar'},
+	{nombre: 'Capital Federal', sufijo: ',Ar'},
+	])	
+
+Lecturista.create([
+	{nombre: 'juan'},
+	{nombre: 'pedro'},
+	{nombre: 'jose'},
+	])	
+
+User.create([
+	{name: 'juan', email: 'dgraselli@gmail.com', password: '212121', password_confirmation: '212121', admin: true }
+	])	
+
+Incidencia.create([
+	{nombre: 'Medidor Tapado'},
+	{nombre: 'No se encontro medidor'},
+	])
+	
