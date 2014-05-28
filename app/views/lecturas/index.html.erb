@@ -92,7 +92,11 @@ zoom=12
         <td><%= lectura.cp %></td>
         <td>[<%= lectura.medidor_tipo %>] <%= lectura.medidor_num %></td>
         <td><%= lectura.lectura_valor %></td>
-        <td><%= lectura.incidencias %> <%= "FOTO" if lectura.fotos.count > 0 %></td>
+        <td><%= lectura.incidencias %> 
+            <%=  if lectura.fotos.count > 0 %>
+            <span class="glyphicon glyphicon-camera "></span> 
+            <% end %>
+        </td>
         <td><%= lectura.estado.to_s %> </td>
         <td><%= link_to 'Show', lectura %></td>
         <td><%= link_to 'Edit', edit_lectura_path(lectura) %></td>
