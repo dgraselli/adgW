@@ -1,7 +1,7 @@
 class User < ActiveRecord::Base
 
-  before_save { self.name = name.downcase }
-  before_save { self.email = email.downcase }
+  before_save { name = name.downcase }
+  before_save { email = email.downcase }
   before_create :create_remember_token
 
   validates :name,  presence: true, length: { maximum: 50 }, uniqueness: true
