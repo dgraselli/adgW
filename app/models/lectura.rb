@@ -18,7 +18,7 @@ class Lectura < ActiveRecord::Base
   end
   
   def self.rutas
-    Lectura.order(:periodo).pluck('distinct ruta')
+    Lectura.order(:ruta).pluck('distinct ruta')
   end
   
 

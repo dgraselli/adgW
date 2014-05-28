@@ -33,7 +33,7 @@ class SessionsController < ApplicationController
       remember_token = sign_in user
       render :json => { :remember_token => remember_token, username: user.name, success: true}, status: :created  
     else
-      render json: { success: false, message: 'Usuairo no valido' }, status: 401
+      render json: { success: false, message: 'Usuario no valido' }#, status: 401
     end
 
 
