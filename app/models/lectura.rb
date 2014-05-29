@@ -130,9 +130,8 @@ class Lectura < ActiveRecord::Base
   def historico_de_fotos_del_medidor
     fotos = []
     Lectura.where(medidor_tipo: medidor_tipo, medidor_num: medidor_num).map do |lect|
-      fotos << lect.fotos if lect.fotos.count > 0
+      fotos << lect.fotos.to_a if lect.fotos.count > 0
     end
-    fotos << Foto.first
     fotos
   end
 
