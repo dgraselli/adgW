@@ -1,6 +1,6 @@
   <% @lectura.historico_de_fotos_del_medidor.each do |foto| %>
     
-	<%= image_tag url_for(:controller => "main", :action => "foto", :id => foto.id)  %>
+	<%= image_tag url_for(:controller => "main", :action => "foto", :id => foto.id,  only_path: false), size: "150"  %>
 
   <% end%>
 
