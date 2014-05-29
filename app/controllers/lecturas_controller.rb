@@ -15,6 +15,7 @@ class LecturasController < ApplicationController
     respond_to do |format|
       format.html do 
         @lecturas = @lecturas.paginate(page: params[:page])
+        @estado_cantidad = {:Todos => @lecturas.count}.merge @lecturas.group(:estado).count 
         render :index 
       end
       format.csv do 
@@ -130,8 +131,8 @@ class LecturasController < ApplicationController
     @lectura.lectura_lat = params[:lat]
     @lectura.estado = 'Leida'
 
-    #@lectura.incidencias = params[:incidencias].to_s
-    #@lectura.cambios = params[:cambios].to_s
+    @lectura.incidencias = params[:incidencias].to_s
+    @lectura.cambios = params[:cambios].to_s
     @lectura.plan_id = params[:id_plan]
 
     @lectura.save

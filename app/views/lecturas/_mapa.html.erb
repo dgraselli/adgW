@@ -1,0 +1,20 @@
+<fieldset>
+<legend onclick="$(this).next('div').slideToggle()">Mapa</legend>
+<% markers = @lecturas.map{|m| "markers=#{m.lat},#{m.lon}" unless m.lat.nil? }.compact.join('&') %>
+<% markers_real = @lecturas.map{|m| "markers=icon:http://tinyurl.com/2ftvtt6|#{m.lectura_lat},#{m.lectura_lon}" unless m.lat.nil? }.compact.join('&') %>
+
+<% path = "path=color:0x0000ff|weight:2|" + @lecturas.map{|m| "#{m.lat},#{m.lon}" unless m.lat.nil? }.compact.join('|') %>
+<% path_real = "&path=color:0x00ff00|weight:2|" + @lecturas.map{|m| "#{m.lectura_lat},#{m.lectura_lon}" unless m.lat.nil? }.compact.join('|') %>
+
+<div style="float: right; display: none">
+<div>
+<%
+zoom=12
+%>
+<%= image_tag "http://maps.google.com/maps/api/staticmap?size=430x350&sensor=false&zoom=#{zoom}&#{markers}&#{markers_real}" ,{style: 'border: solid black 1px'} unless markers.blank? %>
+
+<%= image_tag "http://maps.google.com/maps/api/staticmap?size=430x350&sensor=false&zoom=#{zoom}&#{path}&#{path_real}" ,{style: 'border: solid black 1px'} unless markers.blank? %>
+</div>
+
+</div>
+</fieldset>

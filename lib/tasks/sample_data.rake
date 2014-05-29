@@ -7,8 +7,17 @@ namespace :chaca do
     #update_rutas
   end
 
-  task update_rutas: :environment do
-    Lectura.all.each { |l| l.ruta = "Ruta #{l.usuario[-1]}" }
+  desc "Secuencia cada ruta por calle altura"
+  task seq_rutas: :environment do
+    Lectura.rutas.each do |ruta|
+      Lectura.periodos.each do |periodo|
+        Lectura.where(ruta: ruta, periodo: periodo).order(:calle, :altura). each_with_index do |lect, idx|
+          lect.update_attribute(:secuencia,  idx)
+          puts "#{ruta}-#{periodo} -> #{idx}"
+
+        end
+      end
+    end
   end
   
   task delete_lecturas: :environment do
@@ -17,9 +26,6 @@ namespace :chaca do
 
   desc "Carga valores adeudados aleatorios entre 250 y 3500"
   task set_random_adeudado: :environment do
-    #ActiveRecord::Base.logger = Logger.new(STDOUT)
-
-    #Lectura.where(:adeudado =>   nil).each{|a| a.adeudado = rand(250.00-3250.99) + rand(0.00+0.99).round(2) ; a.save; puts a.adeudado.to_s + "    -"}
     Lectura.all.each{|a| a.adeudado = rand(250.00-3250.99) + rand(0.00+0.99).round(2) ; a.save; puts a.adeudado.to_s + "    -"}
   end
 

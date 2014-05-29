@@ -140,6 +140,16 @@
       <%= @lectura.incidencias %>
     </p>
 
+    <p>
+      <strong>Cambios:</strong>
+      <%= @lectura.cambios %>
+    </p>
+    <p>
+      <strong>Plan de pago:</strong>
+      <%= @lectura.plan_de_pago %>
+    </p>
+
+
     <%= link_to 'Edit', edit_lectura_path(@lectura) %> |
     <%= link_to 'Back', lecturas_path %>
 

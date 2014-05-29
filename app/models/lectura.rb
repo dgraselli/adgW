@@ -66,11 +66,11 @@ class Lectura < ActiveRecord::Base
   end
 
   def historico_consumo
-    Lectura.where(usuario: usuario).group(:lectura_fh_toma).order(:lectura_fh_toma).sum(:lectura_consumo)
+    Lectura.where(medidor_tipo: medidor_tipo, medidor_num: medidor_num).group(:periodo).order(:periodo).sum(:lectura_consumo)
   end
 
   def historico_lectura
-    Lectura.where(usuario: usuario).group(:lectura_fh_toma).order(:lectura_fh_toma).maximum(:lectura_valor)
+    Lectura.where(medidor_tipo: medidor_tipo, medidor_num: medidor_num).group(:periodo).order(:periodo).maximum(:lectura_valor)
   end
 
   def direccion
@@ -117,6 +117,14 @@ class Lectura < ActiveRecord::Base
     {monto: adeudado,
       planes: planes
     }
+  end
+
+  def plan_de_pago
+    deuda[:planes].select{|x| x[:id] == plan_id}[0][:desc] if plan_id.present?
+  end
+
+  def periodo_str
+    "#{periodo.to_s[0..3]}-#{periodo.to_s[4..5]}"
   end
 
 private

@@ -36,10 +36,32 @@
     </ul>
   </div>
 
+
+<div class="row">
+<div class="col-md-2" style="padding-top: 140px">
+    <ul class="nav nav-pills nav-stacked">
+    <% @estado_cantidad.each do |est,cant| %>
+      <% if  params[:estado].to_s == est.to_s %>
+        <li class="active" >
+      <% else %>
+        <li  >
+      <% end %>
+        <a href="#" onclick="$('#h_estado').val('<%=est%>'); $('#submit_btn').click()" ><span class="badge pull-right"><%=cant%></span><%= est.to_s  %>&nbsp;</a>
+      </li>
+    <% end %>
+    </ul>
+</div>
+<div class="col-md-10">
     
 	<%= will_paginate @lecturas %>
 	  <div id="lecturas"><%= render 'lecturas' %></div>
 	<%= will_paginate @lecturas %>
+
+  </div>
+</div>
 	
 <% end %>
+
+<% javascript_include_tag 'scaffold' %>
+
 

@@ -16,9 +16,7 @@ class UserMailer < ActionMailer::Base
 
     if(@lectura.deuda.present?)
       @monto = @lectura.deuda[:monto] 
-      #@id_plan = id_plan
-      #@planes = @lectura.deuda[:planes] 
-      #@plan = @lectura.deuda[:planes].select{|x| x[:id] == id_plan}[0][:desc]
+      @plan = @lectura.plan_de_pago
 
       mail to: email
     end

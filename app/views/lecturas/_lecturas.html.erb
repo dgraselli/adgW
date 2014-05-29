@@ -1,17 +1,17 @@
+<%= render "mapa" %>
 
 <table>
   <thead>
     <tr>
-      <th>Ruta</th>
-      <th>Periodo</th>
-      <th>Secuencia</th>
-      <th><%= sortable "usuario" %></th>
-      <th>Direccion</th>
-      <th>Cp</th>
-      <th>Medidor</th>
-      <th>Lectura valor</th>
-      <th>Incidencias</th>
-      <th>Estado</th>
+      <th><%= sortable "secuencia", "Sec." %></th>
+      <th><%= sortable "ruta", "Ruta" %></th>
+      <th><%= sortable "periodo", "Periodo" %></th>
+      <th><%= sortable "usuario" %> / <%= sortable "calle ,altura", "Direccion" %> </th>
+      <th><%= sortable "cp" %></th>
+      <th><%= sortable "medidor" %></th>
+      <th><%= sortable "lectura_valor", "Lectura" %></th>
+      <th><%= sortable "lectura_consumo", "Consumo" %></th>
+      <th></th>
       <th></th>
       <th></th>
       <th></th>
@@ -21,20 +21,42 @@
   <tbody>
     <% @lecturas.each do |lectura| %>
       <tr>
-        <td><%= lectura.ruta %></td>
-        <td><%= lectura.periodo %></td>
         <td><%= lectura.secuencia %></td>
-        <td><%= lectura.usuario %> / <%= lectura.razon_social %></td>
-        <td><%= lectura.direccion %> (<%=lectura.datos_comp%>)</td>
+        <td><%= lectura.ruta %></td>
+        <td><%= lectura.periodo_str %></td>
+        <td>
+          <strong>[<%= lectura.usuario %>]  <%= lectura.razon_social %> </strong><br/>
+          <%= lectura.direccion %><small> (<%=lectura.datos_comp%>)</small>
+        </td>
         <td><%= lectura.cp %></td>
         <td>[<%= lectura.medidor_tipo %>] <%= lectura.medidor_num %></td>
         <td><%= lectura.lectura_valor %></td>
-        <td><%= lectura.incidencias %> 
-            <%  lectura.fotos.count.times do %>
-            <span class="glyphicon glyphicon-camera "></span> 
+        <td><%= lectura.lectura_consumo %></td>
+        <td>
+
+            <% if lectura.lectura_valor.present? %>
+              <span title="Leido" class="glyphicon glyphicon-check " style="color:green"></span> 
             <% end %>
+            <% if lectura.lectura_lat.present? or lectura.lat.present? %>
+              <span title="Georefernciado"  class="glyphicon glyphicon-screenshot" style="color:blue"></span>
+            <% end %>
+            <% if lectura.cambios.present? %>
+              <span title="Con cambios"  class="glyphicon glyphicon-warning-sign" style="color:yellow"></span>
+            <% end %>
+            <% if lectura.incidencias.present? %>
+              <span title="Con incidencias" class="glyphicon glyphicon-exclamation-sign" style="color:red"></span>
+            <% end %>
+            <% if lectura.plan_id.present? %>
+              <span title="Con plan de pago" class="glyphicon glyphicon-shopping-cart" style="color:red"></span>
+            <% end %>
+
+            <%  lectura.fotos.count.times do %>
+              <span class="glyphicon glyphicon-camera "></span> 
+            <% end %>
+
+              
+
         </td>
-        <td><%= lectura.estado %> </td>
         <td><%= link_to 'Show', lectura %></td>
         <td><%= link_to 'Edit', edit_lectura_path(lectura) %></td>
       </tr>
