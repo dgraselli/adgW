@@ -186,12 +186,14 @@
         <%= render partial: 'foto', locals: {foto: foto} %>
       <% end%>
 
-
+        <div>
           <h4>Historico Consumo</h4>
           <%= column_chart @lectura.historico_consumo  %>
-
+        </div>
+        <div>
           <h4>Historico Lectura</h4>
           <%= column_chart @lectura.historico_lectura  %>
+        </div>
 
 </div>
 </div>
