@@ -151,6 +151,6 @@ private
     end
 
     def set_consumo
-      self.lectura_consumo = self.lectura_valor - self.lectura_previa 
+      self.lectura_consumo = self.lectura_valor - self.lectura_previa.to_f  if self.lectura_valor.present?
     end
 end
