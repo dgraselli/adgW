@@ -8,7 +8,7 @@ class Lectura < ActiveRecord::Base
 
   after_initialize :default_values
 
-  before_save :set_estado
+  before_save :set_estado, :set_consumo
 
  
 
@@ -127,6 +127,12 @@ class Lectura < ActiveRecord::Base
     "#{periodo.to_s[0..3]}-#{periodo.to_s[4..5]}"
   end
 
+  def lectura_previa
+    last_lectura = Lectura.where("medidor_tipo=? and medidor_num=? and id <> ? ",medidor_tipo, medidor_num, id ).order(:lectura_fh_carga).last
+    
+    last_lectura ? last_lectura.lectura_valor : 0
+  end
+
   def historico_de_fotos_del_medidor
     fotos = []
     Lectura.where(medidor_tipo: medidor_tipo, medidor_num: medidor_num).map do |lect|
@@ -142,5 +148,9 @@ private
 
     def set_estado
       self.estado = 'Leida' if self.lectura_valor.present?
+    end
+
+    def set_consumo
+      self.lectura_consumo = self.lectura_valor - self.lectura_previa 
     end
 end

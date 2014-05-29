@@ -9,6 +9,7 @@
       <th><%= sortable "usuario" %> / <%= sortable "calle ,altura", "Direccion" %> </th>
       <th><%= sortable "cp" %></th>
       <th><%= sortable "medidor" %></th>
+      <th><%= sortable "lectura_fh_carga" %></th>
       <th><%= sortable "lectura_valor", "Lectura" %></th>
       <th><%= sortable "lectura_consumo", "Consumo" %></th>
       <th></th>
@@ -30,6 +31,7 @@
         </td>
         <td><%= lectura.cp %></td>
         <td>[<%= lectura.medidor_tipo %>] <%= lectura.medidor_num %></td>
+        <td><%= lectura.lectura_fh_carga %></td>
         <td><%= lectura.lectura_valor %></td>
         <td><%= lectura.lectura_consumo %></td>
         <td>
