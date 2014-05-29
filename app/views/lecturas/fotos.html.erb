@@ -1,3 +1,4 @@
-  <% @lectura.fotos.each do |foto| %>
+  <% @lectura.historico_de_fotos_del_medidor.each do |foto| %>
     <%= render partial: 'foto', locals: {foto: foto} %>
   <% end%>
+

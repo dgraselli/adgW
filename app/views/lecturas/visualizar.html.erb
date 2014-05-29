@@ -1,5 +1,7 @@
   <% if  @lectura.lat.present? or @lectura.lectura_lat.present? %>
   <%= image_tag "http://maps.google.com/maps/api/staticmap?size=350x350&sensor=false&zoom=16&markers=#{@lectura.lat}%2C#{@lectura.lon}|#{@lectura.lectura_lat}%2C#{@lectura.lectura_lon}" ,{style: 'border: solid black 1px'} %>
+  <% elsif last = Lectura.where(medidor_tipo: @lectura.medidor_tipo, medidor_num: @lectura.medidor_num).where("lat is not null or lectura_lat is not null").order(:periodo).last %>  
+  <%= image_tag "http://maps.google.com/maps/api/staticmap?size=350x350&sensor=false&zoom=16&markers=#{last.lat}%2C#{last.lon}|#{last.lectura_lat}%2C#{last.lectura_lon}" ,{style: 'border: solid black 1px'} %>
   <% else %>
 Sin georeferenciar
   <% end %>

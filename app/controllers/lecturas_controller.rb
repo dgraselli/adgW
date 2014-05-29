@@ -140,11 +140,11 @@ class LecturasController < ApplicationController
     email = @lectura.email
 
     if(params[:cambios].present?)
-      dato_mail = params[:cambios].select{|x| x["dato"] == "email"}[0]
+      dato_mail = params[:cambios].select{|x| x["dato"].downcase == "email"}[0]
       email = dato_mail["valor"] if dato_mail.present?
     end
 
-    if(params[:id_plan].present?) 
+    if(params[:id_plan].present? and email.present?) 
       UserMailer.send_factura(@lectura, params[:id_plan], email).deliver
     end
 
