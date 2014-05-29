@@ -1,4 +1,6 @@
   <% @lectura.historico_de_fotos_del_medidor.each do |foto| %>
-    <%= render partial: 'foto', locals: {foto: foto} %>
+    
+	<%= image_tag url_for(:controller => "main", :action => "foto", :id => foto.id)  %>
+
   <% end%>
 
