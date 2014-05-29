@@ -62,6 +62,11 @@ class MainController < ApplicationController
     rowarray = Array.new
     myfile = params[:file]
 
+    if myfile.nil?
+      redirect_to '/main/import', notice: "Debe seleccionar un archivo"
+      return
+    end
+
     lines = CSV.read(myfile.path, col_sep: "\t")
     @columns = lines[0].compact.reject(&:blank?) << "estado"
 
@@ -73,6 +78,10 @@ class MainController < ApplicationController
 
     @values = lines[1..lines.count-1].map{|line| line << "Nueva"} 
 
+    if @columns.count != @values[0].count
+      redirect_to '/main/import', notice: "La cantidad de columnas no coincide #{@columns.count} - #{@values[0].count}"
+      return
+    end
 
     Lectura.import( @columns, @values) #, validate: false
     Lectura.where("lectura_valor is not null").update_all(:estado => "Leida");

@@ -21,4 +21,5 @@
 //= require scaffold
 //= require easing
 //= require smoothzoom
+//= require common
 

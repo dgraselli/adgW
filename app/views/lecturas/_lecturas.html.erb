@@ -1,0 +1,43 @@
+
+<table>
+  <thead>
+    <tr>
+      <th>Ruta</th>
+      <th>Periodo</th>
+      <th>Secuencia</th>
+      <th><%= sortable "usuario" %></th>
+      <th>Direccion</th>
+      <th>Cp</th>
+      <th>Medidor</th>
+      <th>Lectura valor</th>
+      <th>Incidencias</th>
+      <th>Estado</th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @lecturas.each do |lectura| %>
+      <tr>
+        <td><%= lectura.ruta %></td>
+        <td><%= lectura.periodo %></td>
+        <td><%= lectura.secuencia %></td>
+        <td><%= lectura.usuario %> / <%= lectura.razon_social %></td>
+        <td><%= lectura.direccion %> (<%=lectura.datos_comp%>)</td>
+        <td><%= lectura.cp %></td>
+        <td>[<%= lectura.medidor_tipo %>] <%= lectura.medidor_num %></td>
+        <td><%= lectura.lectura_valor %></td>
+        <td><%= lectura.incidencias %> 
+            <%  lectura.fotos.count.times do %>
+            <span class="glyphicon glyphicon-camera "></span> 
+            <% end %>
+        </td>
+        <td><%= lectura.estado %> </td>
+        <td><%= link_to 'Show', lectura %></td>
+        <td><%= link_to 'Edit', edit_lectura_path(lectura) %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>

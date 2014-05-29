@@ -11,6 +11,40 @@ class Lectura < ActiveRecord::Base
   before_save :set_estado
 
  
+
+  def self.search(params)
+    r = all
+
+    logger.debug params
+
+    if params[:razon_social]
+      r = r.where('razon_social LIKE ?', "%#{search}%")
+    end
+           
+    if params[:ruta].present?
+      r = r.where(ruta: params[:ruta])
+    end
+    
+    if params[:periodo].present?
+      r = r.where(periodo: params[:periodo])
+    end
+
+    if(params[:lecturista_id].present?)
+      r = r.where(lecturista_id: params[:lecturista_id])
+    end
+
+     #@estado_cantidad = {:Todos => @lecturas.count}.merge @lecturas.group(:estado).count 
+
+    if(params[:estado].present? and params[:estado] != "Todos")
+      r = r.where(estado: params[:estado])
+    elsif
+      params[:estado] = "Todos"
+    end
+
+    r
+  end
+
+
   
   def self.periodos
     Lectura.order(:periodo).pluck('distinct periodo')
@@ -25,6 +59,8 @@ class Lectura < ActiveRecord::Base
     Lectura.order(:ruta).pluck('distinct ruta')
   end
   
+
+
   def self.historico_consumo_ruta(ruta)
     Lectura.where(ruta: ruta).group(:periodo).order(:periodo).sum(:lectura_consumo)
   end

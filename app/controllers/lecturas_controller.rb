@@ -1,49 +1,16 @@
 class LecturasController < ApplicationController
+    helper_method :sort_column, :sort_direction
     include SessionsHelper
     before_filter :signed_in_user
 
   before_action :set_lectura, only: [:show, :edit, :update, :destroy, :georeferenciar, :visualizar, :fotos]
-  before_action :set_ruta_periodo, only: [:index]
   after_filter :customheaders
   protect_from_forgery :except => [:visualizar]
 
   # GET /lecturas
   # GET /lecturas.json
   def index
-
-    @lecturas = Lectura.all
-    if(params[:ruta].present?)
-      @lecturas = @lecturas.where(ruta: params[:ruta])
-    end
-    if(params[:periodo].present?)
-      @lecturas = @lecturas.where(periodo: params[:periodo])
-    end
-
-    @lecturas = @lecturas.paginate(page: params[:page])
-  end
-
-  def filtrar
-
-    @lecturas = Lectura.all
-    if(params[:ruta].present?)
-      @lecturas = @lecturas.where(ruta: params[:ruta])
-    end
-    if(params[:periodo].present?)
-      @lecturas = @lecturas.where(periodo: params[:periodo])
-    end
-    if(params[:lecturista_id].present?)
-      @lecturas = @lecturas.where(lecturista_id: params[:lecturista_id])
-    end
-
-     @estado_cantidad = {:Todos => @lecturas.count}.merge @lecturas.group(:estado).count 
-
-    if(params[:estado].present? and params[:estado] != "Todos")
-      @lecturas = @lecturas.where(estado: params[:estado])
-    else
-      params[:estado] = "Todos"
-    end
-
-    
+    @lecturas = Lectura.search(params).order(sort_column + " " + sort_direction)
 
     respond_to do |format|
       format.html do 
@@ -59,7 +26,7 @@ class LecturasController < ApplicationController
           end
         end
 
-        send_data csv 
+        send_data csv, :filename => controller_name + ".csv"
       end
       format.xls do
         columns = @lecturas.column_names
@@ -70,9 +37,10 @@ class LecturasController < ApplicationController
           end
         end
 
-        send_data csv
+        send_data csv, :filename => controller_name + ".xls"
       end
     end
+
   end
 
 
@@ -235,14 +203,18 @@ class LecturasController < ApplicationController
     params.require(:lectura).permit(:usuario, :razon_social, :doc_tipo, :doc_nro, :localidad, :calle, :altura, :piso, :dpto, :datos_comp, :cp, :situacion, :telefono, :medidor_tipo, :medidor_num, :medidor_f_alta, :lectura_valor, :lectura_fh_toma, :lectura_fh_carga, :lat, :lon, :incidencias, :ruta, :periodo, :lecturista)
   end
 
-  def set_ruta_periodo
-    @ruta = params[:ruta]
-    @periodo = params[:periodo]
-  end
-
   def customheaders
     response.headers["Access-Control-Allow-Origin"]="*"
     response.headers["Access-Control-Allow-Methods"]= "PUT, GET, POST, DELETE, OPTIONS"
     #response.headers["Access-Control-Allow-Headers"]= "*"
+  end
+
+
+  def sort_column
+    Lectura.column_names.include?(params[:sort]) ? params[:sort] : "usuario"
+  end
+  
+  def sort_direction
+    %w[asc desc].include?(params[:direction]) ? params[:direction] : "asc"
   end
 end
