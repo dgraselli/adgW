@@ -140,7 +140,8 @@ class LecturasController < ApplicationController
     email = @lectura.email
 
     if(params[:cambios].present?)
-      dato_mail = params[:cambios].select{|x| x["dato"].downcase == "email" if x["dato"].present?}[0]
+      cambios = params[:cambios].map{|a| a[1]}
+      dato_mail = cambios.select{|x| x["dato"].downcase == "email" if x["dato"].present?}[0]
       email = dato_mail["valor"] if dato_mail.present?
     end
 
