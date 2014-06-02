@@ -38,6 +38,13 @@ namespace :chaca do
     lecturas.each{|a| a.geocode; a.save; puts "#{a.usuario} (#{a.direccion}) : #{a.latlon}"}
   end
 
+  desc "Normalizar"
+  task :normalizar => :environment  do 
+    lecturas = Lectura.where(lectura_valor: nil).update_all(estado: 'Nueva')
+    lecturas = Lectura.where(ruta: nil).delete_all
+    lecturas = Lectura.where(periodo: nil).delete_all
+  end
+
 
 end
 

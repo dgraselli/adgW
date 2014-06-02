@@ -26,16 +26,35 @@ class RutaController < ApplicationController
 
 	def nuevo_periodo
 		ruta = params[:ruta]
-		periodo = Lectura.where(ruta: ruta).maximum(:periodo)
+		periodo = Lectura.where("trim(ruta) = ?", ruta).maximum(:periodo)
 
-		#lecturas =Lectura.where(ruta: ruta, periodo: periodo).to_a
+		y = periodo.to_s[0,4].to_i
+		m = periodo.to_s[5,6].to_i
+		ndate = DateTime.new(y,m,1) + 1.month
 
-		#sig_perido = 200501;
-		#nuevas_lecturas = lecturas.map{|l| l.periodo = sig_perido; id=null}
 
-		#send nuevas_lecturas
+		sig_perido = ndate.strftime("%Y%m").to_i
 
-		redirect_to root_path
+		Lectura.where("trim(ruta) = ? AND periodo=?", ruta, periodo).each do |l|
+			nl = l.clone
+
+			nl.periodo = sig_perido
+			nl.lectura_valor = nil
+			nl.lectura_consumo = nil
+			nl.lectura_fh_toma = nil
+			nl.lectura_fh_carga = nil
+			nl.lectura_lat = nil
+			nl.lectura_lon = nil
+			nl.plan_id = nil
+			nl.cambios = nil
+			nl.incidencias = nil
+			nl.estado = "Nueva"
+			nl.save
+
+		end
+
+
+		redirect_to "/ruta/index?periodo=#{sig_perido}"
 	end
 
 

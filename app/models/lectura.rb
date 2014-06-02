@@ -147,7 +147,7 @@ private
     end
 
     def set_estado
-      self.estado = 'Leida' if self.lectura_valor.present?
+      self.estado = self.lectura_valor.present? ? 'Leida' : 'Nueva'
     end
 
     def set_consumo
