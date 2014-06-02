@@ -33,7 +33,7 @@ namespace :chaca do
   task :geocodificar_faltante, [:lecturista] => :environment  do |task, args|
     lecturas = Lectura.where(:lat => nil)
     if args[:lecturista].present?
-      lecturas.where(lecturista: Lecturista.find_by_name(args[:lecturista]))
+      lecturas = lecturas.where(lecturista: Lecturista.find_by_nombre(args[:lecturista]))
     end
     lecturas.each{|a| a.geocode; a.save; puts "#{a.usuario} (#{a.direccion}) : #{a.latlon}"}
   end

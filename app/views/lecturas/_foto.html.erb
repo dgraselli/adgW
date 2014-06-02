@@ -2,3 +2,4 @@
 <div class="foto_tumb">
 <%= image_tag url_for(:controller => "main", :action => "foto", :id => foto.id) , {class: "img-thumbnail", alt:"Responsive image", rel: "zoom"}%>
 </div>
+<td><%= link_to 'Eliminar', foto, method: :delete, data: { confirm: 'Seguro?' } %></td>
