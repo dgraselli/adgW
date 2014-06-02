@@ -29,11 +29,11 @@ namespace :chaca do
     Lectura.all.each{|a| a.adeudado = rand(250.00-3250.99) + rand(0.00+0.99).round(2) ; a.save; puts a.adeudado.to_s + "    -"}
   end
 
-  desc "Geocodificar ausentes por direccion"
-  task :geocodificar_faltante, [:ruta] => :environment  do |task, args|
+  desc "Geocodificar ausentes por lecturista"
+  task :geocodificar_faltante, [:lecturista] => :environment  do |task, args|
     lecturas = Lectura.where(:lat => nil)
-    if args[:ruta].present?
-      lecturas.where(ruta: args[:ruta])
+    if args[:lecturista].present?
+      lecturas.where(lecturista: Lecturista.find_by_name(args[:lecturista]))
     end
     lecturas.each{|a| a.geocode; a.save; puts "#{a.usuario} (#{a.direccion}) : #{a.latlon}"}
   end
