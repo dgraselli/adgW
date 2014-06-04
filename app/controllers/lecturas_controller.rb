@@ -178,16 +178,24 @@ class LecturasController < ApplicationController
 
   def add_foto
     @lectura = Lectura.find(params[:id])
+    if params[:file].nil? 
+      redirect_to @lectura, notice: 'Debe selecionar un archivo.'
+    else
 
     @foto = Foto.new do |t|
       t.lectura_id = @lectura.id
       t.usuario_id = @lectura.usuario
-
+      t.foto = params[:file].read
+      t.filename = params[:file].original_filename
+      t.name = params[:file].original_filename
+      t.obs = "test"
+      t.mime_type = params[:file].content_type
     end
 
     @foto.save
 
     redirect_to @lectura
+  end
   end
 
   def delete_foto
