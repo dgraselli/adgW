@@ -170,21 +170,33 @@
 </div>
 <div class="col-md-8">
 
+      <fieldset>
+      <legend>Georeferencia</legend>
+        Medidor sin georeferenciar <%= button_to "Geo-referenciar", "/lecturas/#{@lectura.id}/georeferenciar" %>
+
       <% if  @lectura.lat.present? or @lectura.lectura_lat.present? %>
       <%= image_tag "http://maps.google.com/maps/api/staticmap?size=350x350&sensor=false&zoom=16&markers=#{@lectura.lat}%2C#{@lectura.lon}|#{@lectura.lectura_lat}%2C#{@lectura.lectura_lon}" ,{style: 'border: solid black 1px'} %>
 
       <%= image_tag "http://maps.googleapis.com/maps/api/streetview?size=350x350&location=40.720032,%20-73.988354&fov=90&heading=235&pitch=10&sensor=false" ,{style: 'border: solid black 1px'} %>
 
       <% else %>
-      <div >
-        Medidor sin georeferenciar <%= button_to "Geo-referenciar", "/lecturas/#{@lectura.id}/georeferenciar" %>
-      </div>
       <% end %>
+      </fieldset>
 
 
       <% @lectura.fotos.each do |foto| %>
         <%= render partial: 'foto', locals: {foto: foto} %>
       <% end%>
+
+      <fieldset>
+      <legend>Agregar Fotos</legend>
+      <%= form_tag '/lecturas/add_foto',  multipart: true  do  %>
+        <%= hidden_field_tag 'id', @lectura.id %>
+        <%= file_field_tag 'file' %>
+        <%= submit_tag 'Aceptar' %>
+      <% end %>
+      </form>
+      </fieldset>
 
         <div>
           <h4>Historico Consumo</h4>

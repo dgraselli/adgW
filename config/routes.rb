@@ -25,6 +25,8 @@ FirstApp::Application.routes.draw do
   post  '/update_lectura', to: 'lecturas#update_lectura'
   post  '/update_foto', to: 'lecturas#update_foto'
   get  '/main/test_update_lectura'
+  get  '/lecturas/delete_foto', to: 'lecturas#delete_foto'
+  match  '/lecturas/add_foto', to: 'lecturas#add_foto', via: [:get, :post, :put]
 
   post '/lecturas/update_lectura'
   match '/lecturas/filtrar', to: 'lecturas#filtrar', via: [:get, :post]

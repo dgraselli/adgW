@@ -1,7 +1,7 @@
 class LecturasController < ApplicationController
-    helper_method :sort_column, :sort_direction
-    include SessionsHelper
-    before_filter :signed_in_user
+  helper_method :sort_column, :sort_direction
+  include SessionsHelper
+  before_filter :signed_in_user
 
   before_action :set_lectura, only: [:show, :edit, :update, :destroy, :georeferenciar, :visualizar, :fotos]
   after_filter :customheaders
@@ -13,12 +13,12 @@ class LecturasController < ApplicationController
     @lecturas = Lectura.search(params).order(sort_column + " " + sort_direction)
 
     respond_to do |format|
-      format.html do 
+      format.html do
         @lecturas = @lecturas.paginate(page: params[:page])
-        @estado_cantidad = {:Todos => @lecturas.count}.merge @lecturas.group(:estado).count 
-        render :index 
+        @estado_cantidad = {:Todos => @lecturas.count}.merge @lecturas.group(:estado).count
+        render :index
       end
-      format.csv do 
+      format.csv do
         columns = @lecturas.column_names
         csv = CSV.generate() do |csv|
           csv << columns
@@ -136,7 +136,7 @@ class LecturasController < ApplicationController
     @lectura.plan_id = params[:id_plan]
 
     @lectura.save
-    
+
     email = @lectura.email
 
     if(params[:cambios].present?)
@@ -145,7 +145,7 @@ class LecturasController < ApplicationController
       email = dato_mail["valor"] if dato_mail.present?
     end
 
-    if(params[:id_plan].present? and email.present?) 
+    if(params[:id_plan].present? and email.present?)
       UserMailer.send_factura(@lectura, params[:id_plan], email).deliver
     end
 
@@ -173,10 +173,31 @@ class LecturasController < ApplicationController
       @foto.save
     end
 
-
     render :json => {result: 'ok'}
-
   end
+
+  def add_foto
+    @lectura = Lectura.find(params[:id])
+
+    @foto = Foto.new do |t|
+      t.lectura_id = @lectura.id
+      t.usuario_id = @lectura.usuario
+
+    end
+
+    @foto.save
+
+    redirect_to @lectura
+  end
+
+  def delete_foto
+    foto = Foto.find(params[:id])
+    lectura = foto.lectura
+    foto.delete
+
+    redirect_to lectura
+  end
+
 
   def visualizar
     render layout: false
@@ -190,7 +211,7 @@ class LecturasController < ApplicationController
     @lectura.geocode
     @lectura.save
 
-    render :show
+    redirect_to @lectura
 
   end
 
@@ -215,7 +236,7 @@ class LecturasController < ApplicationController
   def sort_column
     Lectura.column_names.include?(params[:sort]) ? params[:sort] : "usuario"
   end
-  
+
   def sort_direction
     %w[asc desc].include?(params[:direction]) ? params[:direction] : "asc"
   end
