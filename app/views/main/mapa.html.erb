@@ -31,7 +31,7 @@ function init() {
 	  new google.maps.Marker({
 		  position: new google.maps.LatLng( <%= l.lat %> , <%= l.lon %> ),
 		  map: map,
-		  icon: 'http://maps.google.com/mapfiles/ms/icons/red-dot.png',
+		  icon: '/images/red-dot.png',
 	      title: '<%= l.user.name if l.user %>'
 	  });
   	<% end %>		
