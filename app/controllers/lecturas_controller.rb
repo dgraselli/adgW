@@ -3,9 +3,9 @@ class LecturasController < ApplicationController
   include SessionsHelper
   before_filter :signed_in_user
 
-  before_action :set_lectura, only: [:show, :edit, :update, :destroy, :georeferenciar, :visualizar, :fotos]
+  before_action :set_lectura, only: [:show, :edit, :update, :destroy, :georeferenciar, :visualizar, :fotos, :mini]
   after_filter :customheaders
-  protect_from_forgery :except => [:visualizar]
+  protect_from_forgery :except => [:visualizar, :mini]
 
   # GET /lecturas
   # GET /lecturas.json
@@ -208,6 +208,10 @@ class LecturasController < ApplicationController
 
 
   def visualizar
+    render layout: false
+  end
+
+  def mini
     render layout: false
   end
 
