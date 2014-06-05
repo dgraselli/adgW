@@ -27,7 +27,7 @@ function init() {
 		  position: new google.maps.LatLng( <%= l.lat %> , <%= l.lon %> ),
 		  map: map,
 		  icon: 'http://maps.google.com/mapfiles/ms/icons/red-dot.png',
-	      title: '<%= l.user.nombre if l.user %>'
+	      title: '<%= l.user.name if l.user %>'
 	  });
   	<% end %>		
 		
