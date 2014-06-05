@@ -14,6 +14,8 @@
 
 <script type="text/javascript">
 
+//$.getScript('https://maps.googleapis.com/maps/api/js?key=xxx&sensor=false');
+
 function init() {
 	points = [];
 	<%  @tracks.select{|a| a.lat.present?}.each do |l| %>
@@ -32,7 +34,7 @@ function init() {
 		  position: new google.maps.LatLng( <%= l.lat %> , <%= l.lon %> ),
 		  map: map,
 		  icon: '/images/red-dot.png',
-	      title: '<%= l.user.name if l.user %>'
+	      title: '<%= l.user.name if l.user %>',
 	  });
   	<% end %>		
 		
