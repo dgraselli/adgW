@@ -24,8 +24,7 @@ class UsersController < ApplicationController
   end
 
   def track
-    t = Track.create user: current_user, lat: params[:lat], lon: params[:lng]
-    t.save
+    Track.create user: current_user, lat: params[:lat], lon: params[:lng]
     render :json => {result: 'ok'}
   end
 
