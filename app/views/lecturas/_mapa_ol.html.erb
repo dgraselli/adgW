@@ -1,0 +1,28 @@
+ <script src="http://www.openlayers.org/api/OpenLayers.js"></script>
+
+<fieldset>
+<legend onclick="$(this).next('div').slideToggle()">Mapa</legend>
+<div id="mapa"  style="width: 100%; height: 300px"></div>
+</fieldset>
+
+         <script type="text/javascript">
+
+           var mapa, capa;
+           mapa = new OpenLayers.Map('mapa');
+           capa = new OpenLayers.Layer.OSM();
+           mapa.addLayer(capa);
+
+           var markers = new OpenLayers.Layer.Markers( "Markers" );
+
+		   	var size = new OpenLayers.Size(21,31);
+			var offset = new OpenLayers.Pixel(-(size.w/2), -size.h);
+			var icon = new OpenLayers.Icon(
+		           "http://www.ingemoral.es/img/markers/icons-2/scenic.png",
+		            size,offset);
+
+			 markers.addMarker(new OpenLayers.Marker(center, icon));
+
+
+		   mapa.addLayer(markers);
+           mapa.zoomToMaxExtent();
+        </script>
