@@ -1,5 +1,7 @@
 
-<div class="foto_tumb">
-<%= image_tag url_for(:controller => "main", :action => "foto", :id => foto.id) , {class: "img-thumbnail", alt:"Responsive image", rel: "zoom"}%>
-<%= link_to 'Eliminar', "/lecturas/delete_foto?id=#{foto.id}", method: :delete, data: { confirm: 'Seguro?' } %>
+<div class="col-xs-6 col-md-3 text-right" >
+	<%= image_tag url_for(:controller => "main", :action => "foto", :id => foto.id) , {class: "img-thumbnail", alt:"Responsive image", rel: "zoom"}%>
+	<%= link_to  "/lecturas/delete_foto?id=#{foto.id}", method: :delete, confirm: 'Seguro?' do %>
+	<span class="glyphicon glyphicon-remove" title="Eliminar"></span>
+	<% end %>
 </div>

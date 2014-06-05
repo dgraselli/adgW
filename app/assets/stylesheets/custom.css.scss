@@ -26,7 +26,7 @@ table {
 
 a{
   color: $link_color;
-  &hover {
+  hover {
     text-decoration: underline;
     background-color: white;
   }
@@ -121,4 +121,22 @@ a{
   cursor: -webkit-zoom-in; cursor: -moz-zoom-in;
   border: 1px solid black;
   margin: 10px;
+}
+
+
+fieldset.toggeable  {
+    margin-top: 20px;
+    legend
+     {
+      font-size: 14px;
+      font-weight: bold;
+      text-align: right;
+      cursor: pointer;
+     }
+}
+
+.fullscreen
+{
+  width: 100%;
+  height: 100%;
 }

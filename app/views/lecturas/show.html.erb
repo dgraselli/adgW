@@ -1,3 +1,4 @@
+<h1>Lectura</h1>
 
 <div class="row">
   <div class="col-md-4">
@@ -170,36 +171,41 @@
 </div>
 <div class="col-md-8">
 
+
+
       <fieldset>
-      <legend>Georeferencia</legend>
-        Medidor sin georeferenciar <%= button_to "Geo-referenciar", "/lecturas/#{@lectura.id}/georeferenciar" %>
+      <legend>Geo-referencia</legend>
+
+        <%= button_to "Geo-referenciar", "/lecturas/#{@lectura.id}/georeferenciar", class: "btn  btn-primary glyphicon glyphicon-star" %>
+        <br />
 
       <% if  @lectura.lat.present? or @lectura.lectura_lat.present? %>
       <%= image_tag "http://maps.google.com/maps/api/staticmap?size=350x350&sensor=false&zoom=16&markers=#{@lectura.lat}%2C#{@lectura.lon}|#{@lectura.lectura_lat}%2C#{@lectura.lectura_lon}" ,{style: 'border: solid black 1px'} %>
 
-      <%= image_tag "http://maps.googleapis.com/maps/api/streetview?size=350x350&location=40.720032,%20-73.988354&fov=90&heading=235&pitch=10&sensor=false" ,{style: 'border: solid black 1px'} %>
-
+      <%#= image_tag "http://maps.googleapis.com/maps/api/streetview?size=350x350&location=40.720032,%20-73.988354&fov=90&heading=235&pitch=10&sensor=false" ,{style: 'border: solid black 1px'} %>
       <% else %>
       <% end %>
       </fieldset>
 
+      <div class="row">
+        <% @lectura.fotos.each do |foto| %>
+          <%= render partial: 'foto', locals: {foto: foto} %>
+        <% end%>
+      </div>
 
-      <% @lectura.fotos.each do |foto| %>
-        <%= render partial: 'foto', locals: {foto: foto} %>
-      <% end%>
-
-<!--
-      <fieldset>
-      <legend>Agregar Fotos</legend>
+      <fieldset class="toggeable">
+      <legend onclick="$(this).next().toggle('1000')">Agregar Fotos</legend>
+      <div id="form_fotos" style="display: none">
       <%= form_tag '/lecturas/add_foto',  multipart: true  do  %>
         <%= hidden_field_tag 'id', @lectura.id %>
         <%= file_field_tag 'file' %>
         <%= submit_tag 'Aceptar' %>
       <% end %>
+      </div>
       </form>
       </fieldset>
--->
 
+      <div class="row">
         <div>
           <h4>Historico Consumo</h4>
           <%= column_chart @lectura.historico_consumo  %>
@@ -208,6 +214,6 @@
           <h4>Historico Lectura</h4>
           <%= column_chart @lectura.historico_lectura  %>
         </div>
-
+       </div>   
 </div>
 </div>

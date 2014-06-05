@@ -23,7 +23,11 @@ class UsersController < ApplicationController
     render :show
   end
 
+  def track
+    Track.create! user: current_user, lat: params[:lat], lon: params[:lon]
 
+    render :json => {result: 'ok'}
+  end
 
   def create
     @user = User.new(user_params)

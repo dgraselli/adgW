@@ -20,3 +20,10 @@ function submit_form(form_name, format)
   hidden_formant.val(aux); 
 }
 
+
+
+.fullscreen
+{
+  width: 100%;
+  height: 100%;
+}
