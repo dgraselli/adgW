@@ -22,8 +22,3 @@ function submit_form(form_name, format)
 
 
 
-.fullscreen
-{
-  width: 100%;
-  height: 100%;
-}

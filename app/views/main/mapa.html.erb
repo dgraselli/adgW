@@ -1,7 +1,7 @@
 
 <fieldset>
 <legend onclick="$(this).next('div').slideToggle()">Mapa</legend>
-<div id="map" style="width: 100%; height: 400px;"></div>
+<div id="map" class="mapa"></div>
 </fieldset>
 
 
@@ -21,15 +21,15 @@ function init() {
   }
   var map = new google.maps.Map(document.getElementById('map'), mapOptions);
 
-  for(i=0; i < points.length; i++) 
-  {
-	  marker = new google.maps.Marker({
-		  position: new google.maps.LatLng(points[i][0], points[i][1]),
+
+	<%  @tracks.select{|a| a.lat.present?}.each do |l| %>	
+	  new google.maps.Marker({
+		  position: new google.maps.LatLng( <%= l.lat %> , <%= l.lon %> ),
 		  map: map,
 		  icon: 'http://maps.google.com/mapfiles/ms/icons/red-dot.png',
-	      title: 'Hello World!'
+	      title: '<%= l.user.nombre if l.user %>'
 	  });
-  }			
+  	<% end %>		
 		
 	
 		
