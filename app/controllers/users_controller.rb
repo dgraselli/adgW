@@ -28,6 +28,11 @@ class UsersController < ApplicationController
     render :json => {result: 'ok'}
   end
 
+  def tracks
+    @tracks = Track.search(params)
+    @user_cant = @tracks.group(:user).count #.merge( User.all.map{|u| [u , 0]} )
+  end
+
   def create
     @user = User.new(user_params)
     if @user.save

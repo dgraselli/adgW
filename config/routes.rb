@@ -38,8 +38,8 @@ FirstApp::Application.routes.draw do
   get  '/ruta/periodos'
   post '/ruta/asignar'
   post '/ruta/nuevo_periodo'
-  match  '/track', to: 'users#track', via: [:post, :get]
-  get '/main/mapa'
+  match '/track', to: 'users#track', via: [:post, :get]
+  match '/tracks', to: 'users#tracks', via: [:get]
   resources :lecturas
   resources :lecturistas
   resources :incidencias

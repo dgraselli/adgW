@@ -41,10 +41,6 @@ class MainController < ApplicationController
     render :qrcode => url, :unit => 10, :level => :l, :format => 'svg'
   end
 
-  def mapa
-    @tracks = Track.last(200)
-  end
-
   def load_suggestions
     @suggestions = Ruta.select(:nombre)
     render json: @suggestions

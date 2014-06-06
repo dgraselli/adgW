@@ -1,0 +1,54 @@
+<h1>OL3</h1>
+<div id="map" class="map"></div>
+
+<script type="text/javascript">
+
+osm = new ol.layer.Tile({
+   source: new ol.source.OSM()
+});
+
+
+var iconStyle = new ol.style.Style({
+  image: new ol.style.Icon( ({
+    src: '/images/green-dot.png'
+  }))
+});
+
+icon_features = [];
+
+points =  <%=raw @tracks.select{|a| a.lat.present?}.to_json %> ;
+
+for(i=0; i < points.length; i++)
+{
+   p = [points[i].lon, points[i].lat];
+   g = new ol.geom.Point(p).transform('EPSG:4326', 'EPSG:3857');
+   iconFeature =  new ol.Feature({geometry: g});
+   iconFeature.setStyle(iconStyle);
+
+   icon_features.push(iconFeature);  
+}
+
+
+
+var vectorLayer = new ol.layer.Vector({
+  source: new ol.source.Vector({
+    features: icon_features
+  })
+});
+
+
+var map = new ol.Map({
+  controls: ol.control.defaults().extend([
+    new ol.control.FullScreen(),
+  ]),
+  target: 'map',
+  layers: [osm, vectorLayer],
+  view: new ol.View2D({
+    center: ol.proj.transform(p, 'EPSG:4326', 'EPSG:3857'),
+    zoom: 12
+  })
+});
+
+
+
+</script>

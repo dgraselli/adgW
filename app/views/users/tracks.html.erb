@@ -1,0 +1,37 @@
+<%= form_tag tracks_path, :method => 'get', :id => "tracks_search" do %>
+
+    <%= label_tag "Desde" %>
+    <%= select_tag 'desde', options_for_select([
+      [" 2 hs", 2],
+      [" 6 hs", 6],
+      ["12 hs", 12],
+      ["24 hs", 24],
+      ["48 hs", 48]
+      ]) %>
+
+    <%= hidden_field_tag 'user' , params[:user], {id: 'h_user'} %>
+
+    <%= submit_tag "Filtrar", {id: 'submit_btn', class: "btn btn-primary "} %>
+
+<% end %>
+
+
+<div class="row">
+  <div class="col-md-2" style="padding-top: 90px">
+    <ul class="nav nav-pills nav-stacked">
+    <% @user_cant.each do |u,cant| %>
+      <% if  params[:user].to_s == u.to_s %>
+        <li class="active" >
+      <% else %>
+        <li  >
+      <% end %>
+        <a href="#" onclick="$('#h_user').val('<%=u%>'); $('#submit_btn').click()" ><span class="badge pull-right"><%=cant%></span><%= u.to_s  %>&nbsp;</a>
+      </li>
+    <% end %>
+    </ul>
+  </div>
+  <div class="col-md-10">
+	<%= render 'mapa_ol3' %>
+  </div>
+</div>
+
