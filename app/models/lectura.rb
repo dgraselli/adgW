@@ -2,7 +2,7 @@ class Lectura < ActiveRecord::Base
   belongs_to :lecturista
   has_many :fotos
   
-  geocoded_by :direccion, :latitude => :lat, :longitude => :lon
+  geocoded_by :direccion_geo, :latitude => :lat, :longitude => :lon
   #after_validation :geocode, :if => :address_changed?
   #after_validation :geocode, if: ->(obj){ ! obj.lat.present? and obj.direccion.present? and obj.address_changed? }
 
@@ -73,8 +73,12 @@ class Lectura < ActiveRecord::Base
     Lectura.where(medidor_tipo: medidor_tipo, medidor_num: medidor_num).group(:periodo).order(:periodo).maximum(:lectura_valor)
   end
 
-  def direccion
+  def direccion_geo
     "#{calle} #{altura}, #{localidad}, Ar"
+  end
+
+  def direccion
+    "#{calle} N° #{altura}
   end
 
   def address_changed?
