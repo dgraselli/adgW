@@ -7,73 +7,46 @@
 
 
 <div id="map" class="map"></div>
-    <script type="text/javascript">
-      osm = new ol.layer.Tile({
-            source: new ol.source.OSM()
-          });
 
+<script type="text/javascript">
+osm = new ol.layer.Tile({
+    source: new ol.source.OSM()
+  });
 
-var iconStyle = new ol.style.Style({
-  image: new ol.style.Icon(/** @type {olx.style.IconOptions} */ ({
-    anchor: [0.5, 46],
-    anchorXUnits: 'fraction',
-    anchorYUnits: 'pixels',
-    opacity: 0.75,
-    src: '/images/pin.png'
-  }))
+p = <%=raw a = @lecturas.select{|a| a.lat.present?}.first; [a.lon, a.lat] %>;
+
+var map = new ol.Map({
+  controls: ol.control.defaults().extend([
+    new ol.control.FullScreen(),
+  ]),
+  target: 'map',
+  layers: [osm],
+  view: new ol.View2D({
+    center: ol.proj.transform(p, 'EPSG:4326', 'EPSG:3857'),
+    zoom: 16  
+  })
 });
-
-icon_features = [];
-
-points = [];
+            
 <%  @lecturas.select{|a| a.lat.present?}.each do |l| %>
-    points.push([ <%= l.lon %> , <%= l.lat %>]);
+      p = [ <%= l.lon %> , <%= l.lat %>];
+      g = new ol.geom.Point( p ).transform('EPSG:4326', 'EPSG:3857');
+      map.addOverlay(new ol.Overlay({
+        position: ol.proj.transform(p, 'EPSG:4326', 'EPSG:3857'),
+        element: $('<img src="/images/green-dot.png">')
+            .css({marginTop: '-200%', marginLeft: '-50%', cursor: 'pointer'})
+            .tooltip({title: '<%=l.direccion%>', trigger: 'hover'})
+      }))
 <% end %>
 
-
-points_toma = [];
 <%  @lecturas.select{|a| a.lectura_lat.present?}.each do |l| %>
-    points_toma.push([ <%= l.lectura_lon %> , <%= l.lectura_lat %>]);
+      p = [ <%= l.letura_lon %> , <%= l.lectura_lat %>];
+      g = new ol.geom.Point( p ).transform('EPSG:4326', 'EPSG:3857');
+      map.addOverlay(new ol.Overlay({
+        position: ol.proj.transform(p, 'EPSG:4326', 'EPSG:3857'),
+        element: $('<img src="/images/red-dot.png">')
+            .css({marginTop: '-200%', marginLeft: '-50%', cursor: 'pointer'})
+            .tooltip({title: '<%=l.direccion%>', trigger: 'hover'})
+      }))
 <% end %>
 
-
-for(i=0; i < points.length; i++)
-{
-   g = new ol.geom.Point(points[i]).transform('EPSG:4326', 'EPSG:3857');
-   //g2 = g.transform(ol.proj.getTransform('EPSG:4326', 'EPSG:3857'));
-   iconFeature =  new ol.Feature({geometry: g});
-   iconFeature.setStyle(iconStyle);
-   icon_features.push(iconFeature);  
-}
-
-//alert(points);
-
-var vectorSource = new ol.source.Vector({
-  features: icon_features
-});
-
-var vectorLayer = new ol.layer.Vector({
-  source: vectorSource
-});
-
-
-
-iconFeature.setStyle(iconStyle);
-
-
-      var map2 = new ol.Map({
-        controls: ol.control.defaults().extend([
-          new ol.control.FullScreen(),
-        ]),
-        target: 'map',
-        layers: [osm, vectorLayer],
-        view: new ol.View2D({
-          center: [0,0],
-          zoom: 4
-        })
-      });
-
-      map.zoomToMaxExtent(true);
-
-
-    </script>
+</script>
