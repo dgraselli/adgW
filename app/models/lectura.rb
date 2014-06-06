@@ -78,7 +78,7 @@ class Lectura < ActiveRecord::Base
   end
 
   def direccion
-    "#{calle} N° #{altura}
+    "#{calle} N° #{altura}"
   end
 
   def address_changed?
