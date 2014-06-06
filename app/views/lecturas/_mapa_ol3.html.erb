@@ -39,7 +39,7 @@ var map = new ol.Map({
 <% end %>
 
 <%  @lecturas.select{|a| a.lectura_lat.present?}.each do |l| %>
-      p = [ <%= l.letura_lon %> , <%= l.lectura_lat %>];
+      p = [ <%= l.lectura_lon %> , <%= l.lectura_lat %>];
       g = new ol.geom.Point( p ).transform('EPSG:4326', 'EPSG:3857');
       map.addOverlay(new ol.Overlay({
         position: ol.proj.transform(p, 'EPSG:4326', 'EPSG:3857'),
