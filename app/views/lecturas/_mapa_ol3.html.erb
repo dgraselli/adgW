@@ -13,7 +13,7 @@ osm = new ol.layer.Tile({
     source: new ol.source.OSM()
   });
 
-p = <%=raw a = @lecturas.select{|a| a.present? && a.lat.present?}.first; [a.lon, a.lat] %>;
+p = <%=raw a = @lecturas.select{|a| a.present? && a.lat.present?}.first; a.nil? ? [-54,-34] :  [a.lon, a.lat] %>;
 
 var map = new ol.Map({
   controls: ol.control.defaults().extend([
