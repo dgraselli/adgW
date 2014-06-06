@@ -14,7 +14,7 @@ class LecturasController < ApplicationController
 
     respond_to do |format|
       format.html do
-        @lecturas = @lecturas.paginate(page: params[:page])
+        @lecturas = @lecturas.paginate(page: params[:page],  :per_page => 300)
         @estado_cantidad = {:Todos => @lecturas.count}.merge @lecturas.group(:estado).count
         render :index
       end
