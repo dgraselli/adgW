@@ -22,4 +22,5 @@
 //= require easing
 //= require smoothzoom
 //= require common
+//= require ol
 
