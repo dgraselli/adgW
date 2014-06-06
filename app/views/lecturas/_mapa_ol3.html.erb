@@ -13,7 +13,7 @@ osm = new ol.layer.Tile({
     source: new ol.source.OSM()
   });
 
-p = <%=raw a = @lecturas.select{|a| a.lat.present?}.first; [a.lon, a.lat] %>;
+p = <%=raw a = @lecturas.select{|a| a.lat.present? && a.lon.present?}.first; [a.lon, a.lat] %>;
 
 var map = new ol.Map({
   controls: ol.control.defaults().extend([
@@ -38,7 +38,7 @@ var map = new ol.Map({
       }))
 <% end %>
 
-<%  @lecturas.select{|a| a.lectura_lat.present?}.each do |l| %>
+<%  @lecturas.select{|a| a.lectura_lat.present? && a.lectura_lon.present?}.each do |l| %>
       p = [ <%= l.lectura_lon %> , <%= l.lectura_lat %>];
       g = new ol.geom.Point( p ).transform('EPSG:4326', 'EPSG:3857');
       map.addOverlay(new ol.Overlay({
