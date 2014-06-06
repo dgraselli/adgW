@@ -7,7 +7,7 @@
       ["12 hs", 12],
       ["24 hs", 24],
       ["48 hs", 48]
-      ]) %>
+      ], params[:desde] || 48 ) %>
 
     <%= hidden_field_tag 'user' , params[:user], {id: 'h_user'} %>
 
