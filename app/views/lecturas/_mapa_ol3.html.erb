@@ -32,7 +32,7 @@ var map = new ol.Map({
       g = new ol.geom.Point( p ).transform('EPSG:4326', 'EPSG:3857');
       map.addOverlay(new ol.Overlay({
         position: ol.proj.transform(p, 'EPSG:4326', 'EPSG:3857'),
-        element: $('<img src="/images/green-dot.png">')
+        element: $('<img src="/images/red-dot.png">')
             .css({marginTop: '-200%', marginLeft: '-50%', cursor: 'pointer'})
             .tooltip({title: '<%=l.direccion%>', trigger: 'hover'})
       }))
@@ -43,7 +43,7 @@ var map = new ol.Map({
       g = new ol.geom.Point( p ).transform('EPSG:4326', 'EPSG:3857');
       map.addOverlay(new ol.Overlay({
         position: ol.proj.transform(p, 'EPSG:4326', 'EPSG:3857'),
-        element: $('<img src="/images/red-dot.png">')
+        element: $('<img src="/images/green-dot.png">')
             .css({marginTop: '-200%', marginLeft: '-50%', cursor: 'pointer'})
             .tooltip({title: '<%=l.direccion%>', trigger: 'hover'})
       }))
