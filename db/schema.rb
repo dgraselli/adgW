@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140607193027) do
+ActiveRecord::Schema.define(version: 20140607194521) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -106,9 +106,9 @@ ActiveRecord::Schema.define(version: 20140607193027) do
     t.integer  "plan_id"
     t.text     "cambios"
     t.float    "lectura_consumo"
-    t.float    "accuracy"
     t.string   "pos"
     t.string   "device"
+    t.float    "lectura_accuracy"
   end
 
   add_index "lecturas", ["lecturista_id"], name: "index_lecturas_on_lecturista_id", using: :btree
