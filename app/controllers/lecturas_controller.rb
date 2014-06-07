@@ -129,6 +129,8 @@ class LecturasController < ApplicationController
     @lectura.lectura_valor = params[:valor]
     @lectura.lectura_lon = params[:lng]
     @lectura.lectura_lat = params[:lat]
+    @lectura.lectura_accuracy = params[:accuracy]
+    @lectura.lectura_pos = params[:pos].to_s
     @lectura.estado = 'Leida'
 
     @lectura.incidencias = params[:incidencias].to_s
