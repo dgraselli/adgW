@@ -9,9 +9,25 @@
 <div id="map" class="map"></div>
 
 <script type="text/javascript">
-osm = new ol.layer.Tile({
-    source: new ol.source.OSM()
-  });
+osm = new ol.layer.Tile({ source: new ol.source.OSM() });
+google_layers =  [
+            new OpenLayers.Layer.Google(
+                "Google Physical",
+                {type: google.maps.MapTypeId.TERRAIN}
+            ),
+            new OpenLayers.Layer.Google(
+                "Google Streets", // the default
+                {numZoomLevels: 20}
+            ),
+            new OpenLayers.Layer.Google(
+                "Google Hybrid",
+                {type: google.maps.MapTypeId.HYBRID, numZoomLevels: 20}
+            ),
+            new OpenLayers.Layer.Google(
+                "Google Satellite",
+                {type: google.maps.MapTypeId.SATELLITE, numZoomLevels: 22}
+            )
+        ];
 
 p = <%=raw a = @lecturas.select{|a| a.present? && a.lat.present?}.first; a.nil? ? [-54,-34] :  [a.lon, a.lat] %>;
 
