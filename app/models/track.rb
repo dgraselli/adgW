@@ -12,7 +12,11 @@ class Track < ActiveRecord::Base
     
     if params[:desde].present?
       r = r.where('created_at > ?', DateTime.now - params[:desde].to_i.hours)
+    else
+      r = r.where('created_at > ?', DateTime.now - 48)
     end
+
+
 
     r
   end

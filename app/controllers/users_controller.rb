@@ -29,7 +29,8 @@ class UsersController < ApplicationController
   end
 
   def tracks
-    @tracks = Track.search(params)
+
+    @tracks = Track.search(params) 
     @user_cant = @tracks.group(:user).count #.merge( User.all.map{|u| [u , 0]} )
   end
 
