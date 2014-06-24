@@ -20,4 +20,9 @@ class Track < ActiveRecord::Base
 
     r
   end
+
+
+  def marker_tooltip
+    "(ACC:#{pos})"
+  end
 end

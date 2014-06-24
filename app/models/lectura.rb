@@ -145,6 +145,10 @@ class Lectura < ActiveRecord::Base
     fotos
   end
 
+  def marker_tooltip
+    "#{direccion} (ACC:#{lectura_accuracy})"
+  end
+
 private
     def default_values
       estado ||= "Nueva"
