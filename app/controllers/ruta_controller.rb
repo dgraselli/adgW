@@ -36,7 +36,7 @@ class RutaController < ApplicationController
 		sig_perido = ndate.strftime("%Y%m").to_i
 
 		Lectura.where("trim(ruta) = ? AND periodo=?", ruta, periodo).each do |l|
-			nl = l.clone
+			nl = l.dup
 
 			nl.periodo = sig_perido
 			nl.lectura_valor = nil
