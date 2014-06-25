@@ -73,7 +73,8 @@ class MainController < ApplicationController
     #check column_names
     invalid_cols = @columns.select{|a|  ! Lectura.column_names.include? a}
     if( ! invalid_cols.empty?)
-      fail "Columnas invalidas:" + invalid_cols.join(",")
+      redirect_to '/main/import', notice: "Columnas invalidas:" + invalid_cols.join(",")
+      return
     end
 
     @values = lines[1..lines.count-1].map{|line| line << "Nueva"} 

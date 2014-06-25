@@ -114,7 +114,7 @@ class LecturasController < ApplicationController
       @lecturas = @lecturas.where(periodo: params[:periodo])
     end
 
-    @lecturas = @lecturas.order(:secuencia);
+    @lecturas = @lecturas.order(:secuencia).limit(500);
 
     render :json => @lecturas.to_json(:methods => [:usuario, :razon_social, :direccion, :rango_valido, :deuda])
     #render :json => @lecturas.to_json(only:[:id, :usuario, :direccion], :methods => [:usuario, :razon_social, :direccion, :rango_valido])
