@@ -1,0 +1,8 @@
+
+Calle: <%=params[:calle]%> <br>
+Altura: <%=params[:altura]%> <br>
+Cantidad: <%=  @unidades.count %> <br>
+<br>
+
+
+<%= render  partial: 'shared/table', locals: {table: @unidades}%>

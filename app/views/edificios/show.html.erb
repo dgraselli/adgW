@@ -1,0 +1,29 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Calle:</strong>
+  <%= @edificio.calle %>
+</p>
+
+<p>
+  <strong>Altura:</strong>
+  <%= @edificio.altura %>
+</p>
+
+<p>
+  <strong>Cant uh:</strong>
+  <%= @edificio.cant_uh %>
+</p>
+
+<p>
+  <strong>Lat:</strong>
+  <%= @edificio.lat %>
+</p>
+
+<p>
+  <strong>Lon:</strong>
+  <%= @edificio.lon %>
+</p>
+
+<%= link_to 'Edit', edit_edificio_path(@edificio) %> |
+<%= link_to 'Back', edificios_path %>

@@ -1,0 +1,184 @@
+
+<fieldset class="toggeable">
+<legend onclick="$(this).next('div').slideToggle()">Mapa</legend>
+<div>
+<div id="map" class="mapa"></div>
+
+<div class="text-right">
+<a onclick="map_fs('#map')" class="btn btn-primary">Pantalla completa</a>
+</div>
+</div>
+</fieldset>
+
+
+<script src="https://maps.googleapis.com/maps/api/js?v=3.exp"></script>
+
+<script type="text/javascript">
+
+
+
+function addMarker(map, data) {
+  var marker = new google.maps.Marker({
+    position: new google.maps.LatLng(data.lat, data.lon),
+    map: map,
+    icon: data.icon,
+    id: data.id,
+    title: data.title
+  });
+
+  // Open the infowindow on marker click
+  /*
+  google.maps.event.addListener(marker, "click", function() {
+	id = 'mapinfo_'+data.id;
+	infowindow = new google.maps.InfoWindow({
+	    content: '<div id="'+id+'" style="width: 200px; height: 300px">...</div>'
+	});
+    infowindow.open(map, marker);
+    $('#'+id).load(data.url);
+  });
+  */
+
+  	   google.maps.event.addListener(marker, 'click', function(){
+	   	removeEdificio(marker);
+	   });
+
+}
+
+
+
+
+var marker;
+var location;
+
+function placeMarker(map, location) {
+  if ( marker ) {
+    marker.setPosition(location);
+  } else {
+    marker = new google.maps.Marker({
+      position: location,
+      icon: '/images/yellow-dot.png',
+      map: map,
+      draggable:true,
+	  animation: google.maps.Animation.DROP
+
+    });
+  }
+}	
+
+
+
+
+
+function removeEdificio(m)
+{
+	$.ajax({
+		type: "DELETE",
+		url: '/edificios/'+m.id+'.json',
+		success: function(res){
+			m.setMap(null);
+		},
+		dataType: 'json'
+		});
+
+}
+function addEdificio()
+{
+	obs = $('#iptObs').val();
+	lat = marker.position.k;
+	lon = marker.position.B;
+	params = {
+		calle: 'buscar',
+		altura: 0,
+		cant_uh: obs,
+		lat: lat,
+		lon: lon
+	}
+	
+	$.ajax({
+		type: "POST",
+		url: '/edificios.json',
+		data: {edificio: params},
+		success: function(res){
+			marker = null;
+			alert('Agregada');	
+		},
+		dataType: 'json'
+		});
+
+}
+
+
+
+function init() {
+
+  markers = [];
+  <%  @direcciones.select{|a| a.lat.present?}.each do |l| %>
+	   markers.push({
+	   	id: '<%=l.id%>',
+	   	lat: '<%=l.lat%>',
+	   	lon: '<%=l.lon%>',
+	   	icon: '/images/red-dot.png',
+	   	title: '<%=l.direccion_geo%> - <%=l.cant_unidades%> unidades',
+	   });
+  <% end %>	
+
+  markers2 = [];
+  <%  @medidos_ph.select{|a| a.lat.present?}.each do |l| %>
+	   markers.push({
+	   	id: '<%=l.id%>',
+	   	lat: '<%=l.lat%>',
+	   	lon: '<%=l.lon%>',
+	   	icon: '/images/green-dot.png',
+	   	title: '<%=l.direccion_geo%> [<%=l.cod_ser%>]  (<%=l.consumo_promedio%>) - <%=l.razon%>',
+	   });
+  <% end %>		
+
+    markers3 = [];
+  <%  @edificios.each do |l| %>
+	   m = {
+	   	id: '<%=l.id%>',
+	   	lat: '<%=l.lat%>',
+	   	lon: '<%=l.lon%>',
+	   	icon: '/images/blue-dot.png',
+	   	title: '<%=l.cant_uh%>',
+	   };
+
+	   markers.push(m);
+  <% end %>		
+
+  var mapOptions = {
+    center: new google.maps.LatLng(markers[0].lat, markers[0].lon),
+    zoom: 14,
+  }
+  var map = new google.maps.Map(document.getElementById('map'), mapOptions);
+ 
+for (index in markers) 
+	addMarker(map, markers[index]);
+
+for (index in markers2) 
+	addMarker(map, markers[index]);
+
+for (index in markers3) 
+	addMarker(map, markers[index]);
+
+
+google.maps.event.addListener(map, 'click', function(event) {
+  placeMarker(map, event.latLng);
+});
+
+google.maps.event.addListener(map, 'rightclick', function(event) {
+  addEdificio();
+});
+
+}
+
+
+google.maps.event.addDomListener(window, 'load', init);
+
+
+
+
+</script>
+
+<input type="text" id="iptObs" />
+<input type="button" value="Agregar" onclick="addEdificio()" />

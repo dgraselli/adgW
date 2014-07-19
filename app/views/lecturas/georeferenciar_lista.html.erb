@@ -1,0 +1,10 @@
+
+<h1>Georefernciando Lecturas </h1>
+
+<h3><%= "#{@lecturas.count} lecturas sin georeferenciar" %></h3>
+
+<%@lecturas.each do |a| a.geocode; a.save %>
+      <%= "#{a.direccion_geo} --> #{a.lat},#{a.lon}" %><br>
+<% end %>
+
+<h3>Finalizado</h3>

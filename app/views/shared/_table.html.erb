@@ -1,0 +1,17 @@
+<table>
+	<tr>
+	    <% table.columns.each do |col| %>
+		<th><%= col.name %></th>
+		<% end %>
+	</tr>
+
+	<tr>
+	    <% table.each do |row| %>
+			<tr>
+			<% table.columns.each do |col| %>
+				<td><%=row[col.name]%></td>
+			<% end %>
+			</tr>
+		<% end %>
+	</tr>
+</table>

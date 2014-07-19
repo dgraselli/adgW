@@ -1,0 +1,35 @@
+<h1>Listing edificios</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Calle</th>
+      <th>Altura</th>
+      <th>Cant uh</th>
+      <th>Lat</th>
+      <th>Lon</th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @edificios.each do |edificio| %>
+      <tr>
+        <td><%= edificio.calle %></td>
+        <td><%= edificio.altura %></td>
+        <td><%= edificio.cant_uh %></td>
+        <td><%= edificio.lat %></td>
+        <td><%= edificio.lon %></td>
+        <td><%= link_to 'Show', edificio %></td>
+        <td><%= link_to 'Edit', edit_edificio_path(edificio) %></td>
+        <td><%= link_to 'Destroy', edificio, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Edificio', new_edificio_path %>
