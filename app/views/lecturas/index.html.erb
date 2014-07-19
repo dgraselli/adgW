@@ -32,9 +32,11 @@
     </button>
     <ul class="dropdown-menu">
       <li><a href="#" onclick="submit_form('lecturas_search','csv')">Archivo separado por comas</a></li>
-      <li><a href="#" onclick="$('#h_format').val('xls'); $('#lecturas_search').submit()">Excel</a></li>
+      <li><a href="#" onclick="submit_form('lecturas_search','xls')">Excel</a></li>
     </ul>
   </div>
+
+  <a href="#" onclick="if('Esto puede demorar. Esta seguro ?') {f = $('#lecturas_search'); f.attr('action','/lecturas/georeferenciar');f.submit();}" >Georeferenciar lista</a>
 
 
 <div class="row">

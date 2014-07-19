@@ -6,6 +6,7 @@
     <extended_description/>
     <trans_version/>
     <trans_type>Normal</trans_type>
+    <trans_status>0</trans_status>
     <directory>&#x2f;</directory>
     <parameters>
     </parameters>
@@ -74,6 +75,30 @@
   </info>
   <notepads>
   </notepads>
+  <connection>
+    <name>5DS_BACULA_adg_w</name>
+    <server>192.168.0.11</server>
+    <type>POSTGRESQL</type>
+    <access>Native</access>
+    <database>adg_w</database>
+    <port>5433</port>
+    <username>postgres</username>
+    <password>Encrypted 2be98afc86aa7b18aae0ca97eca97fd8b</password>
+    <servername/>
+    <data_tablespace/>
+    <index_tablespace/>
+    <attributes>
+      <attribute><code>FORCE_IDENTIFIERS_TO_LOWERCASE</code><attribute>N</attribute></attribute>
+      <attribute><code>FORCE_IDENTIFIERS_TO_UPPERCASE</code><attribute>N</attribute></attribute>
+      <attribute><code>IS_CLUSTERED</code><attribute>N</attribute></attribute>
+      <attribute><code>PORT_NUMBER</code><attribute>5433</attribute></attribute>
+      <attribute><code>PRESERVE_RESERVED_WORD_CASE</code><attribute>N</attribute></attribute>
+      <attribute><code>QUOTE_ALL_FIELDS</code><attribute>N</attribute></attribute>
+      <attribute><code>SUPPORTS_BOOLEAN_DATA_TYPE</code><attribute>Y</attribute></attribute>
+      <attribute><code>SUPPORTS_TIMESTAMP_DATA_TYPE</code><attribute>Y</attribute></attribute>
+      <attribute><code>USE_POOLING</code><attribute>N</attribute></attribute>
+    </attributes>
+  </connection>
   <connection>
     <name>ABSA_PROD_otyr_prod</name>
     <server>172.27.107.195</server>
@@ -155,8 +180,14 @@
   <hop> <from>lecturas</from><to>Actualizar</to><enabled>N</enabled> </hop>
   <hop> <from>lecturas</from><to>Salida Tabla 2 2</to><enabled>N</enabled> </hop>
   <hop> <from>lecturas</from><to>Salida Fichero de Texto</to><enabled>N</enabled> </hop>
-  <hop> <from>en const</from><to>Salida Fichero de Texto 2</to><enabled>Y</enabled> </hop>
-  <hop> <from>bald</from><to>Salida Fichero de Texto 2 2</to><enabled>Y</enabled> </hop>
+  <hop> <from>en const</from><to>Salida Fichero de Texto 2</to><enabled>N</enabled> </hop>
+  <hop> <from>bald</from><to>Salida Fichero de Texto 2 2</to><enabled>N</enabled> </hop>
+  <hop> <from>unidades</from><to>unidades out</to><enabled>N</enabled> </hop>
+  <hop> <from>lecturas</from><to>Salida Tabla 3 2</to><enabled>N</enabled> </hop>
+  <hop> <from>unidades</from><to>String operations</to><enabled>N</enabled> </hop>
+  <hop> <from>String operations</from><to>Valor Java Script Modificado</to><enabled>N</enabled> </hop>
+  <hop> <from>Valor Java Script Modificado</from><to>Salida Tabla 3</to><enabled>N</enabled> </hop>
+  <hop> <from>facturas</from><to>Salida Tabla 3 2 2</to><enabled>Y</enabled> </hop>
   </order>
   <step>
     <name>Actualizar</name>
@@ -191,8 +222,8 @@
       </lookup>
      <cluster_schema/>
  <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
-      <xloc>477</xloc>
-      <yloc>240</yloc>
+      <xloc>319</xloc>
+      <yloc>230</yloc>
       <draw>Y</draw>
       </GUI>
     </step>
@@ -563,8 +594,8 @@
     </fields>
      <cluster_schema/>
  <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
-      <xloc>461</xloc>
-      <yloc>328</yloc>
+      <xloc>778</xloc>
+      <yloc>405</yloc>
       <draw>Y</draw>
       </GUI>
     </step>
@@ -795,8 +826,8 @@
     </fields>
      <cluster_schema/>
  <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
-      <xloc>434</xloc>
-      <yloc>409</yloc>
+      <xloc>952</xloc>
+      <yloc>72</yloc>
       <draw>Y</draw>
       </GUI>
     </step>
@@ -1027,8 +1058,8 @@
     </fields>
      <cluster_schema/>
  <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
-      <xloc>436</xloc>
-      <yloc>489</yloc>
+      <xloc>954</xloc>
+      <yloc>152</yloc>
       <draw>Y</draw>
       </GUI>
     </step>
@@ -1304,6 +1335,432 @@
     </step>
 
   <step>
+    <name>Salida Tabla 3</name>
+    <type>TableOutput</type>
+    <description/>
+    <distribute>Y</distribute>
+    <custom_distribution/>
+    <copies>1</copies>
+         <partitioning>
+           <method>none</method>
+           <schema_name/>
+           </partitioning>
+    <connection>5DS_BACULA_adg_w</connection>
+    <schema/>
+    <table>unidades</table>
+    <commit>1000</commit>
+    <truncate>Y</truncate>
+    <ignore_errors>N</ignore_errors>
+    <use_batch>Y</use_batch>
+    <specify_fields>N</specify_fields>
+    <partitioning_enabled>N</partitioning_enabled>
+    <partitioning_field/>
+    <partitioning_daily>N</partitioning_daily>
+    <partitioning_monthly>Y</partitioning_monthly>
+    <tablename_in_field>N</tablename_in_field>
+    <tablename_field/>
+    <tablename_in_table>Y</tablename_in_table>
+    <return_keys>N</return_keys>
+    <return_field/>
+    <fields>
+    </fields>
+     <cluster_schema/>
+ <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
+      <xloc>720</xloc>
+      <yloc>684</yloc>
+      <draw>Y</draw>
+      </GUI>
+    </step>
+
+  <step>
+    <name>Salida Tabla 3 2</name>
+    <type>TableOutput</type>
+    <description/>
+    <distribute>Y</distribute>
+    <custom_distribution/>
+    <copies>1</copies>
+         <partitioning>
+           <method>none</method>
+           <schema_name/>
+           </partitioning>
+    <connection>5DS_BACULA_adg_w</connection>
+    <schema/>
+    <table>unidades_lecturas</table>
+    <commit>1000</commit>
+    <truncate>Y</truncate>
+    <ignore_errors>N</ignore_errors>
+    <use_batch>Y</use_batch>
+    <specify_fields>N</specify_fields>
+    <partitioning_enabled>N</partitioning_enabled>
+    <partitioning_field/>
+    <partitioning_daily>N</partitioning_daily>
+    <partitioning_monthly>Y</partitioning_monthly>
+    <tablename_in_field>N</tablename_in_field>
+    <tablename_field/>
+    <tablename_in_table>Y</tablename_in_table>
+    <return_keys>N</return_keys>
+    <return_field/>
+    <fields>
+    </fields>
+     <cluster_schema/>
+ <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
+      <xloc>257</xloc>
+      <yloc>319</yloc>
+      <draw>Y</draw>
+      </GUI>
+    </step>
+
+  <step>
+    <name>String operations</name>
+    <type>StringOperations</type>
+    <description/>
+    <distribute>Y</distribute>
+    <custom_distribution/>
+    <copies>1</copies>
+         <partitioning>
+           <method>none</method>
+           <schema_name/>
+           </partitioning>
+    <fields>
+      <field>
+        <in_stream_name>razon</in_stream_name>
+        <out_stream_name/>
+        <trim_type>both</trim_type>
+        <lower_upper>none</lower_upper>
+        <padding_type>none</padding_type>
+        <pad_char/>
+        <pad_len/>
+        <init_cap>no</init_cap>
+        <mask_xml>none</mask_xml>
+        <digits>none</digits>
+        <remove_special_characters>none</remove_special_characters>
+      </field>
+      <field>
+        <in_stream_name>situacion</in_stream_name>
+        <out_stream_name/>
+        <trim_type>both</trim_type>
+        <lower_upper>none</lower_upper>
+        <padding_type>none</padding_type>
+        <pad_char/>
+        <pad_len/>
+        <init_cap>no</init_cap>
+        <mask_xml>none</mask_xml>
+        <digits>none</digits>
+        <remove_special_characters>none</remove_special_characters>
+      </field>
+      <field>
+        <in_stream_name>seccion</in_stream_name>
+        <out_stream_name/>
+        <trim_type>both</trim_type>
+        <lower_upper>none</lower_upper>
+        <padding_type>none</padding_type>
+        <pad_char/>
+        <pad_len/>
+        <init_cap>no</init_cap>
+        <mask_xml>none</mask_xml>
+        <digits>none</digits>
+        <remove_special_characters>none</remove_special_characters>
+      </field>
+      <field>
+        <in_stream_name>locali</in_stream_name>
+        <out_stream_name/>
+        <trim_type>both</trim_type>
+        <lower_upper>none</lower_upper>
+        <padding_type>none</padding_type>
+        <pad_char/>
+        <pad_len/>
+        <init_cap>no</init_cap>
+        <mask_xml>none</mask_xml>
+        <digits>none</digits>
+        <remove_special_characters>none</remove_special_characters>
+      </field>
+      <field>
+        <in_stream_name>calle</in_stream_name>
+        <out_stream_name/>
+        <trim_type>both</trim_type>
+        <lower_upper>none</lower_upper>
+        <padding_type>none</padding_type>
+        <pad_char/>
+        <pad_len/>
+        <init_cap>no</init_cap>
+        <mask_xml>none</mask_xml>
+        <digits>none</digits>
+        <remove_special_characters>none</remove_special_characters>
+      </field>
+      <field>
+        <in_stream_name>piso</in_stream_name>
+        <out_stream_name/>
+        <trim_type>both</trim_type>
+        <lower_upper>none</lower_upper>
+        <padding_type>none</padding_type>
+        <pad_char/>
+        <pad_len/>
+        <init_cap>no</init_cap>
+        <mask_xml>none</mask_xml>
+        <digits>none</digits>
+        <remove_special_characters>none</remove_special_characters>
+      </field>
+      <field>
+        <in_stream_name>depto</in_stream_name>
+        <out_stream_name/>
+        <trim_type>both</trim_type>
+        <lower_upper>none</lower_upper>
+        <padding_type>none</padding_type>
+        <pad_char/>
+        <pad_len/>
+        <init_cap>no</init_cap>
+        <mask_xml>none</mask_xml>
+        <digits>none</digits>
+        <remove_special_characters>none</remove_special_characters>
+      </field>
+      <field>
+        <in_stream_name>manzana</in_stream_name>
+        <out_stream_name/>
+        <trim_type>both</trim_type>
+        <lower_upper>none</lower_upper>
+        <padding_type>none</padding_type>
+        <pad_char/>
+        <pad_len/>
+        <init_cap>no</init_cap>
+        <mask_xml>none</mask_xml>
+        <digits>none</digits>
+        <remove_special_characters>none</remove_special_characters>
+      </field>
+      <field>
+        <in_stream_name>parcela</in_stream_name>
+        <out_stream_name/>
+        <trim_type>both</trim_type>
+        <lower_upper>none</lower_upper>
+        <padding_type>none</padding_type>
+        <pad_char/>
+        <pad_len/>
+        <init_cap>no</init_cap>
+        <mask_xml>none</mask_xml>
+        <digits>none</digits>
+        <remove_special_characters>none</remove_special_characters>
+      </field>
+      <field>
+        <in_stream_name>subparcela</in_stream_name>
+        <out_stream_name/>
+        <trim_type>both</trim_type>
+        <lower_upper>none</lower_upper>
+        <padding_type>none</padding_type>
+        <pad_char/>
+        <pad_len/>
+        <init_cap>no</init_cap>
+        <mask_xml>none</mask_xml>
+        <digits>none</digits>
+        <remove_special_characters>none</remove_special_characters>
+      </field>
+      <field>
+        <in_stream_name>uni_fun</in_stream_name>
+        <out_stream_name/>
+        <trim_type>both</trim_type>
+        <lower_upper>none</lower_upper>
+        <padding_type>none</padding_type>
+        <pad_char/>
+        <pad_len/>
+        <init_cap>no</init_cap>
+        <mask_xml>none</mask_xml>
+        <digits>none</digits>
+        <remove_special_characters>none</remove_special_characters>
+      </field>
+      <field>
+        <in_stream_name>cod_edif</in_stream_name>
+        <out_stream_name/>
+        <trim_type>both</trim_type>
+        <lower_upper>none</lower_upper>
+        <padding_type>none</padding_type>
+        <pad_char/>
+        <pad_len/>
+        <init_cap>no</init_cap>
+        <mask_xml>none</mask_xml>
+        <digits>none</digits>
+        <remove_special_characters>none</remove_special_characters>
+      </field>
+      <field>
+        <in_stream_name>val_atr_0</in_stream_name>
+        <out_stream_name/>
+        <trim_type>both</trim_type>
+        <lower_upper>none</lower_upper>
+        <padding_type>none</padding_type>
+        <pad_char/>
+        <pad_len/>
+        <init_cap>no</init_cap>
+        <mask_xml>none</mask_xml>
+        <digits>none</digits>
+        <remove_special_characters>none</remove_special_characters>
+      </field>
+      <field>
+        <in_stream_name>val_atr_1</in_stream_name>
+        <out_stream_name/>
+        <trim_type>both</trim_type>
+        <lower_upper>none</lower_upper>
+        <padding_type>none</padding_type>
+        <pad_char/>
+        <pad_len/>
+        <init_cap>no</init_cap>
+        <mask_xml>none</mask_xml>
+        <digits>none</digits>
+        <remove_special_characters>none</remove_special_characters>
+      </field>
+      <field>
+        <in_stream_name>vf</in_stream_name>
+        <out_stream_name/>
+        <trim_type>none</trim_type>
+        <lower_upper>none</lower_upper>
+        <padding_type>none</padding_type>
+        <pad_char/>
+        <pad_len/>
+        <init_cap>no</init_cap>
+        <mask_xml>none</mask_xml>
+        <digits>none</digits>
+        <remove_special_characters>none</remove_special_characters>
+      </field>
+      <field>
+        <in_stream_name>sup</in_stream_name>
+        <out_stream_name/>
+        <trim_type>none</trim_type>
+        <lower_upper>none</lower_upper>
+        <padding_type>none</padding_type>
+        <pad_char/>
+        <pad_len/>
+        <init_cap>no</init_cap>
+        <mask_xml>none</mask_xml>
+        <digits>none</digits>
+        <remove_special_characters>none</remove_special_characters>
+      </field>
+      <field>
+        <in_stream_name>a10</in_stream_name>
+        <out_stream_name/>
+        <trim_type>none</trim_type>
+        <lower_upper>none</lower_upper>
+        <padding_type>none</padding_type>
+        <pad_char/>
+        <pad_len/>
+        <init_cap>no</init_cap>
+        <mask_xml>none</mask_xml>
+        <digits>none</digits>
+        <remove_special_characters>none</remove_special_characters>
+      </field>
+      <field>
+        <in_stream_name>a11</in_stream_name>
+        <out_stream_name/>
+        <trim_type>none</trim_type>
+        <lower_upper>none</lower_upper>
+        <padding_type>none</padding_type>
+        <pad_char/>
+        <pad_len/>
+        <init_cap>no</init_cap>
+        <mask_xml>none</mask_xml>
+        <digits>none</digits>
+        <remove_special_characters>none</remove_special_characters>
+      </field>
+      <field>
+        <in_stream_name>a16</in_stream_name>
+        <out_stream_name/>
+        <trim_type>none</trim_type>
+        <lower_upper>none</lower_upper>
+        <padding_type>none</padding_type>
+        <pad_char/>
+        <pad_len/>
+        <init_cap>no</init_cap>
+        <mask_xml>none</mask_xml>
+        <digits>none</digits>
+        <remove_special_characters>none</remove_special_characters>
+      </field>
+      <field>
+        <in_stream_name>dat_complem</in_stream_name>
+        <out_stream_name/>
+        <trim_type>both</trim_type>
+        <lower_upper>none</lower_upper>
+        <padding_type>none</padding_type>
+        <pad_char/>
+        <pad_len/>
+        <init_cap>no</init_cap>
+        <mask_xml>none</mask_xml>
+        <digits>none</digits>
+        <remove_special_characters>none</remove_special_characters>
+      </field>
+      <field>
+        <in_stream_name>cod_ser</in_stream_name>
+        <out_stream_name/>
+        <trim_type>both</trim_type>
+        <lower_upper>none</lower_upper>
+        <padding_type>none</padding_type>
+        <pad_char/>
+        <pad_len/>
+        <init_cap>no</init_cap>
+        <mask_xml>none</mask_xml>
+        <digits>none</digits>
+        <remove_special_characters>none</remove_special_characters>
+      </field>
+      <field>
+        <in_stream_name>cod_con</in_stream_name>
+        <out_stream_name/>
+        <trim_type>both</trim_type>
+        <lower_upper>none</lower_upper>
+        <padding_type>none</padding_type>
+        <pad_char/>
+        <pad_len/>
+        <init_cap>no</init_cap>
+        <mask_xml>none</mask_xml>
+        <digits>none</digits>
+        <remove_special_characters>none</remove_special_characters>
+      </field>
+      <field>
+        <in_stream_name>ser_bas</in_stream_name>
+        <out_stream_name/>
+        <trim_type>both</trim_type>
+        <lower_upper>none</lower_upper>
+        <padding_type>none</padding_type>
+        <pad_char/>
+        <pad_len/>
+        <init_cap>no</init_cap>
+        <mask_xml>none</mask_xml>
+        <digits>none</digits>
+        <remove_special_characters>none</remove_special_characters>
+      </field>
+    </fields>
+     <cluster_schema/>
+ <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
+      <xloc>464</xloc>
+      <yloc>647</yloc>
+      <draw>Y</draw>
+      </GUI>
+    </step>
+
+  <step>
+    <name>Valor Java Script Modificado</name>
+    <type>ScriptValueMod</type>
+    <description/>
+    <distribute>Y</distribute>
+    <custom_distribution/>
+    <copies>1</copies>
+         <partitioning>
+           <method>none</method>
+           <schema_name/>
+           </partitioning>
+    <compatible>N</compatible>
+    <optimizationLevel>9</optimizationLevel>
+    <jsScripts>      <jsScript>        <jsScript_type>0</jsScript_type>
+        <jsScript_name>Script 1</jsScript_name>
+        <jsScript_script>&#x2f;&#x2f;Script here&#xa;&#xa;var MN &#x3d; substr&#x28;cod_ser,0,1&#x29;</jsScript_script>
+      </jsScript>    </jsScripts>    <fields>      <field>        <name>MN</name>
+        <rename>MN</rename>
+        <type>String</type>
+        <length>-1</length>
+        <precision>-1</precision>
+        <replace>N</replace>
+      </field>    </fields>     <cluster_schema/>
+ <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
+      <xloc>597</xloc>
+      <yloc>666</yloc>
+      <draw>Y</draw>
+      </GUI>
+    </step>
+
+  <step>
     <name>bald</name>
     <type>TableInput</type>
     <description/>
@@ -1323,8 +1780,8 @@
     <lazy_conversion_active>N</lazy_conversion_active>
      <cluster_schema/>
  <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
-      <xloc>187</xloc>
-      <yloc>485</yloc>
+      <xloc>705</xloc>
+      <yloc>148</yloc>
       <draw>Y</draw>
       </GUI>
     </step>
@@ -1349,8 +1806,8 @@
     <lazy_conversion_active>N</lazy_conversion_active>
      <cluster_schema/>
  <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
-      <xloc>185</xloc>
-      <yloc>405</yloc>
+      <xloc>684</xloc>
+      <yloc>65</yloc>
       <draw>Y</draw>
       </GUI>
     </step>
@@ -1367,7 +1824,7 @@
            <schema_name/>
            </partitioning>
     <connection>ABSA_REPLICA_absa</connection>
-    <sql>select &#x22;Ruta &#x22;&#x7c;&#x7c;m.turno as ruta, year&#x28;fec_med&#x29;&#x2a;100&#x2b;month&#x28;fec_med&#x29; as periodo,  1 as secuencia ,u.usuario, u.razon as razon_social, tpo_doc as doc_tipo, num_doc as doc_nro,&#xa;l.descripcion as localidad,  c.calle, c.numero as altura, c.dat_complem as datos_comp, l.cod_pos as cp, u.situacion, u.telefono, &#xa;m.tpo_med as medidor_tipo, m.num_med as medidor_num, med.fec_alt as medidor_f_alta,&#xa;m.est_med as lectura_valor, m.fec_med as lectura_fh_toma, m.fec_med as lectura_fh_carga, m.consumo as lectura_consumo, 0 as adeudado&#xa;from z80est_med m, z80unidad u, z80pto_cnx c, z80locali l, z80medidor med&#xa;where&#xa; fec_med &#x3e; mdy&#x28;1,1,2014&#x29; &#xa;and u.seccion in &#x28;111,112&#x29;&#xa;and m.unidad&#x3d;u.unidad&#xa;and m.pto_cnx &#x3d; c.pto_cnx&#xa;and l.locali&#x3d;c.locali&#xa;and m.tpo_med&#x3d;med.tpo_med and m.num_med&#x3d;med.num_med&#xa;and l.cod_pos&#x3d;1900&#xa;order by m.turno, c.calle, c.numero</sql>
+    <sql>select &#x22;Ruta &#x22;&#x7c;&#x7c;m.turno as ruta, year&#x28;fec_med&#x29;&#x2a;100&#x2b;month&#x28;fec_med&#x29; as periodo,  1 as secuencia ,u.unidad, u.razon as razon_social, tpo_doc as doc_tipo, num_doc as doc_nro,&#xa;l.descripcion as localidad,  c.calle, c.numero as altura, c.dat_complem as datos_comp, l.cod_pos as cp, u.situacion, u.telefono, &#xa;m.tpo_med as medidor_tipo, m.num_med as medidor_num, med.fec_alt as medidor_f_alta,&#xa;m.est_med as lectura_valor, m.fec_med as lectura_fh_toma, m.fec_med as lectura_fh_carga, m.consumo as lectura_consumo, 0 as adeudado&#xa;from z80est_med m, z80unidad u, z80pto_cnx c, z80locali l, z80medidor med&#xa;where&#xa; fec_med &#x3e; mdy&#x28;1,1,2014&#x29; &#xa;and m.unidad&#x3d;u.unidad&#xa;and m.pto_cnx &#x3d; c.pto_cnx&#xa;and l.locali&#x3d;c.locali&#xa;and m.tpo_med&#x3d;med.tpo_med and m.num_med&#x3d;med.num_med&#xa;and l.cod_pos&#x3d;1900&#xa;and u.zona&#x3d;&#x27;1&#x27;&#xa;order by m.turno, c.calle, c.numero</sql>
     <limit>0</limit>
     <lookup/>
     <execute_each_row>N</execute_each_row>
@@ -1403,6 +1860,32 @@
  <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
       <xloc>366</xloc>
       <yloc>165</yloc>
+      <draw>Y</draw>
+      </GUI>
+    </step>
+
+  <step>
+    <name>unidades</name>
+    <type>TableInput</type>
+    <description/>
+    <distribute>N</distribute>
+    <custom_distribution/>
+    <copies>1</copies>
+         <partitioning>
+           <method>none</method>
+           <schema_name/>
+           </partitioning>
+    <connection>ABSA_REPLICA_absa</connection>
+    <sql>select &#xa;a.unidad,&#xa;a.unidad_alt,&#xa;a.razon,&#xa;a.situacion,&#xa;a.zona,&#xa;a.seccion,&#xa;a.locali,&#xa;a.calle,&#xa;a.numero,&#xa;a.piso,&#xa;a.depto,&#xa;a.manzana,&#xa;a.parcela,&#xa;a.subparcela,&#xa;a.uni_fun,&#xa;c.descripcion as cod_edif,&#xa;a.val_atr_0,&#xa;a.val_atr_1,&#xa;a.val_atr_2 as vf,&#xa;a.val_atr_3 as sup,&#xa;a.val_atr_10 as a10,&#xa;a.val_atr_11 as a11,&#xa;a.val_atr_16 as a16,&#xa;a.dat_complem,&#xa;b.cod_ser,&#xa;b.cod_con,&#xa;b.ser_bas,&#xa;b.fec_vig&#xa;FROM z80unidad a, z80servi b, z80cod_edi c&#xa;WHERE a.unidad&#x3d;b.unidad and b.fec_vig_h is null&#xa;and a.cod_edi&#x3d;c.cod_edi&#xa;and zona&#x3d;&#x27;1&#x27;</sql>
+    <limit>0</limit>
+    <lookup/>
+    <execute_each_row>N</execute_each_row>
+    <variables_active>N</variables_active>
+    <lazy_conversion_active>N</lazy_conversion_active>
+     <cluster_schema/>
+ <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
+      <xloc>190</xloc>
+      <yloc>559</yloc>
       <draw>Y</draw>
       </GUI>
     </step>
@@ -1481,6 +1964,446 @@
  <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
       <xloc>62</xloc>
       <yloc>151</yloc>
+      <draw>Y</draw>
+      </GUI>
+    </step>
+
+  <step>
+    <name>unidades out</name>
+    <type>TextFileOutput</type>
+    <description/>
+    <distribute>Y</distribute>
+    <custom_distribution/>
+    <copies>1</copies>
+         <partitioning>
+           <method>none</method>
+           <schema_name/>
+           </partitioning>
+    <separator>	</separator>
+    <enclosure>&#x22;</enclosure>
+    <enclosure_forced>N</enclosure_forced>
+    <enclosure_fix_disabled>N</enclosure_fix_disabled>
+    <header>Y</header>
+    <footer>N</footer>
+    <format>DOS</format>
+    <compression>None</compression>
+    <encoding>UTF-8</encoding>
+    <endedLine/>
+    <fileNameInField>N</fileNameInField>
+    <fileNameField/>
+    <create_parent_folder>Y</create_parent_folder>
+    <file>
+      <name>&#x2f;home&#x2f;chaca&#x2f;Escritorio&#x2f;unidades</name>
+      <is_command>N</is_command>
+      <servlet_output>N</servlet_output>
+      <do_not_open_new_file_init>N</do_not_open_new_file_init>
+      <extention>csv</extention>
+      <append>N</append>
+      <split>N</split>
+      <haspartno>N</haspartno>
+      <add_date>N</add_date>
+      <add_time>N</add_time>
+      <SpecifyFormat>N</SpecifyFormat>
+      <date_time_format/>
+      <add_to_result_filenames>Y</add_to_result_filenames>
+      <pad>N</pad>
+      <fast_dump>N</fast_dump>
+      <splitevery>0</splitevery>
+    </file>
+    <fields>
+      <field>
+        <name>unidad</name>
+        <type>Integer</type>
+        <format>&#x23;&#x3b;-&#x23;</format>
+        <currency/>
+        <decimal>,</decimal>
+        <group>.</group>
+        <nullif/>
+        <trim_type>none</trim_type>
+        <length>10</length>
+        <precision>0</precision>
+      </field>
+      <field>
+        <name>unidad_alt</name>
+        <type>String</type>
+        <format/>
+        <currency/>
+        <decimal/>
+        <group/>
+        <nullif/>
+        <trim_type>none</trim_type>
+        <length>20</length>
+        <precision>-1</precision>
+      </field>
+      <field>
+        <name>razon</name>
+        <type>String</type>
+        <format/>
+        <currency/>
+        <decimal/>
+        <group/>
+        <nullif/>
+        <trim_type>none</trim_type>
+        <length>50</length>
+        <precision>-1</precision>
+      </field>
+      <field>
+        <name>situacion</name>
+        <type>String</type>
+        <format/>
+        <currency/>
+        <decimal/>
+        <group/>
+        <nullif/>
+        <trim_type>none</trim_type>
+        <length>4</length>
+        <precision>-1</precision>
+      </field>
+      <field>
+        <name>seccion</name>
+        <type>String</type>
+        <format/>
+        <currency/>
+        <decimal/>
+        <group/>
+        <nullif/>
+        <trim_type>none</trim_type>
+        <length>8</length>
+        <precision>-1</precision>
+      </field>
+      <field>
+        <name>locali</name>
+        <type>String</type>
+        <format/>
+        <currency/>
+        <decimal/>
+        <group/>
+        <nullif/>
+        <trim_type>none</trim_type>
+        <length>8</length>
+        <precision>-1</precision>
+      </field>
+      <field>
+        <name>calle</name>
+        <type>String</type>
+        <format/>
+        <currency/>
+        <decimal/>
+        <group/>
+        <nullif/>
+        <trim_type>none</trim_type>
+        <length>40</length>
+        <precision>-1</precision>
+      </field>
+      <field>
+        <name>numero</name>
+        <type>Integer</type>
+        <format>&#x23;&#x3b;-&#x23;</format>
+        <currency/>
+        <decimal>,</decimal>
+        <group>.</group>
+        <nullif/>
+        <trim_type>none</trim_type>
+        <length>8</length>
+        <precision>0</precision>
+      </field>
+      <field>
+        <name>piso</name>
+        <type>String</type>
+        <format/>
+        <currency/>
+        <decimal/>
+        <group/>
+        <nullif/>
+        <trim_type>none</trim_type>
+        <length>2</length>
+        <precision>-1</precision>
+      </field>
+      <field>
+        <name>depto</name>
+        <type>String</type>
+        <format/>
+        <currency/>
+        <decimal/>
+        <group/>
+        <nullif/>
+        <trim_type>none</trim_type>
+        <length>4</length>
+        <precision>-1</precision>
+      </field>
+      <field>
+        <name>manzana</name>
+        <type>String</type>
+        <format/>
+        <currency/>
+        <decimal/>
+        <group/>
+        <nullif/>
+        <trim_type>none</trim_type>
+        <length>8</length>
+        <precision>-1</precision>
+      </field>
+      <field>
+        <name>parcela</name>
+        <type>String</type>
+        <format/>
+        <currency/>
+        <decimal/>
+        <group/>
+        <nullif/>
+        <trim_type>none</trim_type>
+        <length>8</length>
+        <precision>-1</precision>
+      </field>
+      <field>
+        <name>subparcela</name>
+        <type>String</type>
+        <format/>
+        <currency/>
+        <decimal/>
+        <group/>
+        <nullif/>
+        <trim_type>none</trim_type>
+        <length>4</length>
+        <precision>-1</precision>
+      </field>
+      <field>
+        <name>uni_fun</name>
+        <type>String</type>
+        <format/>
+        <currency/>
+        <decimal/>
+        <group/>
+        <nullif/>
+        <trim_type>none</trim_type>
+        <length>3</length>
+        <precision>-1</precision>
+      </field>
+      <field>
+        <name>cod_edi</name>
+        <type>String</type>
+        <format/>
+        <currency/>
+        <decimal/>
+        <group/>
+        <nullif/>
+        <trim_type>none</trim_type>
+        <length>2</length>
+        <precision>-1</precision>
+      </field>
+      <field>
+        <name>val_atr_0</name>
+        <type>String</type>
+        <format/>
+        <currency/>
+        <decimal/>
+        <group/>
+        <nullif/>
+        <trim_type>none</trim_type>
+        <length>50</length>
+        <precision>-1</precision>
+      </field>
+      <field>
+        <name>val_atr_1</name>
+        <type>String</type>
+        <format/>
+        <currency/>
+        <decimal/>
+        <group/>
+        <nullif/>
+        <trim_type>none</trim_type>
+        <length>50</length>
+        <precision>-1</precision>
+      </field>
+      <field>
+        <name>vf</name>
+        <type>String</type>
+        <format/>
+        <currency/>
+        <decimal/>
+        <group/>
+        <nullif/>
+        <trim_type>none</trim_type>
+        <length>50</length>
+        <precision>-1</precision>
+      </field>
+      <field>
+        <name>sup</name>
+        <type>String</type>
+        <format/>
+        <currency/>
+        <decimal/>
+        <group/>
+        <nullif/>
+        <trim_type>none</trim_type>
+        <length>50</length>
+        <precision>-1</precision>
+      </field>
+      <field>
+        <name>a10</name>
+        <type>String</type>
+        <format/>
+        <currency/>
+        <decimal/>
+        <group/>
+        <nullif/>
+        <trim_type>none</trim_type>
+        <length>50</length>
+        <precision>-1</precision>
+      </field>
+      <field>
+        <name>a11</name>
+        <type>String</type>
+        <format/>
+        <currency/>
+        <decimal/>
+        <group/>
+        <nullif/>
+        <trim_type>none</trim_type>
+        <length>50</length>
+        <precision>-1</precision>
+      </field>
+      <field>
+        <name>a16</name>
+        <type>String</type>
+        <format/>
+        <currency/>
+        <decimal/>
+        <group/>
+        <nullif/>
+        <trim_type>none</trim_type>
+        <length>50</length>
+        <precision>-1</precision>
+      </field>
+      <field>
+        <name>dat_complem</name>
+        <type>String</type>
+        <format/>
+        <currency/>
+        <decimal/>
+        <group/>
+        <nullif/>
+        <trim_type>none</trim_type>
+        <length>40</length>
+        <precision>-1</precision>
+      </field>
+      <field>
+        <name>cod_ser</name>
+        <type>String</type>
+        <format/>
+        <currency/>
+        <decimal/>
+        <group/>
+        <nullif/>
+        <trim_type>none</trim_type>
+        <length>4</length>
+        <precision>-1</precision>
+      </field>
+      <field>
+        <name>cod_con</name>
+        <type>String</type>
+        <format/>
+        <currency/>
+        <decimal/>
+        <group/>
+        <nullif/>
+        <trim_type>none</trim_type>
+        <length>2</length>
+        <precision>-1</precision>
+      </field>
+      <field>
+        <name>ser_bas</name>
+        <type>String</type>
+        <format/>
+        <currency/>
+        <decimal/>
+        <group/>
+        <nullif/>
+        <trim_type>none</trim_type>
+        <length>4</length>
+        <precision>-1</precision>
+      </field>
+      <field>
+        <name>fec_vig</name>
+        <type>Date</type>
+        <format/>
+        <currency/>
+        <decimal/>
+        <group/>
+        <nullif/>
+        <trim_type>none</trim_type>
+        <length>-1</length>
+        <precision>-1</precision>
+      </field>
+    </fields>
+     <cluster_schema/>
+ <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
+      <xloc>628</xloc>
+      <yloc>552</yloc>
+      <draw>Y</draw>
+      </GUI>
+    </step>
+
+  <step>
+    <name>Salida Tabla 3 2 2</name>
+    <type>TableOutput</type>
+    <description/>
+    <distribute>Y</distribute>
+    <custom_distribution/>
+    <copies>1</copies>
+         <partitioning>
+           <method>none</method>
+           <schema_name/>
+           </partitioning>
+    <connection>5DS_BACULA_adg_w</connection>
+    <schema/>
+    <table>unidades_facturas</table>
+    <commit>1000</commit>
+    <truncate>Y</truncate>
+    <ignore_errors>N</ignore_errors>
+    <use_batch>Y</use_batch>
+    <specify_fields>N</specify_fields>
+    <partitioning_enabled>N</partitioning_enabled>
+    <partitioning_field/>
+    <partitioning_daily>N</partitioning_daily>
+    <partitioning_monthly>Y</partitioning_monthly>
+    <tablename_in_field>N</tablename_in_field>
+    <tablename_field/>
+    <tablename_in_table>Y</tablename_in_table>
+    <return_keys>N</return_keys>
+    <return_field/>
+    <fields>
+    </fields>
+     <cluster_schema/>
+ <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
+      <xloc>251</xloc>
+      <yloc>709</yloc>
+      <draw>Y</draw>
+      </GUI>
+    </step>
+
+  <step>
+    <name>facturas</name>
+    <type>TableInput</type>
+    <description/>
+    <distribute>N</distribute>
+    <custom_distribution/>
+    <copies>1</copies>
+         <partitioning>
+           <method>none</method>
+           <schema_name/>
+           </partitioning>
+    <connection>ABSA_REPLICA_absa</connection>
+    <sql>select a.unidad, a.fecha, sum&#x28;a.importe&#x29;  as importe&#xa;from z80facturado a, z80unidad b&#xa;where &#xa;a.unidad&#x3d;b.unidad&#xa;and a.fecha &#x3e; mdy&#x28;1,1,2014&#x29;&#xa;and b.seccion in&#x28;&#x27;111&#x27;,&#x27;112&#x27;&#x29;&#xa;group by 1,2</sql>
+    <limit>0</limit>
+    <lookup/>
+    <execute_each_row>N</execute_each_row>
+    <variables_active>N</variables_active>
+    <lazy_conversion_active>N</lazy_conversion_active>
+     <cluster_schema/>
+ <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
+      <xloc>100</xloc>
+      <yloc>686</yloc>
       <draw>Y</draw>
       </GUI>
     </step>

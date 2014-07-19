@@ -38,6 +38,35 @@ namespace :chaca do
     lecturas.each{|a| a.geocode; a.save; puts "#{a.usuario} (#{a.direccion}) : #{a.latlon}"}
   end
 
+  desc "Geocodificar edificios"
+  task :geocodificar_edificios, [:uh] => :environment  do |task, args|
+    direcciones = Direccion.where(:lat => nil)
+    if args[:uh].present?
+      direcciones = direcciones.where("cant_unidades >= ?", args[:uh])
+    else
+      direcciones = direcciones.where("cant_unidades >= 10")
+    end
+    puts direcciones.count 
+    direcciones.each{|a| a.geocode; a.save; puts "(#{a.direccion_geo}) : #{a.latlon}"}
+  end
+
+  desc "Geocodificar medidos"
+  task :geocodificar_medidos => :environment  do |task, args|
+    unidades = Unidad.where(:lat => nil)
+    unidades = Unidad.where('mn=?','Z')
+    puts unidades.count
+    unidades.each{|a| a.geocode; a.save; puts "(#{a.direccion_geo}) : #{a.latlon}"}
+  end
+
+
+  desc "Geocodificar medidos ph"
+  task :geocodificar_medidos_ph => :environment  do |task, args|
+    unidades = Unidad.medidos_ph.where(:lat => nil)
+    puts unidades.count
+    unidades.each{|a| a.geocode; a.save; puts "(#{a.direccion_geo}) : #{a.latlon}"}
+  end
+
+
   desc "Normalizar"
   task :normalizar => :environment  do 
     lecturas = Lectura.where(lectura_valor: nil).update_all(estado: 'Nueva')

@@ -44,6 +44,11 @@ class LecturasController < ApplicationController
 
   end
 
+  def georeferenciar_lista
+    @lecturas = Lectura.search(params).order(sort_column + " " + sort_direction)
+    @lecturas = @lecturas.where(lat: nil)
+  end
+
 
   # GET /lecturas/1
   # GET /lecturas/1.json
@@ -114,7 +119,8 @@ class LecturasController < ApplicationController
       @lecturas = @lecturas.where(periodo: params[:periodo])
     end
 
-    @lecturas = @lecturas.order(:secuencia).limit(500);
+    #@lecturas = @lecturas.order(:secuencia).limit(500);
+    @lecturas = @lecturas.order(:secuencia);
 
     render :json => @lecturas.to_json(:methods => [:usuario, :razon_social, :direccion, :rango_valido, :deuda])
     #render :json => @lecturas.to_json(only:[:id, :usuario, :direccion], :methods => [:usuario, :razon_social, :direccion, :rango_valido])

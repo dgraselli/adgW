@@ -1,5 +1,7 @@
 FirstApp::Application.routes.draw do
 
+  resources :edificios
+
   root 'main#home'
 
   # Autent... routes  
@@ -34,12 +36,20 @@ FirstApp::Application.routes.draw do
   match '/lecturas/:id/visualizar', to: 'lecturas#visualizar', via: [:get, :post ]
   match '/lecturas/:id/mini', to: 'lecturas#mini', via: [:get, :post ]
   match '/lecturas/:id/fotos', to: 'lecturas#fotos', via: [:get, :post ]
+  match '/lecturas/georeferenciar', to: 'lecturas#georeferenciar_lista', via: ['get','post'] 
+
   get  '/ruta/index'
   get  '/ruta/periodos'
   post '/ruta/asignar'
   post '/ruta/nuevo_periodo'
   match '/track', to: 'users#track', via: [:post, :get]
   match '/tracks', to: 'users#tracks', via: [:get]
+
+  match '/direccion/:calle/:altura', to: 'main#direccion', via: [:get]
+  match '/direcciones/:uh', to: 'main#direcciones', via: [:get]
+  match '/buscar_direccion', to: 'main#buscar_direccion', via: 'get'
+  post '/guardar_direccion', to: 'main#guardar_direccion'
+  post '/agregar_direccion', to: 'main#agregar_direccion'
   resources :lecturas
   resources :lecturistas
   resources :incidencias

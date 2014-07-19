@@ -20,6 +20,7 @@ function submit_form(form_name, format)
   hidden_formant.val(aux); 
 }
 
+//map full screen
 function map_fs(map) 
 {
 

@@ -1,6 +1,8 @@
 class MainController < ApplicationController 
   include SessionsHelper
   before_filter :signed_in_user, :except => [:qcode, :download_mobile]
+  protect_from_forgery :except => [:guardar_direccion]
+  after_filter :customheaders
 
   def home
 
@@ -116,5 +118,81 @@ class MainController < ApplicationController
   def test_update_lectura
 
   end
+
+  def direccion
+    calle = params[:calle]
+    altura = params[:altura]
+
+    
+    @unidades = Unidad.where("trim(calle)=? AND numero=?", calle, altura)    
+
+    
+  end
+
+  def direcciones
+    min_uh = params[:uh] || 40
+    @direcciones = Direccion.where('cant_unidades >= ?', min_uh)
+    @medidos_ph = Unidad.medidos_ph#.limit(3)
+    #@relevados = Direccion.where('cant_unidades_relevadas is not null')
+    @edificios = Edificio.all
+
+
+    #@medidos = Unidad.where('mn = ? and lat is not null','Z')
+
+  end
+
+  def buscar_direccion
+    if params[:lat].nil?
+      calle = params[:calle]
+      if params[:altura].to_i % 100 == 0
+        n1 = params[:altura].to_i
+        n2 = params[:altura].to_i + 50
+      else
+        n1 = n2 = params[:altura]
+      end
+      @direcciones = Direccion.where('calle like ? and numero between ? and ?', calle, n1, n2)    
+    else
+      radio = params[:radio] || 0.1
+
+      @direcciones = Direccion.near([params[:lat], params[:lon]], radio, :units => :km)
+
+    end
+
+    @direcciones = @direcciones.order(:calle, :numero)
+  end
+
+
+  def guardar_direccion
+    if params[:calle].nil? or params[:altura].nil? or params[:cant_unidades_relevadas].nil?
+      render :json => {result: 'error', msg: 'Datos incompletos'}
+      return 
+    end
+
+    direcciones = Direccion.where(calle: params[:calle], numero: params[:altura])    
+
+    if direcciones.count > 0
+      d = direcciones.first
+    else
+      d = Direccion.new
+      d.calle = params[:calle]
+      d.numero = params[:numero]
+    end    
+
+    d.cant_unidades_relevadas = params[:cant_unidades_relevadas]
+    d.rel_lat = params[:rel_lat]
+    d.rel_lon = params[:rel_lon]
+
+    d.save
+
+    render :json => {result: 'ok'}
+  end
+
+
+  private
+    def customheaders
+      response.headers["Access-Control-Allow-Origin"]="*"
+      response.headers["Access-Control-Allow-Methods"]= "PUT, GET, POST, DELETE, OPTIONS"
+      #response.headers["Access-Control-Allow-Headers"]= "*"
+    end
 
 end
